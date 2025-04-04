@@ -37,7 +37,7 @@ export default function SearchHistory() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        my: 2,
+        my: { xs: 3, md: 4 },
       }}
     >
       {history.length > 0 && (
@@ -56,7 +56,7 @@ export default function SearchHistory() {
           </Box>
           <Box
             sx={{
-              maxHeight: "250px", // Aproximadamente 5 elementos
+              maxHeight: "250px",
               overflowY: "auto",
               p: 1,
             }}
