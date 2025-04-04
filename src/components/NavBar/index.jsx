@@ -103,7 +103,7 @@ export default function NavBar() {
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
               <img
-                src="/image/logos/LogoHeadNav.webp"
+                src="/image/logos/logoHeadNav.webp"
                 alt="Logo"
                 style={{ height: "40px" }}
               />
@@ -112,7 +112,7 @@ export default function NavBar() {
             {/* Enfocado a pantallas normales o escritorio*/}
             <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
               <img
-                src="/image/logos/LogoHeadNav.webp"
+                src="/image/logos/logoHeadNav.webp"
                 alt="Logo"
                 style={{ height: "40px" }}
               />

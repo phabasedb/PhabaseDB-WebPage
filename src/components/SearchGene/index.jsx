@@ -16,11 +16,16 @@ export default function SearchGene() {
 
   // Only letters and numbers are allowed
   const allowedRegex = /^[A-Za-z0-9]+$/;
+  const maxLength = 25; // Límite de caracteres
 
   // Function validate Input Search Gene
   const validateInput = (value) => {
     if (value.trim() === "") {
       setErrorGene("The field cannot be empty.");
+      return false;
+    }
+    if (value.length > maxLength) {
+      setErrorGene(`The term cannot exceed  ${maxLength} characters.`);
       return false;
     }
     if (!allowedRegex.test(value)) {
@@ -54,7 +59,6 @@ export default function SearchGene() {
         justifyContent: "center",
         alignItems: "center",
         my: 2,
-        //border: 1,
       }}
     >
       <Box
@@ -72,9 +76,8 @@ export default function SearchGene() {
           placeholder="Search Gene"
           value={searchGene}
           onChange={(e) => {
-            setSearchGene(e.target.value);
-            // Clear error when changing value
-            if (errorGene) setErrorGene("");
+            const value = e.target.value;
+            setSearchGene(value);
           }}
           error={!!errorGene}
           helperText={errorGene}

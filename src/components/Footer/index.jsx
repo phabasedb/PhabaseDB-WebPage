@@ -34,7 +34,7 @@ export default function Footer() {
         }}
       >
         <Image
-          src="/image/logos/LogoFooterUNAM.webp"
+          src="/image/logos/logoFooterUNAM.webp"
           alt="Logo UNAM"
           width={200}
           height={100}
@@ -55,7 +55,7 @@ export default function Footer() {
         }}
       >
         <Image
-          src="/image/logos/LogoFooterCCG.webp"
+          src="/image/logos/logoFooterCCG.webp"
           alt="Logo CCG"
           width={200}
           height={100}

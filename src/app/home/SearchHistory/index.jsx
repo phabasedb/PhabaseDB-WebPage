@@ -1,15 +1,21 @@
 "use client";
 
+// standard
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+// third party
 import {
   Box,
   List,
   ListItem,
   ListItemText,
   Typography,
-  Paper,
+  ListItemIcon,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import Image from "next/image"; // Importar el componente Image
+
+// local
 
 export default function SearchHistory() {
   const [history, setHistory] = useState([]);
@@ -28,48 +34,67 @@ export default function SearchHistory() {
   return (
     <Box
       sx={{
-        width: { xs: "85%", md: "80%" },
-        mx: "auto",
-        mt: 3,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        my: 2,
       }}
     >
-      <Typography variant="h6" sx={{ mb: 2, textAlign: "center" }}>
-        Historial de búsqueda
-      </Typography>
-      <Paper
-        elevation={3}
-        sx={{
-          borderRadius: 2,
-          p: 2,
-          backgroundColor: "#fff",
-          maxHeight: "250px", // Aproximadamente 5 elementos
-          overflowY: "auto",
-        }}
-      >
-        {history.length === 0 ? (
-          <Typography variant="body2" color="text.secondary">
-            Aún no hay búsquedas en el historial.
-          </Typography>
-        ) : (
-          <List>
-            {history.map((item, index) => (
-              <ListItem
-                key={index}
-                divider
-                sx={{
-                  borderRadius: 1,
-                  mb: 1,
-                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
-                  cursor: "pointer",
-                }}
-                onClick={() => handleItemClick(item)}
-              >
-                <ListItemText primary={item} />
-              </ListItem>
-            ))}
-          </List>
-        )}
-      </Paper>
+      {history.length > 0 && (
+        <Box
+          sx={{
+            width: { xs: "90%", md: "70%" },
+            backgroundColor: "white",
+            borderRadius: 2,
+            boxShadow: 5,
+          }}
+        >
+          <Box>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, p: 1 }}>
+              Search History
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              maxHeight: "250px", // Aproximadamente 5 elementos
+              overflowY: "auto",
+              p: 1,
+            }}
+          >
+            <List>
+              {history.map((item, index) => (
+                <ListItem
+                  key={index}
+                  divider
+                  role="listitem"
+                  sx={{
+                    "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <ListItemIcon>
+                    <Image
+                      src="/image/home/iconBean.webp"
+                      alt="Icon Bean"
+                      width={24}
+                      height={24}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item}
+                    sx={{
+                      color: "blue",
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }
