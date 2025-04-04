@@ -73,7 +73,7 @@ export default function StructInfoCardHome({ item, index }) {
                 lg: "1.6rem",
                 xl: "2rem",
               },
-              lineHeight: "1.5",
+              lineHeight: 1.5,
             }}
           >
             {item.description}

@@ -6,8 +6,8 @@
 import { useParams } from "next/navigation";
 
 // local
-import SearchGene from "@/components/SearchGene";
 import Title from "../Title";
+import SearchGene from "@/components/SearchGene";
 import DataTable from "../DataTable";
 
 export default function Search() {

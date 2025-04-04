@@ -12,38 +12,31 @@ export default function DataTable({ searchTerm }) {
     <Box
       sx={{
         my: 3,
-        width: "100%",
-        overflow: "hidden",
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        gap: { xs: 2, md: 3 },
+        justifyContent: "center",
+        alignItems: { xs: "center", md: "flex-start" },
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          gap: { xs: 2, md: 3 },
-          justifyContent: "center",
-          alignItems: { xs: "center", md: "flex-start" },
+          width: { xs: "90%", md: "70%" },
+          order: { xs: 1, md: 1 },
         }}
       >
-        <Box
-          sx={{
-            width: { xs: "90%", md: "70%" },
-            order: { xs: 1, md: 1 },
-          }}
-        >
-          <StructTableSearch searchTerm={searchTerm} />
-        </Box>
+        <StructTableSearch searchTerm={searchTerm} />
+      </Box>
 
-        <Box
-          sx={{
-            width: { xs: "90%", md: "20%" },
-            order: { xs: 2, md: 2 },
-            justifyContent: { md: "flex-start" },
-            alignItems: { md: "center" },
-          }}
-        >
-          <StructOptionSearch />
-        </Box>
+      <Box
+        sx={{
+          width: { xs: "90%", md: "20%" },
+          order: { xs: 2, md: 2 },
+          justifyContent: { md: "flex-start" },
+          alignItems: { md: "center" },
+        }}
+      >
+        <StructOptionSearch />
       </Box>
     </Box>
   );

@@ -26,7 +26,7 @@ export default function StructTableSearch({ searchTerm }) {
 
   if (loading)
     return (
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box sx={{ textAlign: "center" }}>
         <CircularProgress />
       </Box>
     );
@@ -36,26 +36,24 @@ export default function StructTableSearch({ searchTerm }) {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          backgroundColor: "white",
+          borderRadius: 2,
         }}
       >
-        <Box
+        <Typography
+          variant="body2"
+          color="error"
           sx={{
-            width: "90%",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            overflow: "hidden",
-            borderRadius: 2,
+            p: 2,
+            lineHeight: 1.5,
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
           }}
         >
-          <Typography sx={{ p: 2 }}>
-            An error occurred while loading the data for gene {searchTerm}.
-            Please try again.
-          </Typography>
-        </Box>
+          An error occurred while loading the data for gene {searchTerm}. Please
+          try again.
+        </Typography>
       </Box>
     );
 
@@ -64,25 +62,23 @@ export default function StructTableSearch({ searchTerm }) {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          backgroundColor: "white",
+          borderRadius: 2,
         }}
       >
-        <Box
+        <Typography
+          variant="body2"
+          color="error"
           sx={{
-            width: "90%",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            overflow: "hidden",
-            borderRadius: 2,
+            p: 2,
+            lineHeight: 1.5,
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
           }}
         >
-          <Typography sx={{ p: 2 }}>
-            No data was found for the gene: {searchTerm}
-          </Typography>
-        </Box>
+          No data was found for the gene: {searchTerm}
+        </Typography>
       </Box>
     );
   }

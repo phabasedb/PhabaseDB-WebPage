@@ -105,7 +105,7 @@ export default function NavBar() {
               <img
                 src="/image/logos/logoHeadNav.webp"
                 alt="Logo"
-                style={{ height: "40px" }}
+                style={{ height: 40 }}
               />
             </Box>
 
@@ -114,7 +114,7 @@ export default function NavBar() {
               <img
                 src="/image/logos/logoHeadNav.webp"
                 alt="Logo"
-                style={{ height: "40px" }}
+                style={{ height: 40 }}
               />
             </Box>
             <Box

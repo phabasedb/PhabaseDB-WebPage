@@ -7,7 +7,7 @@ import { Typography, Box } from "@mui/material";
 
 export default function Title() {
   return (
-    <Box sx={{ flexGrow: 1, my: 1 }}>
+    <Box sx={{ my: 1 }}>
       <Box
         sx={{
           display: "flex",
@@ -31,11 +31,11 @@ export default function Title() {
             alt="Phabase Logo"
             sx={{
               width: {
-                xs: "80px",
-                sm: "100px",
-                md: "110px",
-                lg: "120px",
-                xl: "130px",
+                xs: 80,
+                sm: 100,
+                md: 110,
+                lg: 120,
+                xl: 130,
               },
               height: "auto",
             }}

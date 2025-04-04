@@ -5,7 +5,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 // third party
-import { Box, TextField, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // local
 
@@ -14,9 +21,13 @@ export default function SearchGene() {
   const [errorGene, setErrorGene] = useState("");
   const router = useRouter();
 
+  // Responsive row menssage error invalid input
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   // Only letters and numbers are allowed
   const allowedRegex = /^[A-Za-z0-9]+$/;
-  const maxLength = 25; // Límite de caracteres
+  const maxLength = 25; // Limit de characteres
 
   // Function validate Input Search Gene
   const validateInput = (value) => {
@@ -56,6 +67,7 @@ export default function SearchGene() {
       sx={{
         width: "100%",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         my: 2,
@@ -76,11 +88,10 @@ export default function SearchGene() {
           placeholder="Search Gene"
           value={searchGene}
           onChange={(e) => {
-            const value = e.target.value;
-            setSearchGene(value);
+            setSearchGene(e.target.value);
           }}
-          error={!!errorGene}
-          helperText={errorGene}
+          error={isSmallScreen && !!errorGene}
+          helperText={isSmallScreen ? errorGene : ""}
           InputProps={{
             style: {
               borderRadius: 25,
@@ -90,7 +101,7 @@ export default function SearchGene() {
           }}
           sx={{
             width: { xs: "100%", md: "70%" },
-            maxWidth: "900px",
+            maxWidth: 900,
           }}
         />
 
@@ -100,14 +111,28 @@ export default function SearchGene() {
           onClick={handleSearch}
           sx={{
             borderRadius: 2,
-            color: "black",
-            padding: "10px 30px",
+            py: 1.5,
+            px: 3,
             width: { xs: "100%", md: "auto" },
           }}
         >
           SEARCH
         </Button>
       </Box>
+
+      {!isSmallScreen && errorGene && (
+        <Box
+          sx={{
+            width: { md: "70%", lg: "70%", xl: "70%" },
+            maxWidth: 950,
+            p: 1,
+          }}
+        >
+          <Typography variant="body2" color="error">
+            {errorGene}
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }

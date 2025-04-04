@@ -23,7 +23,7 @@ export default function CardIndex() {
           <StructInfoCardHome key={index} item={item} index={index} />
         ))}
 
-        {/**New Session Text */}
+        {/**New Session Text Citing Phabase */}
         <Box
           sx={{
             display: "flex",
@@ -32,7 +32,7 @@ export default function CardIndex() {
             width: "90%",
           }}
         >
-          <Box sx={{ border: 1, width: "100%" }}>
+          <Box>
             <Card
               sx={{
                 display: "flex",

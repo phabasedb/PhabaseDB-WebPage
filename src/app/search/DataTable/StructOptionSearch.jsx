@@ -13,7 +13,7 @@ export default function StructOptionSearch() {
     <Box
       sx={{
         background: "white",
-        borderRadius: "25px",
+        borderRadius: 2,
         textAlign: "center",
         py: 1,
       }}

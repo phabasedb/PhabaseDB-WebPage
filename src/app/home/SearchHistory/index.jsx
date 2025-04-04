@@ -13,7 +13,7 @@ import {
   Typography,
   ListItemIcon,
 } from "@mui/material";
-import Image from "next/image"; // Importar el componente Image
+import Image from "next/image";
 
 // local
 
