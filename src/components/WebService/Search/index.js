@@ -10,7 +10,17 @@ import {
 } from "./utils/gene/processSearchData";
 import { GET_GENE_BY_DATATABLE, GET_GENE_BY_ACCESSONID } from "./getGeneBy";
 
+const allowedRegex = /^[A-Za-z0-9]+$/;
+
 export function useGetSearchResults(searchTerm) {
+  if (!allowedRegex.test(searchTerm)) {
+    return {
+      formattedData: null,
+      loading: false,
+      error: "Invalid search term.",
+    };
+  }
+
   const { data, loading, error } = useQuery(GET_GENE_BY_DATATABLE, {
     variables: { search: searchTerm },
     skip: !searchTerm,
@@ -30,6 +40,13 @@ export function useGetSearchResults(searchTerm) {
 }
 
 export function useGetSearchResultIdGene(idGene) {
+  if (!allowedRegex.test(idGene)) {
+    return {
+      formattedData: null,
+      loading: false,
+      error: "Invalid gene search term.",
+    };
+  }
   const { data, loading, error } = useQuery(GET_GENE_BY_ACCESSONID, {
     variables: {
       search: idGene,

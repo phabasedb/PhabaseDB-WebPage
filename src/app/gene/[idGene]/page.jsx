@@ -40,7 +40,7 @@ export default function GenePage() {
 
   if (loading)
     return (
-      <Box sx={{ width: "100%", textAlign: "center", my: 3 }}>
+      <Box sx={{ textAlign: "center" }}>
         <CircularProgress />
       </Box>
     );
@@ -66,15 +66,23 @@ export default function GenePage() {
             borderRadius: 2,
           }}
         >
-          <Typography sx={{ p: 2 }}>
-            An error occurred while loading the data for gene {idGene}. Please
-            try again.
+          <Typography
+            variant="body2"
+            color="error"
+            sx={{
+              p: 2,
+              lineHeight: 1.5,
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+            }}
+          >
+            {error}
           </Typography>
         </Box>
       </Box>
     );
 
-  if (!geneData) {
+  if (!geneData || geneData.length === 0) {
     return (
       <Box
         sx={{
@@ -95,7 +103,16 @@ export default function GenePage() {
             borderRadius: 2,
           }}
         >
-          <Typography sx={{ p: 2 }}>
+          <Typography
+            variant="body2"
+            color="error"
+            sx={{
+              p: 2,
+              lineHeight: 1.5,
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+            }}
+          >
             No data was found for the gene: {idGene}
           </Typography>
         </Box>

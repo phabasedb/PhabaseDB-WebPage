@@ -51,8 +51,7 @@ export default function StructTableSearch({ searchTerm }) {
             overflowWrap: "break-word",
           }}
         >
-          An error occurred while loading the data for gene {searchTerm}. Please
-          try again.
+          {error}
         </Typography>
       </Box>
     );
