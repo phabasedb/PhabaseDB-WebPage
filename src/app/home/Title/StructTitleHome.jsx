@@ -22,7 +22,6 @@ export default function StructTitleHome() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            py: 1,
             gap: { xs: 1, md: 2 },
           }}
         >
@@ -42,10 +41,10 @@ export default function StructTitleHome() {
             }}
           />
           <Typography
-            variant="h2"
+            variant="h1"
             sx={{
               fontWeight: "bold",
-              letterSpacing: { xs: "10px", md: "15px" },
+              letterSpacing: { xs: 10, md: 15 },
               fontSize: {
                 xs: "2.6rem",
                 sm: "3.5rem",
@@ -59,9 +58,10 @@ export default function StructTitleHome() {
           </Typography>
         </Box>
         <Typography
-          variant="h6"
+          variant="h2"
           color="secondary"
           sx={{
+            fontWeight: 500,
             fontSize: {
               xs: "1.2rem",
               sm: "1.4rem",
@@ -69,7 +69,7 @@ export default function StructTitleHome() {
               lg: "1.8rem",
               xl: "2rem",
             },
-            lineHeight: "1.5",
+            lineHeight: 1.5,
             textAlign: "center",
             maxWidth: "90%",
           }}

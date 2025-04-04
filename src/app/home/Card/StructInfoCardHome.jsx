@@ -45,7 +45,7 @@ export default function StructInfoCardHome({ item, index }) {
           <CardMedia
             component="img"
             image={item.image}
-            alt="Imagen Informativa"
+            alt="Informative image"
             sx={{
               width: "100%",
               height: "100%",
@@ -61,7 +61,7 @@ export default function StructInfoCardHome({ item, index }) {
           }}
         >
           <Typography
-            variant="h5"
+            variant="body1"
             sx={{
               p: 2,
               color: "black",
@@ -71,7 +71,7 @@ export default function StructInfoCardHome({ item, index }) {
                 sm: "1.2rem",
                 md: "1.4rem",
                 lg: "1.6rem",
-                xl: "1.8rem",
+                xl: "2rem",
               },
               lineHeight: "1.5",
             }}

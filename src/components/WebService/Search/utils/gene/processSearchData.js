@@ -1,7 +1,7 @@
 export function formatGraphQLDataTable(graphQLResponse) {
   return graphQLResponse.map((item) => ({
     geneId: item?._id,
-    geneIdOriginal: item?.gene?.accessionId,
+    geneIdOriginal: item?.gene?.accessionId || "",
     geneName: item?.gene?.name || "",
     chromosomeName: item?.chromosome?.name || "",
     organismName: item?.organism?.name || "",

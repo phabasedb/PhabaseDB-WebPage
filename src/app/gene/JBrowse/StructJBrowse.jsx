@@ -43,7 +43,7 @@ export default function StructJBrowser({ geneData }) {
     );
   }
   // Construct the URL with encoded values for safety
-  const url = `http://192.168.0.12:5000/?config=phabase%2Fjamapa%2Fconfig.json&assembly=LjG1.1&loc=${encodeURIComponent(
+  const url = `http://192.168.0.14:5000/?config=phabase%2Fjamapa%2Fconfig.json&assembly=LjG1.1&loc=${encodeURIComponent(
     `${geneData.chromosomeName}:${geneData.geneStart}..${geneData.geneEnd}`
   )}&tracks=sequence`;
 

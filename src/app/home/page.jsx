@@ -4,7 +4,8 @@
 
 // local
 import Title from "./Title";
-import Card from "./Card";
+import CardIndex from "./Card";
+import SearchHistory from "./SearchHistory";
 import SearchGene from "@/components/SearchGene";
 
 export default function Home() {
@@ -12,7 +13,8 @@ export default function Home() {
     <>
       <Title />
       <SearchGene />
-      <Card />
+      <SearchHistory />
+      <CardIndex />
     </>
   );
 }
