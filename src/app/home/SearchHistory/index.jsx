@@ -50,13 +50,26 @@ export default function SearchHistory() {
           }}
         >
           <Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, p: 1 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: 600,
+                p: 1,
+                fontSize: {
+                  xs: "1.1rem",
+                  sm: "1.2rem",
+                  md: "1.3rem",
+                  lg: "1.4rem",
+                  xl: "1.5rem",
+                },
+              }}
+            >
               Search History
             </Typography>
           </Box>
           <Box
             sx={{
-              maxHeight: "250px",
+              maxHeight: { xs: 250, sm: 265, md: 280, lg: 315, xl: 325 },
               overflowY: "auto",
               p: 1,
             }}
@@ -87,6 +100,15 @@ export default function SearchHistory() {
                       color: "blue",
                       textDecoration: "underline",
                       cursor: "pointer",
+                    }}
+                    primaryTypographyProps={{
+                      fontSize: {
+                        xs: "1rem",
+                        sm: "1.1rem",
+                        md: "1.2rem",
+                        lg: "1.5rem",
+                        xl: "1.6rem",
+                      },
                     }}
                   />
                 </ListItem>
