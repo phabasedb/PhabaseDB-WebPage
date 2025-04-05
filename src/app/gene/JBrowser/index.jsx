@@ -4,9 +4,9 @@
 import { Box } from "@mui/material";
 
 // local
-import StructJBrowser from "./StructJBrowse";
+import StructJBrowser from "./StructJBrowser";
 
-export default function InformationGene({ geneData }) {
+export default function JBrowser({ geneData }) {
   return (
     <Box
       sx={{

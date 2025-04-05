@@ -10,7 +10,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 // local
 import InformationGene from "../Information";
 import SequencesGene from "../Sequences";
-import JBrowser from "../JBrowse";
+import JBrowser from "../JBrowser";
 import { useGetSearchResultIdGene } from "@/components/WebService/Search";
 
 // Custom hook to automatically select the first transcript by default
