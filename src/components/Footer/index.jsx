@@ -25,7 +25,7 @@ export default function Footer() {
         mt: 2,
       }}
     >
-      {/* Logo Izquierdo */}
+      {/* Logo Left */}
       <Box
         sx={{
           display: "flex",
@@ -41,12 +41,12 @@ export default function Footer() {
         />
       </Box>
 
-      {/* Texto central */}
+      {/* Text center */}
       <Typography variant="body2" sx={{ color: "black", fontWeight: 500 }}>
         © 2025 All rights reserved. CCG-UNAM
       </Typography>
 
-      {/* Logo Derecho */}
+      {/* Logo Rigth */}
       <Box
         sx={{
           display: "flex",

@@ -48,7 +48,7 @@ export default function SearchGene() {
   };
   // ---
 
-  // Search storage function with a limit of 10.
+  // Search history storage function with a limit of 10.
   const handleSearch = () => {
     if (!validateInput(searchGene)) return;
     let storedHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];

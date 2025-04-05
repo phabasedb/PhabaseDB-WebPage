@@ -29,11 +29,6 @@ const pages = [
   { name: "About Us", path: "/" },
 ];
 
-/**Manejo de estados:
- * anchorEl: Guarda la referencia del menú abierto.
- * handleOpenMenu: Se ejecuta cuando hacemos clic en el menú o icono.
- * handleCloseMenu: Se ejecuta cuando cerramos el menú.
- */
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -45,17 +40,12 @@ export default function NavBar() {
     setAnchorElNav(null);
   };
 
-  /**Estructura de la AppBar
-   * Nota: position="sticky": Mantiene la barra fija al hacer scroll.
-   *       position="static": Se mantiene fija la barra al top de la pagina.
-   * Container maxWidth="xl": Ajusta la barra al tamaño de pantalla.
-   */
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky" color="primary">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {/* Enfocado a movil o pantalla pequeña enseña icono de menu*/}
+            {/* Small screen (movil) icon*/}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -109,7 +99,7 @@ export default function NavBar() {
               />
             </Box>
 
-            {/* Enfocado a pantallas normales o escritorio*/}
+            {/* Screen normal and desktop*/}
             <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
               <img
                 src="/image/logos/logoHeadNav.webp"
