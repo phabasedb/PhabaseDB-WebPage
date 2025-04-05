@@ -4,10 +4,10 @@
 import { Box, Card, Typography, Link } from "@mui/material";
 
 // local
-import StructInfoCardHome from "./StructInfoCardHome";
+import StructCard from "./struct-card";
 import { home } from "@/static/text/us-US";
 
-export default function CardIndex() {
+export default function CardInfo() {
   return (
     <Box>
       <Box
@@ -20,7 +20,7 @@ export default function CardIndex() {
         }}
       >
         {home.map((item, index) => (
-          <StructInfoCardHome key={index} item={item} index={index} />
+          <StructCard key={index} item={item} index={index} />
         ))}
 
         {/**New Session Text Citing Phabase */}

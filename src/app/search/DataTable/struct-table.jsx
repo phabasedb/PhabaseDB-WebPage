@@ -16,10 +16,8 @@ import MUIDataTable from "mui-datatables";
 // local
 import { useGetSearchResults } from "@/components/WebService/Search";
 
-export default function StructTableSearch({ searchTerm }) {
-  const { formattedData, loading, error } = useGetSearchResults(
-    searchTerm || ""
-  );
+export default function StructTable({ term }) {
+  const { formattedData, loading, error } = useGetSearchResults(term || "");
   const geneData = useMemo(() => formattedData || [], [formattedData]);
 
   const router = useRouter();

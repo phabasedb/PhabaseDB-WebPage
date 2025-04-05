@@ -31,8 +31,8 @@ function useSelectedTranscript(formattedData) {
 // ---
 
 export default function GenePage() {
-  const { idGene } = useParams();
-  const { formattedData, loading, error } = useGetSearchResultIdGene(idGene);
+  const { id } = useParams();
+  const { formattedData, loading, error } = useGetSearchResultIdGene(id);
   const [selectedTranscript, setSelectedTranscript] =
     useSelectedTranscript(formattedData);
 

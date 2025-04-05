@@ -8,7 +8,7 @@ import { Box, Typography, Button } from "@mui/material";
 
 // local
 
-export default function StructOptionSearch() {
+export default function StructTools() {
   return (
     <Box
       sx={{

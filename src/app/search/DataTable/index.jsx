@@ -4,10 +4,10 @@
 import { Box } from "@mui/material";
 
 // local
-import StructTableSearch from "./StructTableSearch";
-import StructOptionSearch from "./StructOptionSearch";
+import StructTable from "./struct-table";
+import StructTools from "./struct-tools";
 
-export default function DataTable({ searchTerm }) {
+export default function DataTable({ term }) {
   return (
     <Box
       sx={{
@@ -25,7 +25,7 @@ export default function DataTable({ searchTerm }) {
           order: { xs: 1, md: 1 },
         }}
       >
-        <StructTableSearch searchTerm={searchTerm} />
+        <StructTable term={term} />
       </Box>
 
       <Box
@@ -36,7 +36,7 @@ export default function DataTable({ searchTerm }) {
           alignItems: { md: "center" },
         }}
       >
-        <StructOptionSearch />
+        <StructTools />
       </Box>
     </Box>
   );

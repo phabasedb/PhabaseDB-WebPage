@@ -6,17 +6,17 @@
 import { useParams } from "next/navigation";
 
 // local
-import Title from "../Title";
+import Title from "../title";
+import DataTable from "../datatable";
 import SearchGene from "@/components/SearchGene";
-import DataTable from "../DataTable";
 
 export default function Search() {
-  const { searchTerm } = useParams();
+  const { term } = useParams();
   return (
     <>
       <Title />
       <SearchGene />
-      <DataTable searchTerm={searchTerm} />
+      <DataTable term={term} />
     </>
   );
 }

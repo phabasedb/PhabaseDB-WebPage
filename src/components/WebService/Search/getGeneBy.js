@@ -13,6 +13,8 @@ export const GET_GENE_BY_DATATABLE = gql`
         gene {
           accessionId
           name
+          startPosition
+          endPosition
         }
         chromosome {
           name

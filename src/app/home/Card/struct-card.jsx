@@ -5,7 +5,7 @@ import { Box, Card, CardMedia, Typography } from "@mui/material";
 
 // local
 
-export default function StructInfoCardHome({ item, index }) {
+export default function StructCard({ item, index }) {
   return (
     <Box
       sx={{

@@ -3,17 +3,14 @@
 // standard
 
 // third party
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 // local
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const graphqlUrl = `${baseUrl}${process.env.NEXT_PUBLIC_GRAPHQL_PORT}`;
 
 const client = new ApolloClient({
-  uri: "http://192.168.0.14:4000/graphql",
+  uri: `${graphqlUrl}/graphql`,
   cache: new InMemoryCache(),
 });
 

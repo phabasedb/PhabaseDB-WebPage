@@ -3,9 +3,9 @@
 // third party
 
 // local
-import Title from "./Title";
-import CardIndex from "./Card";
-import SearchHistory from "./SearchHistory";
+import Title from "./title";
+import CardInfo from "./card";
+import SearchHistory from "./history";
 import SearchGene from "@/components/SearchGene";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
       <Title />
       <SearchGene />
       <SearchHistory />
-      <CardIndex />
+      <CardInfo />
     </>
   );
 }

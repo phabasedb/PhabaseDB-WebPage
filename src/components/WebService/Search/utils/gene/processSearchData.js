@@ -3,6 +3,8 @@ export function formatGraphQLDataTable(graphQLResponse) {
     geneId: item?._id,
     geneIdOriginal: item?.gene?.accessionId || "",
     geneName: item?.gene?.name || "",
+    geneStart: item?.gene?.startPosition || 0,
+    geneEnd: item?.gene?.endPosition || 0,
     chromosomeName: item?.chromosome?.name || "",
     organismName: item?.organism?.name || "",
   }));
