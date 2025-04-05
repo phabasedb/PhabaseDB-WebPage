@@ -4,9 +4,9 @@
 import { Box } from "@mui/material";
 
 // local
-import StructInfoSequencesGene from "./StructInfoSequencesGene";
+import StructSequences from "./struct-sequences";
 
-export default function SequencesGene({ geneData, selectedTranscript }) {
+export default function Sequences({ geneData, selectedTranscript }) {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ export default function SequencesGene({ geneData, selectedTranscript }) {
         alignItems: "center",
       }}
     >
-      <StructInfoSequencesGene
+      <StructSequences
         geneData={geneData}
         selectedTranscript={selectedTranscript}
       />

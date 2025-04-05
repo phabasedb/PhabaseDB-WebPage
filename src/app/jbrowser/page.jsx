@@ -16,30 +16,45 @@ export default function JBrowsePage() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 600, margin: "auto", mt: 4, p: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Datasets disponibles para JBrowse
-      </Typography>
-      <List>
-        {datasets.map((dataset) => (
-          <ListItem
-            key={dataset.id}
-            disablePadding
-            sx={{ cursor: "pointer" }}
-            onClick={() =>
-              router.push(`/jbrowser/${encodeURIComponent(dataset.id)}`)
-            }
-          >
-            <ListItemText
-              primary={dataset.name}
-              sx={{
-                color: "blue",
-                "&:hover": { textDecoration: "underline" },
-              }}
-            />
-          </ListItem>
-        ))}
-      </List>
+    <Box
+      sx={{
+        my: 3,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "white",
+          width: "90%",
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Typography variant="h4">Datasets available</Typography>
+        <List>
+          {datasets.map((dataset) => (
+            <ListItem
+              key={dataset.id}
+              disablePadding
+              sx={{ cursor: "pointer" }}
+              onClick={() =>
+                router.push(`/jbrowser/${encodeURIComponent(dataset.id)}`)
+              }
+            >
+              <ListItemText
+                primary={dataset.name}
+                sx={{
+                  color: "blue",
+                  "&:hover": { textDecoration: "underline" },
+                }}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 }

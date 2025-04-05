@@ -7,7 +7,7 @@ import { Box, Card, Typography, Link } from "@mui/material";
 import StructCard from "./struct-card";
 import { home } from "@/static/text/us-US";
 
-export default function CardInfo() {
+export default function InformationCard() {
   return (
     <Box>
       <Box

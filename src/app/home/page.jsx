@@ -4,7 +4,7 @@
 
 // local
 import Title from "./title";
-import CardInfo from "./card";
+import InformationCard from "./card";
 import SearchHistory from "./history";
 import SearchGene from "@/components/SearchGene";
 
@@ -14,7 +14,7 @@ export default function Home() {
       <Title />
       <SearchGene />
       <SearchHistory />
-      <CardInfo />
+      <InformationCard />
     </>
   );
 }

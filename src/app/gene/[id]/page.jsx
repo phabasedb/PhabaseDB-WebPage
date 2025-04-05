@@ -8,9 +8,9 @@ import { useParams } from "next/navigation";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // local
-import InformationGene from "../Information";
-import SequencesGene from "../Sequences";
-import JBrowser from "../JBrowser";
+import Information from "../information";
+import Sequences from "../sequences";
+import JBrowse from "../jbrowse";
 import { useGetSearchResultIdGene } from "@/components/WebService/Search";
 
 // Custom hook to automatically select the first transcript by default
@@ -122,16 +122,13 @@ export default function GenePage() {
 
   return (
     <>
-      <InformationGene
+      <Information
         geneData={geneData}
         selectedTranscript={selectedTranscript}
         setSelectedTranscript={setSelectedTranscript}
       />
-      <JBrowser geneData={geneData} />
-      <SequencesGene
-        geneData={geneData}
-        selectedTranscript={selectedTranscript}
-      />
+      <JBrowse geneData={geneData} />
+      <Sequences geneData={geneData} selectedTranscript={selectedTranscript} />
     </>
   );
 }

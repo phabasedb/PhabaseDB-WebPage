@@ -10,7 +10,7 @@ import {
 
 // local
 
-export default function StructInformGene({
+export default function StructInfo({
   geneData,
   selectedTranscript,
   setSelectedTranscript,

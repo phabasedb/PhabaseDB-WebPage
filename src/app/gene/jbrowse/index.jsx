@@ -4,9 +4,9 @@
 import { Box } from "@mui/material";
 
 // local
-import StructJBrowser from "./StructJBrowser";
+import StructJBrowse from "./struct-jbrowse";
 
-export default function JBrowser({ geneData }) {
+export default function JBrowse({ geneData }) {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ export default function JBrowser({ geneData }) {
         alignItems: "center",
       }}
     >
-      <StructJBrowser geneData={geneData} />
+      <StructJBrowse geneData={geneData} />
     </Box>
   );
 }

@@ -6,9 +6,17 @@ import { Box, Typography } from "@mui/material";
 export default function DatasetPage() {
   const { dataset } = useParams();
 
-  // Construimos la URL para el iframe. Por ejemplo, para "jamapa" se generará:
-  // http://192.168.0.14:5000/?config=phabase%2Fjamapa%2Fconfig.json
-  const configUrl = `http://192.168.0.14:5000/?config=phabase%2F${dataset}%2Fconfig.json`;
+  if (!dataset) {
+    return (
+      <Box sx={{ textAlign: "center", p: 4 }}>
+        <Typography variant="h6">No dataset specified</Typography>
+      </Box>
+    );
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const portJBrowse = process.env.NEXT_PUBLIC_JBROWSER_PORT;
+  const configUrl = `${baseUrl}${portJBrowse}/?config=phabase%2F${dataset}%2Fconfig.json`;
 
   return (
     <Box sx={{ maxWidth: "100%", margin: "auto", mt: 4, p: 2 }}>

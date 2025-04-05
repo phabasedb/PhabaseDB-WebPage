@@ -5,13 +5,16 @@ import React, { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 
 // local
-import { renderSequenceGT, renderSequenceCDS } from "./SequenceHighlighter";
+import {
+  renderSequenceGenTrans,
+  renderSequenceCDS,
+} from "./sequence-highlighter";
 
 // Gene and Transcript selected
-export function SequenceDisplayGT({ sequence, start, annotations }) {
+export function DisplayGenTrans({ sequence, start, annotations }) {
   // Compute the highlighted sequence using a helper function
   const highlightedSequence = useMemo(() => {
-    return renderSequenceGT(sequence, start, annotations);
+    return renderSequenceGenTrans(sequence, start, annotations);
   }, [sequence, start, annotations]);
 
   return (
@@ -30,7 +33,7 @@ export function SequenceDisplayGT({ sequence, start, annotations }) {
 }
 
 // CDS of the transcript selected
-export function SequenceDisplayCDS({ sequence, start, annotations }) {
+export function DisplayCDS({ sequence, start, annotations }) {
   // Compute the highlighted CDS sequence using a helper function
   const highlightedSequence = useMemo(() => {
     return renderSequenceCDS(sequence, start, annotations);

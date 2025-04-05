@@ -10,7 +10,7 @@ const COLOR_PAIRS = {
 };
 
 // Renders a gene/transcript sequence with highlighted annotations (UTRs and CDS)
-export function renderSequenceGT(sequence, start, annotations = []) {
+export function renderSequenceGenTrans(sequence, start, annotations = []) {
   if (!annotations || annotations.length === 0) return sequence;
 
   const seqLength = sequence.length;

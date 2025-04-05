@@ -4,9 +4,9 @@
 import { Box } from "@mui/material";
 
 // local
-import StructInformGene from "./StructInformGene";
+import StructInfo from "./struct-info";
 
-export default function InformationGene({
+export default function Information({
   geneData,
   selectedTranscript,
   setSelectedTranscript,
@@ -20,7 +20,7 @@ export default function InformationGene({
         alignItems: "center",
       }}
     >
-      <StructInformGene
+      <StructInfo
         geneData={geneData}
         selectedTranscript={selectedTranscript}
         setSelectedTranscript={setSelectedTranscript}

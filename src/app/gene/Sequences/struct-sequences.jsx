@@ -14,7 +14,7 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 
 // local
-import { SequenceDisplayGT, SequenceDisplayCDS } from "./utils/SequenceDisplay";
+import { DisplayGenTrans, DisplayCDS } from "./utils/sequence-display";
 
 // Legend colors for 5' UTRs, CDS, and 3' UTRs
 const LEGEND_COLORS = {
@@ -67,10 +67,7 @@ function TabPanel(props) {
   );
 }
 
-export default function StructInfoSequencesGene({
-  geneData,
-  selectedTranscript,
-}) {
+export default function StructSequences({ geneData, selectedTranscript }) {
   // Responsive configuration for tabs
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -212,7 +209,7 @@ export default function StructInfoSequencesGene({
           {geneData.geneStrand}
         </Typography>
       </Box>
-      <SequenceDisplayGT
+      <DisplayGenTrans
         sequence={geneData.geneSequence}
         start={geneData.geneStart}
         annotations={annotations}
@@ -239,7 +236,7 @@ export default function StructInfoSequencesGene({
             {selectedTranscript.transcriptEnd}
           </Typography>
         </Box>
-        <SequenceDisplayGT
+        <DisplayGenTrans
           sequence={selectedTranscript.transcriptSequence}
           start={selectedTranscript.transcriptStart}
           annotations={annotations}
@@ -269,7 +266,7 @@ export default function StructInfoSequencesGene({
             {selectedTranscript.transcriptIdOriginal} | CDS
           </Typography>
         </Box>
-        <SequenceDisplayCDS
+        <DisplayCDS
           sequence={selectedTranscript.transcriptSequence}
           start={selectedTranscript.transcriptStart}
           annotations={annotations}

@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 
 // local
 
-export default function StructJBrowser({ geneData }) {
+export default function StructJBrowse({ geneData }) {
   // Check if geneData is missing or lacks required fields
   const isDataIncomplete =
     !geneData ||

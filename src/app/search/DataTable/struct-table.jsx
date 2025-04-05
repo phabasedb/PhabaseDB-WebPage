@@ -74,7 +74,7 @@ export default function StructTable({ term }) {
             overflowWrap: "break-word",
           }}
         >
-          No data was found for the gene: {searchTerm}
+          No data was found for the gene: {term}
         </Typography>
       </Box>
     );
