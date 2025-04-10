@@ -2,53 +2,85 @@
 
 import { useRouter } from "next/navigation";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { datasets } from "@/static/datasets/";
+
+// Se construye la URL base usando las variables de entorno
+const jbrowseBaseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
 
 export default function JBrowsePage() {
   const router = useRouter();
 
-  // Simulación de datasets disponibles
-  const datasets = [
-    {
-      id: "jamapa",
-      name: "Phaseolus vulgaris cv. Negro Jamapa",
-    },
-    // Puedes agregar más datasets según sea necesario
-  ];
+  const handleDatasetClick = (dataset) => {
+    // Convertimos el objeto sessionDefect a string
+    const sessionStr = JSON.stringify(dataset.sessionDefect);
+    // Prependemos "spec-" al string
+    const sessionValue = `spec-${sessionStr}`;
+
+    // Armamos la query string con config y session
+    const query = new URLSearchParams({
+      config: "config.json",
+      session: sessionValue,
+    }).toString();
+
+    // Redirigimos a JBrowse2 con la URL formada
+    router.push(`${jbrowseBaseUrl}/?${query}`);
+  };
 
   return (
     <Box
       sx={{
-        my: 3,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        flexDirection: "column",
+        my: { xs: 3, md: 4 },
       }}
     >
       <Box
         sx={{
-          backgroundColor: "white",
           width: "90%",
-          p: 2,
-          display: "flex",
-          flexDirection: "column",
+          backgroundColor: "white",
+          borderRadius: 2,
+          boxShadow: 5,
+          p: 1,
         }}
       >
-        <Typography variant="h4">Datasets available</Typography>
+        <Typography
+          sx={{
+            fontWeight: 600,
+            fontSize: {
+              xs: "1.3rem",
+              sm: "1.5rem",
+              md: "1.7rem",
+              lg: "1.9rem",
+              xl: "2.1rem",
+            },
+          }}
+        >
+          Datasets available
+        </Typography>
         <List>
           {datasets.map((dataset) => (
             <ListItem
-              key={dataset.id}
+              key={dataset._id}
               disablePadding
               sx={{ cursor: "pointer" }}
-              onClick={() =>
-                router.push(`/jbrowser/${encodeURIComponent(dataset.id)}`)
-              }
+              onClick={() => handleDatasetClick(dataset)}
             >
               <ListItemText
-                primary={dataset.name}
+                primary={dataset.organism}
                 sx={{
                   color: "blue",
-                  "&:hover": { textDecoration: "underline" },
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+                primaryTypographyProps={{
+                  fontSize: {
+                    xs: "0.9rem",
+                    sm: "1.1rem",
+                    md: "1.2rem",
+                    lg: "1.4rem",
+                    xl: "1.6rem",
+                  },
                 }}
               />
             </ListItem>

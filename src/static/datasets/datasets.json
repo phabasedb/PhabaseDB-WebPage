@@ -1,7 +1,32 @@
 [
   {
-    "id": "PDBJAMAPAORG000001",
-    "name": "Phaseolus vulgaris cv. Negro Jamapa",
-    "urlConfig": "?config=phabase%2Fjamapa%2Fconfig.json"
+    "_id": "PDBJAMAPAORG000001",
+    "organism": "Phaseolus vulgaris cv. Negro Jamapa",
+    "assamblyName": "LjG_1.1",
+    "sessionDefect": {
+      "views": [
+        {
+          "type": "LinearGenomeView",
+          "assembly": "LjG1.1",
+          "loc": "LjG1.1_chr1:1-137250648",
+          "tracks": ["jamapa-genes"]
+        }
+      ]
+    }
+  },
+  {
+    "_id": "PDBSARCOVORG000001",
+    "organism": "Phaseolus vulgaris cv. Sars Cov 2",
+    "assamblyName": "NC_045512.2",
+    "sessionDefect": {
+      "views": [
+        {
+          "type": "LinearGenomeView",
+          "assembly": "sars-cov2",
+          "loc": "NC_045512.2:1-29903",
+          "tracks": ["sars-cov2-genes"]
+        }
+      ]
+    }
   }
 ]

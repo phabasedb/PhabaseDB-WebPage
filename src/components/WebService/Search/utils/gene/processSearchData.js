@@ -6,6 +6,7 @@ export function formatGraphQLDataTable(graphQLResponse) {
     geneStart: item?.gene?.startPosition || 0,
     geneEnd: item?.gene?.endPosition || 0,
     chromosomeName: item?.chromosome?.name || "",
+    organismName: item?.organism?._id || "",
     organismName: item?.organism?.name || "",
   }));
 }

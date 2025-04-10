@@ -20,6 +20,7 @@ export const GET_GENE_BY_DATATABLE = gql`
           name
         }
         organism {
+          _id
           name
         }
       }
