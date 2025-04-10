@@ -1,17 +1,19 @@
-// standard
+"use client";
 
-// third party
 import { Box, Typography } from "@mui/material";
+import { datasets } from "@/static/datasets/";
 
-// local
+// URL base construida con las variables de entorno
+const URI_JBROWSE = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
 
 export default function StructJBrowse({ geneData }) {
-  // Check if geneData is missing or lacks required fields
+  // Verifica que geneData tenga la información necesaria
   const isDataIncomplete =
     !geneData ||
     !geneData.chromosomeName ||
     !geneData.geneStart ||
-    !geneData.geneEnd;
+    !geneData.geneEnd ||
+    !geneData.organismId;
 
   if (isDataIncomplete) {
     return (
@@ -42,10 +44,50 @@ export default function StructJBrowse({ geneData }) {
       </Box>
     );
   }
-  // Construct the URL with encoded values for safety
-  const url = `http://192.168.0.13:5000/?config=phabase%2Fjamapa%2Fconfig.json&assembly=LjG1.1&loc=${encodeURIComponent(
-    `${geneData.chromosomeName}:${geneData.geneStart}..${geneData.geneEnd}`
-  )}&tracks=sequence`;
+
+  const foundDataset = datasets.find(
+    (dataset) => dataset._id === geneData.organismId
+  );
+
+  if (!foundDataset) {
+    return (
+      <Box
+        sx={{
+          my: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            width: "90%",
+            background: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            overflow: "hidden",
+            borderRadius: 2,
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            No dataset found for organism id: {geneData.organismName}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  const assemblyName = foundDataset.assamblyName;
+  const tracksAssembly = foundDataset.tracks;
+  const locParam = `${geneData.chromosomeName}:${geneData.geneStart}..${geneData.geneEnd}`;
+  const queryParams = new URLSearchParams({
+    config: "config.json",
+    loc: locParam,
+    assembly: assemblyName,
+    tracks: tracksAssembly,
+  }).toString();
+  const url = `${URI_JBROWSE}/?${queryParams}`;
 
   return (
     <Box

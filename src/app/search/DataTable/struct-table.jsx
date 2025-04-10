@@ -15,6 +15,40 @@ import MUIDataTable from "mui-datatables";
 
 // local
 import { useGetSearchResults } from "@/components/WebService/Search";
+import { datasets } from "@/static/datasets/";
+
+const URI_JBROWSE = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
+
+const buildJBrowseUrlForGene = (gene) => {
+  if (
+    !gene.chromosomeName ||
+    !gene.geneStart ||
+    !gene.geneEnd ||
+    !gene.organismId
+  ) {
+    return null;
+  }
+
+  const foundDataset = datasets.find(
+    (dataset) => dataset._id === gene.organismId
+  );
+  if (!foundDataset) {
+    return null;
+  }
+
+  const assemblyName = foundDataset.assamblyName;
+  const tracksAssembly = foundDataset.tracks;
+  const locParam = `${gene.chromosomeName}:${gene.geneStart}..${gene.geneEnd}`;
+  const queryParams = new URLSearchParams({
+    config: "config.json",
+    loc: locParam,
+    assembly: assemblyName,
+    tracks: tracksAssembly,
+  }).toString();
+
+  const url = `${URI_JBROWSE}/?${queryParams}`;
+  return url;
+};
 
 export default function StructTable({ term }) {
   const { formattedData, loading, error } = useGetSearchResults(term || "");
@@ -126,10 +160,17 @@ export default function StructTable({ term }) {
                   size="small"
                   variant="contained"
                   color="primary"
-                  sx={{ mx: 1, fontWeight: "bold" }}
-                  onClick={() =>
-                    alert(`Visualizar en JBrowser: ${tableMeta.rowData[1]}`)
-                  }
+                  sx={{ fontWeight: "bold" }}
+                  onClick={() => {
+                    // Se obtiene el registro gene usando tableMeta.rowIndex
+                    const geneRecord = geneData[tableMeta.rowIndex];
+                    const url = buildJBrowseUrlForGene(geneRecord);
+                    if (url) {
+                      router.push(url);
+                    } else {
+                      alert("Insufficient data to build JBrowse URL.");
+                    }
+                  }}
                 >
                   B
                 </Button>

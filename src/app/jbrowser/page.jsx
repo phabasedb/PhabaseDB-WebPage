@@ -4,26 +4,23 @@ import { useRouter } from "next/navigation";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { datasets } from "@/static/datasets/";
 
-// Se construye la URL base usando las variables de entorno
-const jbrowseBaseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
+const URI_JBROWSE = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
+
+const buildJBrowseUrl = (dataset) => {
+  const sessionValue = `spec-${JSON.stringify(dataset.sessionDefect)}`;
+  const query = new URLSearchParams({
+    config: "config.json",
+    session: sessionValue,
+  }).toString();
+  return `${URI_JBROWSE}/?${query}`;
+};
 
 export default function JBrowsePage() {
   const router = useRouter();
 
   const handleDatasetClick = (dataset) => {
-    // Convertimos el objeto sessionDefect a string
-    const sessionStr = JSON.stringify(dataset.sessionDefect);
-    // Prependemos "spec-" al string
-    const sessionValue = `spec-${sessionStr}`;
-
-    // Armamos la query string con config y session
-    const query = new URLSearchParams({
-      config: "config.json",
-      session: sessionValue,
-    }).toString();
-
-    // Redirigimos a JBrowse2 con la URL formada
-    router.push(`${jbrowseBaseUrl}/?${query}`);
+    const url = buildJBrowseUrl(dataset);
+    router.push(url);
   };
 
   return (

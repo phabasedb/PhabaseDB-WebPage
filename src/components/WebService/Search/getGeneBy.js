@@ -56,6 +56,7 @@ export const GET_GENE_BY_ACCESSONID = gql`
           type
         }
         organism {
+          _id
           name
         }
         transcripts {

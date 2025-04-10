@@ -5,8 +5,14 @@ import React from "react";
 
 // third party
 import { Box, Typography, Button } from "@mui/material";
+import Link from "next/link";
 
 // local
+
+const pages = [
+  { name: "Gene Expression", path: "/" },
+  { name: "JBrowser", path: "/jbrowser" },
+];
 
 export default function StructTools() {
   return (
@@ -34,12 +40,17 @@ export default function StructTools() {
           justifyContent: "center",
         }}
       >
-        <Button variant="contained" color="primary">
-          GENE EXPRESSION
-        </Button>
-        <Button variant="contained" color="primary">
-          JBROWSER
-        </Button>
+        {pages.map((page) => (
+          <Button
+            key={page.name}
+            component={Link}
+            href={page.path}
+            variant="contained"
+            color="primary"
+          >
+            {page.name}
+          </Button>
+        ))}
       </Box>
     </Box>
   );

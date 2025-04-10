@@ -1,12 +1,15 @@
 export function formatGraphQLDataTable(graphQLResponse) {
   return graphQLResponse.map((item) => ({
     geneId: item?._id,
+    //Gene
     geneIdOriginal: item?.gene?.accessionId || "",
     geneName: item?.gene?.name || "",
     geneStart: item?.gene?.startPosition || 0,
     geneEnd: item?.gene?.endPosition || 0,
+    //Chromosome
     chromosomeName: item?.chromosome?.name || "",
-    organismName: item?.organism?._id || "",
+    //Organism
+    organismId: item?.organism?._id || "",
     organismName: item?.organism?.name || "",
   }));
 }
@@ -27,6 +30,7 @@ export function formatGraphQLAccessionId(graphQLResponse) {
     chromosomeName: item?.chromosome?.name || "",
     chromosomeType: item?.chromosome?.type || "",
     //Organism
+    organismId: item?.organism?._id || "",
     organismName: item?.organism?.name || "",
     //Transcript
     transcripts: Array.isArray(item?.transcripts)
