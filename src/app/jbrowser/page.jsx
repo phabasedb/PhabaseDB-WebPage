@@ -2,25 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { datasets } from "@/static/datasets/";
-
-const URI_JBROWSE = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
-
-const buildJBrowseUrl = (dataset) => {
-  const sessionValue = `spec-${JSON.stringify(dataset.sessionDefect)}`;
-  const query = new URLSearchParams({
-    config: "config.json",
-    session: sessionValue,
-  }).toString();
-  return `${URI_JBROWSE}/?${query}`;
-};
+import { datasets } from "@/static/datasets";
+import { buildJBrowseUrlFromSession } from "@/shared/builduri-jbrowse";
 
 export default function JBrowsePage() {
   const router = useRouter();
 
   const handleDatasetClick = (dataset) => {
-    const url = buildJBrowseUrl(dataset);
-    router.push(url);
+    const url = buildJBrowseUrlFromSession(dataset);
+    if (!url) return;
+    window.open(url, "_blank", "noopener");
   };
 
   return (

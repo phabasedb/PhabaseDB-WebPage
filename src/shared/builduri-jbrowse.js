@@ -48,3 +48,22 @@ export function buildJBrowseUrl({
 
   return { url, message: null };
 }
+
+/**
+ * Constructs the JBrowse URL from a sessionDefect.
+ * @param {Object} sessionDefect – el objeto sessionDefect de tu dataset
+ * @param {string} [baseUrl] – por defecto NEXT_PUBLIC_BASE_URL
+ * @param {string} [port] – por defecto NEXT_PUBLIC_JBROWSE_PORT
+ * @returns {string|null} Full URL o null si no hay sessionDefect
+ */
+export function buildJBrowseUrlFromSession({
+  sessionDefect,
+  baseUrl = process.env.NEXT_PUBLIC_BASE_URL,
+  port = process.env.NEXT_PUBLIC_JBROWSE_PORT,
+}) {
+  if (!sessionDefect) return null;
+
+  const json = JSON.stringify(sessionDefect);
+  //    ?config=config.json&session=spec-{"views":[…]}
+  return `${baseUrl}:${port}/?config=config.json&session=spec-${json}`;
+}
