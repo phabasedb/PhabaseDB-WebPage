@@ -14,105 +14,30 @@ import InfoIcon from "@mui/icons-material/Info";
 import MUIDataTable from "mui-datatables";
 
 // local
-import { useGetSearchResults } from "@/components/WebService/Search";
-import { datasets } from "@/static/datasets/";
-
-const URI_JBROWSE = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_JBROWSE_PORT}`;
-
-const buildJBrowseUrlForGene = (gene) => {
-  if (
-    !gene.chromosomeName ||
-    !gene.geneStart ||
-    !gene.geneEnd ||
-    !gene.organismId
-  ) {
-    return null;
-  }
-
-  const foundDataset = datasets.find(
-    (dataset) => dataset._id === gene.organismId
-  );
-  if (!foundDataset) {
-    return null;
-  }
-
-  const assemblyName = foundDataset.assamblyName;
-  const tracksAssembly = foundDataset.tracks;
-  const locParam = `${gene.chromosomeName}:${gene.geneStart}..${gene.geneEnd}`;
-  const queryParams = new URLSearchParams({
-    config: "config.json",
-    loc: locParam,
-    assembly: assemblyName,
-    tracks: tracksAssembly,
-  }).toString();
-
-  const url = `${URI_JBROWSE}/?${queryParams}`;
-  return url;
-};
+import { useGeneSearch } from "@/components/WebService/Search";
+import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
+import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
-  const { formattedData, loading, error } = useGetSearchResults(term || "");
-  const geneData = useMemo(() => formattedData || [], [formattedData]);
-
+  const { data, loading, error } = useGeneSearch(term || "");
+  const GENE_DATA = useMemo(() => data || [], [data]);
   const router = useRouter();
 
-  if (loading)
-    return (
-      <Box sx={{ textAlign: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-
-  if (error)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "white",
-          borderRadius: 2,
-        }}
-      >
-        <Typography
-          variant="body2"
-          color="error"
-          sx={{
-            p: 2,
-            lineHeight: 1.5,
-            wordBreak: "break-word",
-            overflowWrap: "break-word",
-          }}
-        >
-          {error}
-        </Typography>
-      </Box>
-    );
-
-  if (!geneData || geneData.length === 0) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "white",
-          borderRadius: 2,
-        }}
-      >
-        <Typography
-          variant="body2"
-          color="error"
-          sx={{
-            p: 2,
-            lineHeight: 1.5,
-            wordBreak: "break-word",
-            overflowWrap: "break-word",
-          }}
-        >
-          No data was found for the gene: {term}
-        </Typography>
-      </Box>
-    );
-  }
+  // JBROWSER URI
+  const handleJBrowseClick = (rowIndex) => {
+    const geneRecord = GENE_DATA[rowIndex];
+    const url = buildJBrowseUrl({
+      organismId: geneRecord.organismId,
+      chromosome: geneRecord.chromosome,
+      start: geneRecord.start,
+      end: geneRecord.end,
+    });
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      alert("Insufficient data to build JBrowse URL.");
+    }
+  };
 
   const columns = [
     {
@@ -123,6 +48,8 @@ export default function StructTable({ term }) {
         sort: false,
         //Configuration value and updateValue
         customBodyRender: (value, tableMeta, updateValue) => {
+          const rowIndex = tableMeta.rowIndex;
+          const geneId = tableMeta.rowData[1]; // columna “accession”
           return (
             <Box
               sx={{
@@ -136,7 +63,7 @@ export default function StructTable({ term }) {
                 <IconButton
                   color="primary"
                   onClick={
-                    () => router.push(`/gene/${tableMeta.rowData[1]}`) // Rediriging gene/[idGene]
+                    () => router.push(`/gene/${geneId}`) // Rediriging gene/[idGene]
                   }
                 >
                   <InfoIcon />
@@ -148,9 +75,7 @@ export default function StructTable({ term }) {
                   variant="contained"
                   color="primary"
                   sx={{ fontWeight: "bold" }}
-                  onClick={() =>
-                    alert(`Ver Gene Expression de ${tableMeta.rowData[1]}`)
-                  }
+                  onClick={() => alert(`Ver Gene Expression de ${geneId}`)}
                 >
                   GE
                 </Button>
@@ -161,16 +86,7 @@ export default function StructTable({ term }) {
                   variant="contained"
                   color="primary"
                   sx={{ fontWeight: "bold" }}
-                  onClick={() => {
-                    // Se obtiene el registro gene usando tableMeta.rowIndex
-                    const geneRecord = geneData[tableMeta.rowIndex];
-                    const url = buildJBrowseUrlForGene(geneRecord);
-                    if (url) {
-                      router.push(url);
-                    } else {
-                      alert("Insufficient data to build JBrowse URL.");
-                    }
-                  }}
+                  onClick={() => handleJBrowseClick(rowIndex)}
                 >
                   B
                 </Button>
@@ -180,10 +96,10 @@ export default function StructTable({ term }) {
         },
       },
     },
-    { name: "geneIdOriginal", label: "Gene ID" },
-    { name: "geneName", label: "Gene Name" },
-    { name: "chromosomeName", label: "Chromosome Name" },
-    { name: "organismName", label: "Organism Name" },
+    { name: "accession", label: "Gene ID" },
+    { name: "name", label: "Gene Name" },
+    { name: "chromosome", label: "Chromosome Name" },
+    { name: "organism", label: "Organism Name" },
   ];
 
   const options = {
@@ -208,5 +124,9 @@ export default function StructTable({ term }) {
     },
   };
 
-  return <MUIDataTable data={geneData} columns={columns} options={options} />;
+  return (
+    <DataHandler loading={loading} error={error} data={GENE_DATA} term={term}>
+      <MUIDataTable data={GENE_DATA} columns={columns} options={options} />
+    </DataHandler>
+  );
 }

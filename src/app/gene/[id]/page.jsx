@@ -5,130 +5,58 @@ import { useState, useEffect, useMemo } from "react";
 
 // third party
 import { useParams } from "next/navigation";
-import { Box, Typography, CircularProgress } from "@mui/material";
 
 // local
+import GeneHandler from "./utils/gene-handler";
 import Information from "../information";
 import Sequences from "../sequences";
 import JBrowse from "../jbrowse";
-import { useGetSearchResultIdGene } from "@/components/WebService/Search";
+import { useGeneById } from "@/components/WebService/Search";
 
 // Custom hook to automatically select the first transcript by default
-function useSelectedTranscript(formattedData) {
-  const [selectedTranscript, setSelectedTranscript] = useState(null);
-
+function useSelectedTranscript(formattedDetail) {
+  const [sel, setSel] = useState(null);
   useEffect(() => {
-    if (formattedData && formattedData.length > 0 && !selectedTranscript) {
-      const geneData = formattedData[0];
-      if (geneData.transcripts?.length > 0) {
-        setSelectedTranscript(geneData.transcripts[0]);
-      }
+    if (formattedDetail?.transcripts?.length && !sel) {
+      setSel(formattedDetail.transcripts[0]);
     }
-  }, [formattedData]);
-
-  return [selectedTranscript, setSelectedTranscript];
+  }, [formattedDetail]);
+  return [sel, setSel];
 }
 // ---
 
 export default function GenePage() {
   const { id } = useParams();
-  const { formattedData, loading, error } = useGetSearchResultIdGene(id);
+
+  // aquí obtienes loading, error y el detalle mapeado (o null)
+  const { data: detail, loading, error } = useGeneById(id || "");
+
+  // manejador de estados vacío/hubo error/ok
+  return (
+    <GeneHandler
+      loading={loading}
+      error={error}
+      data={detail ? [detail] : []}
+      idGene={id}
+    >
+      <InnerGenePage detail={detail} />
+    </GeneHandler>
+  );
+}
+
+function InnerGenePage({ detail }) {
   const [selectedTranscript, setSelectedTranscript] =
-    useSelectedTranscript(formattedData);
-
-  const geneData = useMemo(() => formattedData?.[0] || null, [formattedData]);
-
-  if (loading)
-    return (
-      <Box sx={{ textAlign: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-
-  if (error)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          my: 3,
-        }}
-      >
-        <Box
-          sx={{
-            width: "90%",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            overflow: "hidden",
-            borderRadius: 2,
-          }}
-        >
-          <Typography
-            variant="body2"
-            color="error"
-            sx={{
-              p: 2,
-              lineHeight: 1.5,
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-            }}
-          >
-            {error}
-          </Typography>
-        </Box>
-      </Box>
-    );
-
-  if (!geneData || geneData.length === 0) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          my: 3,
-        }}
-      >
-        <Box
-          sx={{
-            width: "90%",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            overflow: "hidden",
-            borderRadius: 2,
-          }}
-        >
-          <Typography
-            variant="body2"
-            color="error"
-            sx={{
-              p: 2,
-              lineHeight: 1.5,
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-            }}
-          >
-            No data was found for the gene: {idGene}
-          </Typography>
-        </Box>
-      </Box>
-    );
-  }
+    useSelectedTranscript(detail);
 
   return (
     <>
       <Information
-        geneData={geneData}
+        geneData={detail}
         selectedTranscript={selectedTranscript}
         setSelectedTranscript={setSelectedTranscript}
       />
-      <JBrowse geneData={geneData} />
-      <Sequences geneData={geneData} selectedTranscript={selectedTranscript} />
+      <JBrowse geneData={detail} />
+      <Sequences geneData={detail} selectedTranscript={selectedTranscript} />
     </>
   );
 }

@@ -28,7 +28,7 @@ export const GET_GENE_BY_DATATABLE = gql`
   }
 `;
 
-export const GET_GENE_BY_ACCESSONID = gql`
+export const GET_GENE_BY_ID = gql`
   query GetGeneBy(
     $properties: [String]
     $search: String

@@ -1,70 +1,123 @@
-// standard
-
-// third party
+// /hooks/gene/useGeneQuery.js
 import { useQuery } from "@apollo/client";
-
-// local
+import { GET_GENE_BY_DATATABLE, GET_GENE_BY_ID } from "./getGeneBy";
+import { mapGeneSummaries, mapGeneDetail } from "./utils/gene/geneDataMappers";
 import {
-  formatGraphQLDataTable,
-  formatGraphQLAccessionId,
-} from "./utils/gene/processSearchData";
-import { GET_GENE_BY_DATATABLE, GET_GENE_BY_ACCESSONID } from "./getGeneBy";
+  ALPHANUMERIC_PATTERN,
+  MAX_INPUT_LENGTH,
+  MIN_INPUT_LENGTH,
+} from "shared/const-validateds";
 
-const allowedRegex = /^[A-Za-z0-9]+$/;
+// -------------------
 
-export function useGetSearchResults(searchTerm) {
-  if (!allowedRegex.test(searchTerm)) {
-    return {
-      formattedData: null,
-      loading: false,
-      error: "Invalid search term.",
-    };
+const validators = [
+  {
+    test: (value) => value.length <= MAX_INPUT_LENGTH,
+    message: `The term cannot exceed ${MAX_INPUT_LENGTH} characters.`,
+  },
+  {
+    test: (value) => value.length >= MIN_INPUT_LENGTH,
+    message: `The term cannot be less than ${MIN_INPUT_LENGTH} characters.`,
+  },
+  {
+    test: (value) => ALPHANUMERIC_PATTERN.test(value),
+    message: "Only alphanumeric characters are allowed.",
+  },
+];
+
+// -------------------
+
+/**
+ * Generic hook for gene queries with Apollo.
+ * @param {string} searchTerm - Search term or ID
+ * @param {object} query - Apollo query
+ * @param {object} variables - Variables for the query
+ * @param {function} mapData - Function for mapping the data
+ */
+export function useGeneQuery(searchTerm, query, variables, mapData) {
+  for (const validator of validators) {
+    if (!validator.test(searchTerm)) {
+      return {
+        data: null,
+        loading: false,
+        error: validator.message,
+      };
+    }
   }
 
-  const { data, loading, error } = useQuery(GET_GENE_BY_DATATABLE, {
-    variables: { search: searchTerm },
+  // Execute the query with Apollo
+  const {
+    data,
+    loading,
+    error: apolloError,
+  } = useQuery(query, {
+    variables,
     skip: !searchTerm,
   });
 
-  let formattedData;
-  if (data?.getGeneBy?.data) {
-    formattedData = formatGraphQLDataTable(data.getGeneBy.data);
+  // Handle loading state
+  if (loading) {
+    return { data: null, loading: true, error: null };
   }
 
-  if (error) {
-    console.error("Error en useGetSearchResults: ", error);
-    console.error("Query utilizado", GET_GENE_BY_DATATABLE);
-  }
-
-  return { formattedData, loading, error };
-}
-
-export function useGetSearchResultIdGene(idGene) {
-  if (!allowedRegex.test(idGene)) {
+  // Handle network error
+  if (apolloError?.networkError) {
+    console.error("Network error:", apolloError.networkError);
     return {
-      formattedData: null,
+      data: null,
       loading: false,
-      error: "Invalid gene search term.",
+      error: "Service not available. Please try again later.",
     };
   }
-  const { data, loading, error } = useQuery(GET_GENE_BY_ACCESSONID, {
-    variables: {
-      search: idGene,
+
+  // Handling GraphQL errors
+  if (apolloError?.graphQLErrors) {
+    console.error("GraphQL errors:", apolloError.graphQLErrors);
+    return {
+      data: null,
+      loading: false,
+      error: "Error en la consulta del servidor. Por favor, intente de nuevo.",
+    };
+  }
+
+  // Map data if they exist
+  const mappedData = data?.getGeneBy?.data
+    ? mapData(data.getGeneBy.data)
+    : null;
+
+  // Error-free default return
+  return {
+    data: mappedData,
+    loading: false,
+    error: null,
+  };
+}
+
+// -------------------
+
+/**
+ * Hook to search for genes and get an array of summaries.
+ * @param {string} query - Alphanumeric search term
+ */
+export function useGeneSearch(query) {
+  return useGeneQuery(query, GET_GENE_BY_DATATABLE, { search: query }, (data) =>
+    mapGeneSummaries(data)
+  );
+}
+
+/**
+ * Hook to get the full detail of a gene by its ID or accession.
+ * @param {string} geneId - ID or accession of the gene
+ */
+export function useGeneById(geneId) {
+  return useGeneQuery(
+    geneId,
+    GET_GENE_BY_ID,
+    {
+      search: geneId,
       properties: ["gene._id", "gene.accessionId"],
       fullMatchOnly: true,
     },
-    skip: !idGene,
-  });
-
-  let formattedData;
-  if (data?.getGeneBy?.data) {
-    formattedData = formatGraphQLAccessionId(data.getGeneBy.data);
-  }
-
-  if (error) {
-    console.error("Error en useGetSearchResultGeneId: ", error);
-    console.error("Query utilizado", GET_GENE_BY_ACCESSONID);
-  }
-
-  return { formattedData, loading, error };
+    (data) => (data[0] ? mapGeneDetail(data[0]) : null)
+  );
 }
