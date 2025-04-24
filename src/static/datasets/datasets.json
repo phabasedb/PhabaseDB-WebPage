@@ -14,21 +14,5 @@
         }
       ]
     }
-  },
-  {
-    "_id": "PDBSARCOVORG000001",
-    "organism": "Phaseolus vulgaris cv. Sars Cov 2",
-    "assamblyName": "NC_045512.2",
-    "tracks": ["sars-cov2-genes", "sars-cov2-ReferenceSequenceTrack"],
-    "sessionDefect": {
-      "views": [
-        {
-          "type": "LinearGenomeView",
-          "assembly": "sars-cov2",
-          "loc": "NC_045512.2:1-29903",
-          "tracks": ["sars-cov2-genes", "sars-cov2-ReferenceSequenceTrack"]
-        }
-      ]
-    }
   }
 ]
