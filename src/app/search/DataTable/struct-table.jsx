@@ -23,22 +23,6 @@ export default function StructTable({ term }) {
   const GENE_DATA = useMemo(() => data || [], [data]);
   const router = useRouter();
 
-  // JBROWSER URI
-  const handleJBrowseClick = (rowIndex) => {
-    const geneRecord = GENE_DATA[rowIndex];
-    const url = buildJBrowseUrl({
-      organismId: geneRecord.organismId,
-      chromosome: geneRecord.chromosome,
-      start: geneRecord.start,
-      end: geneRecord.end,
-    });
-    if (url) {
-      window.open(url, "_blank", "noopener,noreferrer");
-    } else {
-      alert("Insufficient data to build JBrowse URL.");
-    }
-  };
-
   const columns = [
     {
       name: "tools",
@@ -49,7 +33,26 @@ export default function StructTable({ term }) {
         //Configuration value and updateValue
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
-          const geneId = tableMeta.rowData[1]; // columna “accession”
+          const gene = GENE_DATA[rowIndex];
+          const geneId = tableMeta.rowData[1]; // “accession” column
+
+          // We prepare the URL and the message
+          const { url, message } = buildJBrowseUrl({
+            organismId: gene.organismId,
+            chromosome: gene.chromosome,
+            start: gene.start,
+            end: gene.end,
+          });
+
+          // Handler click for JBrowse
+          const onJBrowseClick = () => {
+            if (url) {
+              window.open(url, "_blank", "noopener,noreferrer");
+            } else {
+              alert(message);
+            }
+          };
+
           return (
             <Box
               sx={{
@@ -86,7 +89,7 @@ export default function StructTable({ term }) {
                   variant="contained"
                   color="primary"
                   sx={{ fontWeight: "bold" }}
-                  onClick={() => handleJBrowseClick(rowIndex)}
+                  onClick={onJBrowseClick}
                 >
                   B
                 </Button>

@@ -1,64 +1,47 @@
 "use client";
 
+import { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
 
 export default function StructJBrowse({ geneData }) {
-  const url = buildJBrowseUrl({
-    organismId: geneData.organism?.id,
-    chromosome: geneData.chromosome?.name,
-    start: geneData.start,
-    end: geneData.end,
-  });
+  const { url, message } = useMemo(() => {
+    return buildJBrowseUrl({
+      organismId: geneData?.organism?.id,
+      chromosome: geneData?.chromosome?.name,
+      start: geneData?.start,
+      end: geneData?.end,
+    });
+  }, [
+    geneData?.organism?.id,
+    geneData?.chromosome?.name,
+    geneData?.start,
+    geneData?.end,
+  ]);
 
-  if (!url) {
-    const missingData =
-      !geneData.chromosome?.name ||
-      geneData.start == null ||
-      geneData.end == null ||
-      !geneData.organism?.id;
-    const message = missingData
-      ? `JBrowse visualization not available, incomplete data for gene: ${
-          geneData.accession || geneData.geneId || "Unknown"
-        }`
-      : `No dataset found for organism: ${
-          geneData.organism?.name || geneData.organism?.id
-        }`;
-
+  function ErrorBox({ text }) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Box
+      <Box sx={{ my: 3, display: "flex", justifyContent: "center" }}>
+        <Typography
+          variant="body2"
+          color="error"
           sx={{
-            width: "90%",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            overflow: "hidden",
-            borderRadius: 2,
+            p: 2,
+            backgroundColor: "white",
+            borderRadius: 1,
+            lineHeight: 1.5,
+            wordBreak: "break-word",
+            maxWidth: "90%",
           }}
         >
-          <Typography
-            variant="body2"
-            color="error"
-            sx={{
-              p: 2,
-              lineHeight: 1.5,
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-            }}
-          >
-            {message}
-          </Typography>
-        </Box>
+          {text}
+        </Typography>
       </Box>
     );
+  }
+
+  if (!url) {
+    return <ErrorBox text={message} />;
   }
 
   return (

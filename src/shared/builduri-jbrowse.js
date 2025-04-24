@@ -1,17 +1,16 @@
 import { datasets } from "@/static/datasets";
 
+const validatedMessages = {
+  incomplete: "Cannot display JBrowse because required data is missing.",
+  badRange: "Cannot display JBrowse because the position range is invalid.",
+  noDataset:
+    "Cannot display JBrowse because no dataset exists for this organism.",
+};
+
 /**
- * Construye la URL de JBrowse a partir de datos de gen.
- *
+ * Attempts to construct the JBrowse URL for a gen.
  * @param {Object} params
- * @param {string} params.organismId   — dataset._id
- * @param {string} params.chromosome   — nombre de cromosoma
- * @param {number} params.start        — posición inicio
- * @param {number} params.end          — posición fin
- * @param {string} [params.config="config.json"]
- * @param {string} [baseUrl=process.env.NEXT_PUBLIC_BASE_URL]
- * @param {string|number} [port=process.env.NEXT_PUBLIC_JBROWSE_PORT]
- * @returns {string|null} URL completa o null si faltan datos o rango inválido
+ * @returns {{ url: string|null, message: string|null }}
  */
 export function buildJBrowseUrl({
   organismId,
@@ -22,32 +21,22 @@ export function buildJBrowseUrl({
   baseUrl = process.env.NEXT_PUBLIC_BASE_URL,
   port = process.env.NEXT_PUBLIC_JBROWSE_PORT,
 }) {
-  // Validar datos obligatorios
   if (!organismId || !chromosome || start == null || end == null) {
-    return null;
+    return { url: null, message: validatedMessages.incomplete };
   }
 
-  // Validar que start y end sean números enteros y rango correcto
-  const startNum = Number(start);
-  const endNum = Number(end);
-  if (
-    !Number.isInteger(startNum) ||
-    !Number.isInteger(endNum) ||
-    startNum < 0 ||
-    endNum < 0 ||
-    startNum > endNum
-  ) {
-    return null;
+  const s = Number(start),
+    e = Number(end);
+  if (!Number.isInteger(s) || !Number.isInteger(e) || s < 0 || e < 0 || s > e) {
+    return { url: null, message: validatedMessages.badRange };
   }
 
-  // Buscar el dataset correspondiente
   const ds = datasets.find((d) => d._id === organismId);
   if (!ds) {
-    return null;
+    return { url: null, message: validatedMessages.noDataset };
   }
 
-  // Construir parámetros de loc y tracks
-  const loc = `${chromosome}:${startNum}..${endNum}`;
+  const loc = `${chromosome}:${s}..${e}`;
   const tracks = Array.isArray(ds.tracks) ? ds.tracks.join(",") : "";
   const qp = new URLSearchParams({
     config,
@@ -55,6 +44,7 @@ export function buildJBrowseUrl({
     assembly: ds.assamblyName,
     tracks,
   }).toString();
+  const url = `${baseUrl}:${port}/?${qp}`;
 
-  return `${baseUrl}:${port}/?${qp}`;
+  return { url, message: null };
 }

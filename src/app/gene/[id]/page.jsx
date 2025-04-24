@@ -28,10 +28,8 @@ function useSelectedTranscript(formattedDetail) {
 export default function GenePage() {
   const { id } = useParams();
 
-  // aquí obtienes loading, error y el detalle mapeado (o null)
   const { data: detail, loading, error } = useGeneById(id || "");
 
-  // manejador de estados vacío/hubo error/ok
   return (
     <GeneHandler
       loading={loading}

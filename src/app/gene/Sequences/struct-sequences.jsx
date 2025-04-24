@@ -81,19 +81,15 @@ export default function StructSequences({ geneData, selectedTranscript }) {
   // Calculate sequence lengths
   const getSequenceLength = (sequence) => sequence?.length || "N/A";
 
-  const genomicLength = getSequenceLength(geneData?.geneSequence);
-  const transcriptLength = getSequenceLength(
-    selectedTranscript?.transcriptSequence
-  );
-  const peptideLength = getSequenceLength(
-    selectedTranscript?.aminoacidSequence
-  );
+  const genomicLength = getSequenceLength(geneData?.sequence);
+  const transcriptLength = getSequenceLength(selectedTranscript?.sequence);
+  const peptideLength = getSequenceLength(selectedTranscript?.aminoAcidSeq);
   // Calculate total CDS length
   const cdsLength = useMemo(() => {
     if (selectedTranscript?.cds?.length > 0) {
       return selectedTranscript.cds.reduce((total, cd) => {
-        if (cd?.cdStart && cd?.cdEnd) {
-          const cdLength = cd.cdEnd - cd.cdStart + 1;
+        if (cd?.start && cd?.end) {
+          const cdLength = cd.end - cd.start + 1;
           return total + cdLength;
         }
         return total;
@@ -110,18 +106,18 @@ export default function StructSequences({ geneData, selectedTranscript }) {
       if (selectedTranscript.utrs) {
         selectedTranscript.utrs.forEach((utr) => {
           ann.push({
-            start: utr.utrStart,
-            end: utr.utrEnd,
-            type: utr.utrType,
+            start: utr.start,
+            end: utr.end,
+            type: utr.type,
           });
         });
       }
       if (selectedTranscript.cds) {
         selectedTranscript.cds.forEach((cd) => {
           ann.push({
-            start: cd.cdStart,
-            end: cd.cdEnd,
-            type: cd.cdType,
+            start: cd.start,
+            end: cd.end,
+            type: cd.type,
           });
         });
       }
@@ -146,42 +142,42 @@ export default function StructSequences({ geneData, selectedTranscript }) {
 
     switch (tabValue) {
       case "genomic":
-        if (!geneData?.geneSequence) {
+        if (!geneData?.sequence) {
           alert("No genomic sequence available.");
           return;
         }
-        header = geneData.geneIdOriginal;
-        sequence = geneData.geneSequence;
+        header = geneData.accession;
+        sequence = geneData.sequence;
         break;
       case "transcript":
-        if (!selectedTranscript?.transcriptSequence) {
+        if (!selectedTranscript?.sequence) {
           alert("No transcript sequence available.");
           return;
         }
-        header = selectedTranscript.transcriptIdOriginal;
-        sequence = selectedTranscript.transcriptSequence;
+        header = selectedTranscript.accession;
+        sequence = selectedTranscript.sequence;
         break;
       case "cds":
         if (!selectedTranscript?.cds || selectedTranscript.cds.length === 0) {
           alert("No CDS available for this transcript.");
           return;
         }
-        header = selectedTranscript.transcriptIdOriginal;
-        // Si tienes una propiedad 'cdsCompleteSequence' que contenga la secuencia unida de CDS,
+        header = selectedTranscript.accession;
+        // Si tienes una propiedad 'cdsSeq' que contenga la secuencia unida de CDS,
         // úsala; de lo contrario, podrías generar la secuencia a partir de las anotaciones.
-        sequence = selectedTranscript.cdsCompleteSequence || "";
+        sequence = selectedTranscript.cdsSeq || "";
         if (!sequence) {
           alert("CDS sequence not available.");
           return;
         }
         break;
       case "peptide":
-        if (!selectedTranscript?.aminoacidSequence) {
+        if (!selectedTranscript?.aminoAcidSeq) {
           alert("No peptide sequence available.");
           return;
         }
-        header = selectedTranscript.transcriptIdOriginal;
-        sequence = selectedTranscript.aminoacidSequence;
+        header = selectedTranscript.accession;
+        sequence = selectedTranscript.aminoAcidSeq;
         break;
       default:
         return;
@@ -204,14 +200,14 @@ export default function StructSequences({ geneData, selectedTranscript }) {
       <Box sx={{ p: 1 }}>
         <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
           {">"}
-          {geneData.chromosomeName} | {geneData.geneIdOriginal} |{" "}
-          {geneData.chromosomeType}: {geneData.geneStart}..{geneData.geneEnd}{" "}
-          {geneData.geneStrand}
+          {geneData.chromosome.name} | {geneData.accession} |{" "}
+          {geneData.chromosome.type}: {geneData.start}..{geneData.end}{" "}
+          {geneData.strand}
         </Typography>
       </Box>
       <DisplayGenTrans
-        sequence={geneData.geneSequence}
-        start={geneData.geneStart}
+        sequence={geneData.sequence}
+        start={geneData.start}
         annotations={annotations}
       />
     </Box>
@@ -230,15 +226,14 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         <Box sx={{ p: 1 }}>
           <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
             {">"}
-            {geneData.chromosomeName} |{" "}
-            {selectedTranscript.transcriptIdOriginal} :{" "}
-            {selectedTranscript.transcriptStart}..
-            {selectedTranscript.transcriptEnd}
+            {geneData.chromosome.name} | {selectedTranscript.accession} :{" "}
+            {selectedTranscript.start}..
+            {selectedTranscript.end}
           </Typography>
         </Box>
         <DisplayGenTrans
-          sequence={selectedTranscript.transcriptSequence}
-          start={selectedTranscript.transcriptStart}
+          sequence={selectedTranscript.sequence}
+          start={selectedTranscript.start}
           annotations={annotations}
         />
       </Box>
@@ -262,13 +257,12 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         <Box sx={{ p: 1 }}>
           <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
             {">"}
-            {geneData.chromosomeName} |{" "}
-            {selectedTranscript.transcriptIdOriginal} | CDS
+            {geneData.chromosome.name} | {selectedTranscript.accession} | CDS
           </Typography>
         </Box>
         <DisplayCDS
-          sequence={selectedTranscript.transcriptSequence}
-          start={selectedTranscript.transcriptStart}
+          sequence={selectedTranscript.sequence}
+          start={selectedTranscript.start}
           annotations={annotations}
         />
       </Box>
@@ -278,8 +272,8 @@ export default function StructSequences({ geneData, selectedTranscript }) {
   const renderPeptideTab = () => {
     if (
       !selectedTranscript ||
-      !selectedTranscript.aminoacidSequence ||
-      selectedTranscript.aminoacidSequence.length === 0
+      !selectedTranscript.aminoAcidSeq ||
+      selectedTranscript.aminoAcidSeq.length === 0
     ) {
       return (
         <Box sx={{ p: 1 }}>
@@ -292,8 +286,8 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         <Box sx={{ p: 1 }}>
           <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
             {">"}
-            {geneData.chromosomeName} |{" "}
-            {selectedTranscript.transcriptIdOriginal} | Peptide
+            {geneData.chromosome.name} | {selectedTranscript.accession} |
+            Peptide
           </Typography>
         </Box>
         <Box sx={{ px: 1 }}>
@@ -301,7 +295,7 @@ export default function StructSequences({ geneData, selectedTranscript }) {
             variant="body1"
             sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}
           >
-            {selectedTranscript.aminoacidSequence}
+            {selectedTranscript.aminoAcidSeq}
           </Typography>
         </Box>
       </Box>

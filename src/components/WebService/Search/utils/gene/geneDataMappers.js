@@ -1,7 +1,7 @@
 /**
- * Convierte un arreglo de registros de genes a resúmenes simples.
- * @param {Array<Object>} records - Respuesta de GraphQL con múltiples genes
- * @returns {Array<Object>} - Lista de resúmenes de genes
+ * Converts an array of gene records to simple summaries.
+ * @param {Array<Object>} records - GraphQL response with multiple genes
+ * @returns {Array<Object>} - List of gene summaries
  */
 export function mapGeneSummaries(records) {
   return (records || []).map((r) => ({
@@ -17,9 +17,9 @@ export function mapGeneSummaries(records) {
 }
 
 /**
- * Convierte un solo registro de gen a un objeto detallado.
- * @param {Object} r - Un registro de gen de GraphQL
- * @returns {Object} - Detalle completo del gen
+ * Converts a single gene record to a detailed object.
+ * @param {Object} r - A GraphQL gene record
+ * @returns {Object} - Complete gene detail
  */
 export function mapGeneDetail(r) {
   const record = r || {};
