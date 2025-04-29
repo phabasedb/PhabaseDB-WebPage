@@ -27,7 +27,7 @@ export default function Title() {
         >
           <Box
             component="img"
-            src="/image/logos/LogoPhabaseIA.webp"
+            src="/image/logos/logoPhabaseIA.webp"
             alt="Phabase Logo"
             sx={{
               width: {
