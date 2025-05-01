@@ -18,8 +18,7 @@ export function buildJBrowseUrl({
   start,
   end,
   config = "config.json",
-  baseUrl = process.env.NEXT_PUBLIC_BASE_URL,
-  port = process.env.NEXT_PUBLIC_JBROWSE_PORT,
+  baseUrl = process.env.NEXT_PUBLIC_URI_JBROWSE,
 }) {
   if (!organismId || !chromosome || start == null || end == null) {
     return { url: null, message: validatedMessages.incomplete };
@@ -44,7 +43,7 @@ export function buildJBrowseUrl({
     assembly: ds.assamblyName,
     tracks,
   }).toString();
-  const url = `${baseUrl}:${port}/?${qp}`;
+  const url = `${baseUrl}?${qp}`;
 
   return { url, message: null };
 }
@@ -58,12 +57,11 @@ export function buildJBrowseUrl({
  */
 export function buildJBrowseUrlFromSession({
   sessionDefect,
-  baseUrl = process.env.NEXT_PUBLIC_BASE_URL,
-  port = process.env.NEXT_PUBLIC_JBROWSE_PORT,
+  baseUrl = process.env.NEXT_PUBLIC_URI_JBROWSE,
 }) {
   if (!sessionDefect) return null;
 
   const json = JSON.stringify(sessionDefect);
   //    ?config=config.json&session=spec-{"views":[…]}
-  return `${baseUrl}:${port}/?config=config.json&session=spec-${json}`;
+  return `${baseUrl}?config=config.json&session=spec-${json}`;
 }

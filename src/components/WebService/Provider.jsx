@@ -7,10 +7,10 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 // local
 
-const URI_GRAPHQL = `${process.env.NEXT_PUBLIC_BASE_URL}:${process.env.NEXT_PUBLIC_GRAPHQL_PORT}`;
+const URI_GRAPHQL = process.env.NEXT_PUBLIC_URI_GRAPHQL;
 
 const client = new ApolloClient({
-  uri: `${URI_GRAPHQL}/graphql`,
+  uri: `${URI_GRAPHQL}`,
   cache: new InMemoryCache(),
 });
 
