@@ -3,8 +3,8 @@
 // third party
 
 // local
-import Title from "./titlee";
-import InformationCard from "./cardd";
+import Title from "./title";
+import InformationCard from "./card";
 import SearchHistory from "./history";
 import SearchGene from "@/components/SearchGene";
 
