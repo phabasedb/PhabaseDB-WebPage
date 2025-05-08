@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 
 // local
 import GeneHandler from "./utils/gene-handler";
-import Information from "../information";
+import Information from "../informationn";
 import Sequences from "../sequences";
 import JBrowse from "../jbrowse";
 import { useGeneById } from "@/components/WebService/Search";
