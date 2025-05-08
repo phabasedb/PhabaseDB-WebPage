@@ -1,16 +1,19 @@
 [
   {
     "_id": "PDBJAMAPAORG000001",
-    "organism": "Phaseolus vulgaris cv. Negro Jamapa",
+    "organism": "Phaseolus vulgaris cv. Negro Jamapa v1.3",
     "assamblyName": "LjG1.1",
-    "tracks": ["jamapa-genes", "LjG1.1-ReferenceSequenceTrack"],
+    "tracks": ["JamapaGenes-FeatureTrack", "LjG1.1-ReferenceSequenceTrack"],
     "sessionDefect": {
       "views": [
         {
           "type": "LinearGenomeView",
           "assembly": "LjG1.1",
           "loc": "LjG1.1_chr1:1-137250648",
-          "tracks": ["jamapa-genes", "LjG1.1-ReferenceSequenceTrack"]
+          "tracks": [
+            "JamapaGenes-FeatureTrack",
+            "LjG1.1-ReferenceSequenceTrack"
+          ]
         }
       ]
     }

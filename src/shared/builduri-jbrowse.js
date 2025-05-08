@@ -1,4 +1,4 @@
-import { datasets } from "@/static/datasets";
+import { datasets } from "@/static/jbrowser/datasets";
 
 const validatedMessages = {
   incomplete: "Cannot display JBrowse because required data is missing.",

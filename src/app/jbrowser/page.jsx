@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { datasets } from "@/static/datasets";
+import { datasets } from "@/static/jbrowser/datasets";
 import { buildJBrowseUrlFromSession } from "@/shared/builduri-jbrowse";
 
 export default function JBrowsePage() {
