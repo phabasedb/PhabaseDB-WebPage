@@ -21,6 +21,9 @@ export default function BlastPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const URI_BLASTN = process.env.NEXT_PUBLIC_URI_BLASTN;
+  const URI_BLASTP = process.env.NEXT_PUBLIC_URI_BLASTP;
+
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
@@ -29,10 +32,7 @@ export default function BlastPage() {
 
     // Puedes cambiar a /blastn o /blastp según tu routing. Si usas nginx debes enrutar esos endpoints.
     // Si Testing directo: usa "http://localhost:4001/blastn" temporalmente.
-    const url =
-      program === "blastn"
-        ? "phabasedb_app-blast/blastn"
-        : "phabasedb_app-blast/blastp";
+    const url = program === "blastn" ? "URI_BLASTN" : "URI_BLASTP";
 
     try {
       const res = await fetch(url, {
