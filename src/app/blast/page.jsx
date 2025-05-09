@@ -31,8 +31,8 @@ export default function BlastPage() {
     // Si Testing directo: usa "http://localhost:4001/blastn" temporalmente.
     const url =
       program === "blastn"
-        ? "http://localhost:4001/blastn"
-        : "http://localhost:4001/blastp";
+        ? "phabasedb_app-blast/blastn"
+        : "phabasedb_app-blast/blastp";
 
     try {
       const res = await fetch(url, {
