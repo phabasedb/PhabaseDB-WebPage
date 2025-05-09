@@ -32,7 +32,7 @@ export default function BlastPage() {
 
     // Puedes cambiar a /blastn o /blastp según tu routing. Si usas nginx debes enrutar esos endpoints.
     // Si Testing directo: usa "http://localhost:4001/blastn" temporalmente.
-    const url = program === "blastn" ? "URI_BLASTN" : "URI_BLASTP";
+    const url = program === "blastn" ? URI_BLASTN : URI_BLASTP;
 
     try {
       const res = await fetch(url, {
