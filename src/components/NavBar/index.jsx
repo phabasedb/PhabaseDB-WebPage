@@ -24,7 +24,7 @@ const pages = [
   { name: "Gene Browser", path: "/" },
   { name: "Gene Expression", path: "/" },
   { name: "JBrowser", path: "/jbrowser" },
-  { name: "BLAST", path: "/" },
+  { name: "BLAST", path: "/blast" },
   { name: "Help", path: "/" },
   { name: "About Us", path: "/" },
 ];
