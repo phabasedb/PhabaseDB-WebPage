@@ -17,8 +17,10 @@ import { datasets } from "@/static/blast/datasets";
 export default function BlastPage() {
   const [sequence, setSequence] = useState("");
   const [program, setProgram] = useState("blastn");
+
   const [db, setDb] = useState("");
   const [result, setResult] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
