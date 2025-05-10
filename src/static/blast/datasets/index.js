@@ -3,6 +3,6 @@
 //third party
 
 //local
-//import datasets from "./datasets.json";
+import datasets from "./datasets.json";
 
-//export { datasets };
+export { datasets };

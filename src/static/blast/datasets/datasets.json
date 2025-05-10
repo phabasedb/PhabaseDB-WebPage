@@ -1,0 +1,12 @@
+[
+  {
+    "database": "Lotus japonicus Gifu",
+    "nucleotide": [
+      {
+        "name": "Lotus japonicus Gifu genome v1.2",
+        "path": "jamapa/Lotusjaponicus_Gifu_v1.2_genome"
+      }
+    ],
+    "protein": []
+  }
+]

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   TextField,
@@ -11,54 +10,52 @@ import {
   Select,
   InputLabel,
   FormControl,
+  ListSubheader,
 } from "@mui/material";
+import { datasets } from "@/static/blast/datasets";
 
 export default function BlastPage() {
   const [sequence, setSequence] = useState("");
-  const [db, setDb] = useState("");
   const [program, setProgram] = useState("blastn");
+  const [db, setDb] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const URI_BLASTN = process.env.NEXT_PUBLIC_URI_BLASTN;
-  const URI_BLASTP = process.env.NEXT_PUBLIC_URI_BLASTP;
+  const URI =
+    program === "blastn"
+      ? process.env.NEXT_PUBLIC_URI_BLASTN
+      : process.env.NEXT_PUBLIC_URI_BLASTP;
+
+  const allDbs = datasets.flatMap((d) => [
+    ...d.nucleotide.map((x) => ({ group: "Nucleotide", ...x })),
+    ...d.protein.map((x) => ({ group: "Protein", ...x })),
+  ]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setError("");
     setResult("");
-
-    // Puedes cambiar a /blastn o /blastp según tu routing. Si usas nginx debes enrutar esos endpoints.
-    // Si Testing directo: usa "http://localhost:4001/blastn" temporalmente.
-    const url = program === "blastn" ? URI_BLASTN : URI_BLASTP;
-
     try {
-      const res = await fetch(url, {
+      const res = await fetch(URI, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sequence, db }),
       });
-
-      if (!res.ok) {
-        setError("No se pudo ejecutar el BLAST. " + (await res.text()));
-        setLoading(false);
-        return;
-      }
-
-      const text = await res.text();
-      setResult(text);
+      if (!res.ok) throw new Error(await res.text());
+      setResult(await res.text());
     } catch (err) {
-      setError("Error de red: " + err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
-    <Box maxWidth="sm" mx="auto" py={3}>
-      <Paper sx={{ p: 3 }}>
-        <Typography variant="h5" gutterBottom>
+    <Box maxWidth="600px" mx="auto" py={4}>
+      <Paper sx={{ p: 4 }} elevation={3}>
+        <Typography variant="h6" gutterBottom>
           Ejecutar BLAST
         </Typography>
         <form onSubmit={handleSubmit}>
@@ -74,32 +71,58 @@ export default function BlastPage() {
               <MenuItem value="blastp">BLASTP</MenuItem>
             </Select>
           </FormControl>
+
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="db-label">Base de datos</InputLabel>
+            <Select
+              labelId="db-label"
+              value={db}
+              label="Base de datos"
+              onChange={(e) => setDb(e.target.value)}
+              renderValue={(val) =>
+                allDbs.find((x) => x.path === val)?.name || ""
+              }
+            >
+              <ListSubheader>Nucleotide</ListSubheader>
+              {allDbs
+                .filter((x) => x.group === "Nucleotide")
+                .map((x) => (
+                  <MenuItem key={x.path} value={x.path}>
+                    {x.name}
+                  </MenuItem>
+                ))}
+              <ListSubheader>Protein</ListSubheader>
+              {allDbs
+                .filter((x) => x.group === "Protein")
+                .map((x) => (
+                  <MenuItem key={x.path} value={x.path}>
+                    {x.name}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+
           <TextField
             label="Secuencia FASTA"
             multiline
-            minRows={3}
+            minRows={4}
             fullWidth
             margin="normal"
             value={sequence}
             onChange={(e) => setSequence(e.target.value)}
           />
-          <TextField
-            label="Base BLAST (ruta ej: jamapa/Lotusjaponicus_Gifu_v1.2_genome)"
-            fullWidth
-            margin="normal"
-            value={db}
-            onChange={(e) => setDb(e.target.value)}
-          />
+
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            fullWidth
             sx={{ mt: 2 }}
-            disabled={loading}
+            disabled={loading || !db || !sequence}
           >
-            {loading ? "Procesando..." : "Ejecutar"}
+            {loading ? "Procesando…" : "Ejecutar"}
           </Button>
         </form>
+
         {error && (
           <Typography color="error" mt={2}>
             {error}
@@ -111,18 +134,12 @@ export default function BlastPage() {
             <Paper
               sx={{
                 p: 2,
-                maxHeight: 350,
+                maxHeight: 300,
                 overflow: "auto",
                 background: "#f5f5f5",
               }}
             >
-              <pre
-                style={{
-                  fontSize: 12,
-                  whiteSpace: "pre-wrap",
-                  wordBreak: "break-all",
-                }}
-              >
+              <pre style={{ fontSize: 12, whiteSpace: "pre-wrap" }}>
                 {result}
               </pre>
             </Paper>
