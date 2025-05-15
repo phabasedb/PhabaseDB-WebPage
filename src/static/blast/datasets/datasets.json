@@ -4,17 +4,17 @@
     "nucleotide": [
       {
         "name": "Lotus japonicus Gifu genome v1.2",
-        "path": "JAMAPA/Lotusjaponicus_Gifu_v1.2_genome"
+        "path": "jamapa/Lotusjaponicus_Gifu_v1.2_genome"
       },
       {
         "name": "Lotus japonicus Gifu v1.3 CDS",
-        "path": "JAMAPA/Lotusjaponicus_Gifu_v1.3_cds"
+        "path": "jamapa/Lotusjaponicus_Gifu_v1.3_cds"
       }
     ],
     "protein": [
       {
         "name": "Lotus japonicus Gifu v1.3 Proteins",
-        "path": "JAMAPA/Lotusjaponicus_Gifu_v1.3_proteins"
+        "path": "jamapa/Lotusjaponicus_Gifu_v1.3_proteins"
       }
     ]
   },
@@ -23,7 +23,7 @@
     "nucleotide": [
       {
         "name": "Phaseolus vulgaris G19833 genome v2.0",
-        "path": "G19833/Pvulgaris_G19833_442_v2.0_genome"
+        "path": "g19833/Pvulgaris_G19833_442_v2.0_genome"
       }
     ],
     "protein": []
