@@ -17,5 +17,24 @@
         }
       ]
     }
+  },
+  {
+    "_id": "PDBG19833ORG000001",
+    "organism": "Phaseolus vulgaris G19833 v2.1",
+    "assemblyName": "G19833",
+    "tracks": ["G19833Genes-FeatureTrack", "G19833-ReferenceSequenceTrack"],
+    "sessionDefect": {
+      "views": [
+        {
+          "type": "LinearGenomeView",
+          "assembly": "G19833",
+          "loc": "Chr01:1-51433939",
+          "tracks": [
+            "G19833Genes-FeatureTrack",
+            "G19833-ReferenceSequenceTrack"
+          ]
+        }
+      ]
+    }
   }
 ]
