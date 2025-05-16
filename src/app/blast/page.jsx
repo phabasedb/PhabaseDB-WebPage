@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Typography,
-  Paper,
   Divider,
   List,
   ListItem,
@@ -16,101 +15,59 @@ import {
   CircularProgress,
 } from "@mui/material";
 import datasets from "@/static/blast/datasets/datasets.json";
+import { useBlast } from "./useBlast";
 
 export default function BlastPage() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("nucleotide");
   const [selected, setSelected] = useState([]);
-  const [htmlResult, setHtmlResult] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [evalue, setEvalue] = useState("");
+  const [wordSize, setWordSize] = useState("");
+  const [maxTargetSeqs, setMaxTargetSeqs] = useState("");
+  const [filterQuery, setFilterQuery] = useState(true);
+  const [allowGaps, setAllowGaps] = useState(true);
+  const [matrix, setMatrix] = useState("BLOSUM62");
+  const [iframeSrc, setIframeSrc] = useState("");
+
+  const { handleBlast, loading, error, htmlResult } = useBlast({
+    type,
+    selected,
+    query,
+    evalue,
+    wordSize,
+    maxTargetSeqs,
+    filterQuery,
+    allowGaps,
+    matrix,
+  });
 
   useEffect(() => setSelected([]), [type]);
 
-  //Parameters
-  const [evalue, setEvalue] = useState("-1");
-  const [wordSize, setWordSize] = useState("");
-  const [maxTargetSeqs, setMaxTargetSeqs] = useState("100");
-  const [filterQuery, setFilterQuery] = useState(true);
-  const [allowGaps, setAllowGaps] = useState(true);
-  // Only a protein (BLASTP):
-  const [matrix, setMatrix] = useState("BLOSUM62");
+  useEffect(() => {
+    if (!htmlResult) {
+      setIframeSrc("");
+      return;
+    }
+    const fullHtml = `<!DOCTYPE html>
+    <html lang="en"> 
+    <head>
+      <meta charset="utf-8" />
+      <base target="_self" />
+    </head>
+    <body>
+      ${htmlResult}
+    </body>
+    </html>`;
+    const blob = new Blob([fullHtml], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    setIframeSrc(url);
+    return () => URL.revokeObjectURL(url);
+  }, [htmlResult]);
 
   const handleToggle = (path) => () => {
     setSelected((prev) =>
       prev.includes(path) ? prev.filter((p) => p !== path) : [...prev, path]
     );
-  };
-
-  const handleBlast = async () => {
-    setLoading(true);
-    setError(null);
-    setHtmlResult("");
-
-    // 1) Monta un array con todos los flags
-    const args = [];
-
-    // E‑value
-    if (evalue && evalue !== "") {
-      args.push("-evalue", evalue);
-    }
-
-    // Word size
-    if (wordSize && wordSize !== "") {
-      args.push("-word_size", wordSize);
-    }
-
-    // Máximo de secuencias
-    if (maxTargetSeqs && maxTargetSeqs !== "") {
-      args.push("-max_target_seqs", maxTargetSeqs);
-    }
-
-    // Gaps
-    if (!allowGaps) {
-      args.push("-ungapped");
-    }
-
-    // Filtro de baja complejidad
-    if (type === "nucleotide") {
-      args.push("-dust", filterQuery ? "yes" : "no");
-    } else {
-      args.push("-seg", filterQuery ? "yes" : "no");
-    }
-
-    // Matriz (solo para BLASTP)
-    if (type === "protein" && matrix) {
-      args.push("-matrix", matrix);
-    }
-
-    const advancedParams = args.join(" ");
-
-    // 2) Llama a la API con esa cadena
-    const uri =
-      type === "nucleotide"
-        ? process.env.NEXT_PUBLIC_URI_BLASTN
-        : process.env.NEXT_PUBLIC_URI_BLASTP;
-
-    try {
-      const res = await fetch(uri, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sequence: query,
-          db: selected,
-          params: advancedParams,
-        }),
-      });
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Error en BLAST");
-      }
-      const html = await res.text();
-      setHtmlResult(html);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
@@ -120,6 +77,7 @@ export default function BlastPage() {
         alignItems: "center",
         flexDirection: "column",
         my: { xs: 3, md: 4 },
+        gap: 3,
       }}
     >
       <Box
@@ -134,7 +92,6 @@ export default function BlastPage() {
           boxShadow: 5,
         }}
       >
-        {/* Title */}
         <Box sx={{ width: "90%", my: 1 }}>
           <Typography
             sx={{
@@ -151,7 +108,6 @@ export default function BlastPage() {
             BLAST
           </Typography>
 
-          {/* Sequence */}
           <Box sx={{ my: 1 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               Sequence query:
@@ -161,15 +117,14 @@ export default function BlastPage() {
               placeholder="Paste query sequence(s) in FASTA format here…"
               multiline
               fullWidth
-              minRows={5}
-              maxRows={5}
+              minRows={8}
+              maxRows={8}
               inputProps={{ style: { overflow: "auto", resize: "none" } }}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
           </Box>
 
-          {/* Type: Button NUCLEOTIDE or PROTEIN */}
           <Box sx={{ my: 1 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               Database selection:
@@ -192,7 +147,6 @@ export default function BlastPage() {
             </Box>
           </Box>
 
-          {/* Dataset List */}
           {datasets.map((dbGroup, i) => {
             const items = dbGroup[type] || [];
             return (
@@ -235,13 +189,10 @@ export default function BlastPage() {
             );
           })}
 
-          {/* Advanced Params */}
           <Box sx={{ my: 1 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               Advanced parameters:
             </Typography>
-
-            {/* E-value */}
             <TextField
               label="Expect (E) threshold"
               variant="outlined"
@@ -250,8 +201,6 @@ export default function BlastPage() {
               value={evalue}
               onChange={(e) => setEvalue(e.target.value)}
             />
-
-            {/* Word size */}
             <TextField
               label="Word (W) length"
               variant="outlined"
@@ -261,8 +210,6 @@ export default function BlastPage() {
               value={wordSize}
               onChange={(e) => setWordSize(e.target.value)}
             />
-
-            {/* Max Target Seqs */}
             <TextField
               label="# of alignments to show"
               variant="outlined"
@@ -271,8 +218,6 @@ export default function BlastPage() {
               value={maxTargetSeqs}
               onChange={(e) => setMaxTargetSeqs(e.target.value)}
             />
-
-            {/* Protein-only: Comparison Matrix */}
             {type === "protein" && (
               <TextField
                 select
@@ -290,8 +235,6 @@ export default function BlastPage() {
                 <option value="PAM70">PAM70</option>
               </TextField>
             )}
-
-            {/* Allow Gaps */}
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Checkbox
                 checked={allowGaps}
@@ -299,8 +242,6 @@ export default function BlastPage() {
               />
               <Typography>Allow gaps?</Typography>
             </Box>
-
-            {/* Filter Query */}
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Checkbox
                 checked={filterQuery}
@@ -310,7 +251,6 @@ export default function BlastPage() {
             </Box>
           </Box>
 
-          {/* Action Button */}
           <Box sx={{ textAlign: "center", my: 2 }}>
             <Button
               variant="contained"
@@ -328,21 +268,29 @@ export default function BlastPage() {
           </Box>
         </Box>
       </Box>
-      {/* Error Message */}
+
       {error && (
-        <Box sx={{ mt: 2, color: "red" }}>
+        <Box sx={{ my: 2, color: "red" }}>
           <Typography>{error}</Typography>
         </Box>
       )}
-      {/* Results Display */}
-      {htmlResult && (
-        <Box sx={{ mt: 2, width: "90%" }}>
-          <Typography variant="h6" gutterBottom>
-            BLAST Results
-          </Typography>
-          <Paper sx={{ p: 2, maxHeight: 600, overflow: "auto" }}>
-            <div dangerouslySetInnerHTML={{ __html: htmlResult }} />
-          </Paper>
+
+      {iframeSrc && (
+        <Box
+          sx={{
+            width: "90%",
+            backgroundColor: "white",
+            borderRadius: 2,
+            boxShadow: 5,
+            height: "700px",
+            overflow: "hidden",
+          }}
+        >
+          <iframe
+            title="blast-result"
+            src={iframeSrc}
+            style={{ width: "100%", height: "100%" }}
+          />
         </Box>
       )}
     </Box>
