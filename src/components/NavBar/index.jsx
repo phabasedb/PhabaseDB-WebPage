@@ -21,7 +21,7 @@ import Link from "next/link";
 // local
 
 const pages = [
-  { name: "Gene Browser", path: "/" },
+  { name: "Home", path: "/" },
   { name: "Gene Expression", path: "/" },
   { name: "JBrowser", path: "/jbrowser" },
   { name: "BLAST", path: "/blast" },
