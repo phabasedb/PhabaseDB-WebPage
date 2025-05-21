@@ -27,5 +27,15 @@
       }
     ],
     "protein": []
+  },
+  {
+    "database": "Phaseolus vulgaris Negro Jamapa",
+    "nucleotide": [
+      {
+        "name": "Phaseolus vulgaris Negro Jamapa genome",
+        "path": "PvNJ/PvNJ_genome"
+      }
+    ],
+    "protein": []
   }
 ]
