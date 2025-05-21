@@ -14,12 +14,13 @@ import InfoIcon from "@mui/icons-material/Info";
 import MUIDataTable from "mui-datatables";
 
 // local
-import { useGeneSearch } from "@/components/WebService/Search";
+import { useGeneSearch, useAllGenes } from "@/components/WebService/Search";
 import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
 import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
-  const { data, loading, error } = useGeneSearch(term || "");
+  const { data, loading, error } =
+    term === "GENES" ? useAllGenes() : useGeneSearch(term);
   const GENE_DATA = useMemo(() => data || [], [data]);
   const router = useRouter();
 
