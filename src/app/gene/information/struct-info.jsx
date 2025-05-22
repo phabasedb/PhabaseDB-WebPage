@@ -155,6 +155,7 @@ export default function StructInfo({
           { label: "JBROWSER", key: "JBROWSER-NV" },
           { label: "GENE EXPRESSION", key: "EXPRESSION" },
           { label: "BLAST", key: "BLAST" },
+          { label: "SEQUENCE RETRIVAL", key: "RETRIVAL" },
         ].map((btn) => (
           <Button
             key={btn.key}
