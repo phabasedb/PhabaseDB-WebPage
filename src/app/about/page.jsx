@@ -125,27 +125,27 @@ export default function AboutUs() {
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ fontWeight: 600, my: 1 }}
+                sx={{ fontWeight: 600, fontSize: "1.1rem", my: 1 }}
               >
                 {member.role}
               </Typography>
-              <Typography variant="body2" sx={{ fontSize: "0.85rem", my: 1 }}>
+              <Typography variant="body2" sx={{ fontSize: "1rem", my: 1 }}>
                 {member.degree}
               </Typography>
-              <Typography variant="body2" sx={{ fontSize: "0.85rem", my: 1 }}>
+              <Typography variant="body2" sx={{ fontSize: "1rem", my: 1 }}>
                 {member.institution}
               </Typography>
               <Typography
                 variant="body2"
                 color="blue"
-                sx={{ fontSize: "0.85rem", my: 1 }}
+                sx={{ fontSize: "1rem", my: 1 }}
               >
                 {member.email}
               </Typography>
               <Typography
                 variant="body2"
                 color="blue"
-                sx={{ fontSize: "0.85rem" }}
+                sx={{ fontSize: "1rem" }}
               >
                 {member.phone}
               </Typography>
