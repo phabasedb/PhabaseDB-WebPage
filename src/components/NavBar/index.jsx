@@ -26,7 +26,7 @@ const pages = [
   { name: "JBrowser", path: "/jbrowser" },
   { name: "BLAST", path: "/blast" },
   { name: "Help", path: "/" },
-  { name: "About Us", path: "/" },
+  { name: "About Us", path: "/about" },
 ];
 
 export default function NavBar() {

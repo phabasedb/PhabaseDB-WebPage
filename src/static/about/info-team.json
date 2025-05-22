@@ -1,0 +1,21 @@
+{
+  "description": "Our team comprises professionals with diverse expertise who are highly committed and motivated toward their projects, fostering a friendly and collaborative working environment",
+  "members": [
+    {
+      "name": "Jesús Montiel González",
+      "phone": "(777) 3115164",
+      "email": "jmontiel@ccg.unam.mx",
+      "degree": "Biologist from the Benemérita Universidad Autónoma de Puebla; Master's and PhD in Biochemical Sciences from the UNAM Institute of Biotechnology",
+      "institution": "Center for Genomic Sciences, UNAM",
+      "role": "Principal Investigator"
+    },
+    {
+      "name": "Damien Jean-Rene Formey de Saint Louvent",
+      "phone": "(777) 3115164",
+      "email": "formey@ccg.unam.mx",
+      "degree": "Bachelor in Biology from the University of Perpignan Via Domitia; Master's in Genomics and Evolution (LGDP – UPVD/CNRS); PhD in Plant–Microorganism Interaction Genomics (University of Toulouse III Paul Sabatier/CNRS)",
+      "institution": "Center for Genomic Sciences, UNAM",
+      "role": "Principal Investigator"
+    }
+  ]
+}
