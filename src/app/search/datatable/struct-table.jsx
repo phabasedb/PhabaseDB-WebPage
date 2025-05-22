@@ -9,13 +9,13 @@ import dynamic from "next/dynamic";
 const CircularProgress = dynamic(() =>
   import("@mui/material/CircularProgress")
 );
-import { Box, Tooltip, Button, IconButton, Typography } from "@mui/material";
+import { Box, Tooltip, Button, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import MUIDataTable from "mui-datatables";
 
 // local
 import { useGeneSearch, useAllGenes } from "@/components/WebService/Search";
-import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
+//import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
 import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
@@ -31,28 +31,8 @@ export default function StructTable({ term }) {
       options: {
         filter: false,
         sort: false,
-        //Configuration value and updateValue
         customBodyRender: (value, tableMeta, updateValue) => {
-          const rowIndex = tableMeta.rowIndex;
-          const gene = GENE_DATA[rowIndex];
           const geneId = tableMeta.rowData[1]; // “accession” column
-
-          // We prepare the URL and the message
-          const { url, message } = buildJBrowseUrl({
-            organismId: gene.organismId,
-            chromosome: gene.chromosome,
-            start: gene.start,
-            end: gene.end,
-          });
-
-          // Handler click for JBrowse
-          const onJBrowseClick = () => {
-            if (url) {
-              window.open(url, "_blank", "noopener,noreferrer");
-            } else {
-              alert(message);
-            }
-          };
 
           return (
             <Box
@@ -82,17 +62,6 @@ export default function StructTable({ term }) {
                   onClick={() => alert(`Ver Gene Expression de ${geneId}`)}
                 >
                   GE
-                </Button>
-              </Tooltip>
-              <Tooltip title="JBrowser Visualization">
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  sx={{ fontWeight: "bold" }}
-                  onClick={onJBrowseClick}
-                >
-                  B
                 </Button>
               </Tooltip>
             </Box>
