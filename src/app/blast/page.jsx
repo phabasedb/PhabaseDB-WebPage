@@ -17,7 +17,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import datasets from "@/static/blast/datasets/datasets.json";
+import datasets from "@/static/blast/datasets/index";
 import { useBlast } from "./useBlast";
 
 export default function BlastPage() {
