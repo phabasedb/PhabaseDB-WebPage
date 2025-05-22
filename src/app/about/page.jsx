@@ -6,7 +6,7 @@
 import { Box, Typography } from "@mui/material";
 
 // local
-import { team } from "@/static/about/index";
+import { team } from "@/static/about";
 
 export default function AboutUs() {
   return (
