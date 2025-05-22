@@ -11,9 +11,12 @@ import {
   ListItemIcon,
   ListItemText,
   Checkbox,
+  InputAdornment,
+  IconButton,
   TextField,
   CircularProgress,
 } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 import datasets from "@/static/blast/datasets/datasets.json";
 import { useBlast } from "./useBlast";
 
@@ -134,6 +137,20 @@ export default function BlastPage() {
               inputProps={{ style: { overflow: "auto", resize: "none" } }}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              InputProps={{
+                endAdornment: query && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="clear sequence"
+                      onClick={() => setQuery("")}
+                      edge="end"
+                      size="small"
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Box>
 
@@ -218,7 +235,6 @@ export default function BlastPage() {
               variant="outlined"
               fullWidth
               sx={{ my: 1 }}
-              placeholder="default"
               value={wordSize}
               onChange={(e) => setWordSize(e.target.value)}
             />
