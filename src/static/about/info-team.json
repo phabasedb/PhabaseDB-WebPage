@@ -6,18 +6,26 @@
       "name": "Jesús Montiel González",
       "phone": "(777) 3115164",
       "email": "jmontiel@ccg.unam.mx",
-      "degree": "Biologist from the Benemérita Universidad Autónoma de Puebla; Master's and PhD in Biochemical Sciences from the UNAM Institute of Biotechnology",
+      "degree": "Project Leader",
       "institution": "Center for Genomic Sciences, UNAM",
-      "role": "Principal Investigator"
+      "role": "Principal Investigator",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/jesus-montiel-gonzalez-571203102/",
+        "researchgate": "https://www.researchgate.net/profile/Jesus-Montiel-Gonzalez/research",
+        "ccg": "https://www.ccg.unam.mx/en/jesus-montiel-gonzalez/"
+      }
     },
     {
       "photo": "/image/team/damien.webp",
       "name": "Damien Jean-Rene Formey de Saint Louvent",
       "phone": "(777) 3115164",
       "email": "formey@ccg.unam.mx",
-      "degree": "Bachelor in Biology from the University of Perpignan Via Domitia; Master's in Genomics and Evolution (LGDP – UPVD/CNRS); PhD in Plant–Microorganism Interaction Genomics (University of Toulouse III Paul Sabatier/CNRS)",
+      "degree": "Project Leader",
       "institution": "Center for Genomic Sciences, UNAM",
-      "role": "Principal Investigator"
+      "role": "Principal Investigator",
+      "social": {
+        "ccg": "https://www.ccg.unam.mx/damien-jean-rene-formey-de-saint-louvent/"
+      }
     }
   ]
 }

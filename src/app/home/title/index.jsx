@@ -74,7 +74,7 @@ export default function Title() {
             maxWidth: "90%",
           }}
         >
-          A genomic and transcriptomic database for Phaseolus spp
+          A genomic and transcriptomic database for Phaseolus app
         </Typography>
       </Box>
     </Box>
