@@ -8,6 +8,7 @@ import {
   ToggleButtonGroup,
   Button,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 // local
 
@@ -17,6 +18,8 @@ export default function StructInfo({
   setSelectedTranscript,
   onNavClick,
 }) {
+  const router = useRouter();
+
   const commonTypographyStyle = {
     fontSize: {
       xs: "0.9rem",
@@ -70,6 +73,19 @@ export default function StructInfo({
       )}
     </Box>
   );
+
+  const handleBlastClick = () => {
+    if (geneData.accession && geneData.sequence) {
+      sessionStorage.setItem(
+        "blastPrefill",
+        JSON.stringify({
+          accession: geneData.accession,
+          sequence: geneData.sequence,
+        })
+      );
+      router.push("/blast");
+    }
+  };
 
   return (
     <Box
@@ -148,13 +164,13 @@ export default function StructInfo({
           flexWrap: "wrap",
           gap: 1,
           justifyContent: "center",
+          mt: 2,
         }}
       >
         {[
           { label: "SEQUENCES", key: "SEQUENCES-NV" },
           { label: "JBROWSER", key: "JBROWSER-NV" },
           { label: "GENE EXPRESSION", key: "EXPRESSION" },
-          { label: "BLAST", key: "BLAST" },
           { label: "SEQUENCE RETRIVAL", key: "RETRIVAL" },
         ].map((btn) => (
           <Button
@@ -166,6 +182,15 @@ export default function StructInfo({
             {btn.label}
           </Button>
         ))}
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleBlastClick}
+          sx={{ textTransform: "none" }}
+        >
+          BLAST
+        </Button>
       </Box>
     </Box>
   );

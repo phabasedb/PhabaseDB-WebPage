@@ -33,7 +33,7 @@
     "nucleotide": [
       {
         "name": "Phaseolus vulgaris Negro Jamapa genome",
-        "path": "PvNJ/PvNJ_genome"
+        "path": "pvnj/PvNJ_genome"
       }
     ],
     "protein": []

@@ -29,6 +29,18 @@ export default function BlastPage() {
   const [matrix, setMatrix] = useState("BLOSUM62");
   const [iframeSrc, setIframeSrc] = useState("");
 
+  useEffect(() => {
+    const raw = sessionStorage.getItem("blastPrefill");
+    if (raw) {
+      try {
+        const { accession, sequence } = JSON.parse(raw);
+        const combined = `>${accession}\n${sequence}`;
+        setQuery(combined);
+      } catch {}
+      sessionStorage.removeItem("blastPrefill");
+    }
+  }, []);
+
   const { handleBlast, loading, error, htmlResult } = useBlast({
     type,
     selected,
