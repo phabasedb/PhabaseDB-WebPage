@@ -9,7 +9,7 @@ export default function GeneHandler({
 }) {
   if (loading)
     return (
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", my: 3 }}>
         <CircularProgress />
       </Box>
     );

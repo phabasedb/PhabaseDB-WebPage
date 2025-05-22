@@ -1,7 +1,7 @@
 "use client";
 
 // standard
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // third party
 import { useParams } from "next/navigation";
@@ -46,15 +46,40 @@ function InnerGenePage({ detail }) {
   const [selectedTranscript, setSelectedTranscript] =
     useSelectedTranscript(detail);
 
+  // Refs para secciones
+  const jbrowseRef = useRef(null);
+  const sequencesRef = useRef(null);
+
+  // Función que pasa a Information para manejar scroll
+  const handleNavClick = (target) => {
+    switch (target) {
+      case "JBROWSER-NV":
+        jbrowseRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "SEQUENCES-NV":
+        sequencesRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <Information
         geneData={detail}
         selectedTranscript={selectedTranscript}
         setSelectedTranscript={setSelectedTranscript}
+        onNavClick={handleNavClick}
       />
-      <JBrowse geneData={detail} />
-      <Sequences geneData={detail} selectedTranscript={selectedTranscript} />
+
+      <section ref={jbrowseRef} id="jbrowse-section">
+        <JBrowse geneData={detail} />
+      </section>
+
+      <section ref={sequencesRef} id="sequences-section">
+        <Sequences geneData={detail} selectedTranscript={selectedTranscript} />
+      </section>
     </>
   );
 }

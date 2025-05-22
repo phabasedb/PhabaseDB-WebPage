@@ -6,6 +6,7 @@ import {
   Typography,
   ToggleButton,
   ToggleButtonGroup,
+  Button,
 } from "@mui/material";
 
 // local
@@ -14,6 +15,7 @@ export default function StructInfo({
   geneData,
   selectedTranscript,
   setSelectedTranscript,
+  onNavClick,
 }) {
   const commonTypographyStyle = {
     fontSize: {
@@ -137,6 +139,32 @@ export default function StructInfo({
           />
           <InfoItem label="Description" value={geneData.description} />
         </Box>
+      </Box>
+
+      <Box
+        sx={{
+          width: "90%",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 1,
+          justifyContent: "center",
+        }}
+      >
+        {[
+          { label: "SEQUENCES", key: "SEQUENCES-NV" },
+          { label: "JBROWSER", key: "JBROWSER-NV" },
+          { label: "GENE EXPRESSION", key: "EXPRESSION" },
+          { label: "BLAST", key: "BLAST" },
+        ].map((btn) => (
+          <Button
+            key={btn.key}
+            variant="contained"
+            onClick={() => onNavClick?.(btn.key)}
+            sx={{ textTransform: "none" }}
+          >
+            {btn.label}
+          </Button>
+        ))}
       </Box>
     </Box>
   );

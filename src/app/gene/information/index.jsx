@@ -10,6 +10,7 @@ export default function Information({
   geneData,
   selectedTranscript,
   setSelectedTranscript,
+  onNavClick,
 }) {
   return (
     <Box
@@ -24,6 +25,7 @@ export default function Information({
         geneData={geneData}
         selectedTranscript={selectedTranscript}
         setSelectedTranscript={setSelectedTranscript}
+        onNavClick={onNavClick}
       />
     </Box>
   );
