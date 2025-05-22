@@ -74,7 +74,11 @@ export default function Title() {
             maxWidth: "90%",
           }}
         >
-          A genomic and transcriptomic database for Phaseolus app
+          A genomic and transcriptomic database for{" "}
+          <Box component="span" sx={{ fontStyle: "italic" }}>
+            Phaseolus
+          </Box>{" "}
+          spp
         </Typography>
       </Box>
     </Box>

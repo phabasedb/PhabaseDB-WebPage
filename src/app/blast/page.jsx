@@ -85,6 +85,25 @@ export default function BlastPage() {
     );
   };
 
+  function formatScientificName(name) {
+    const scientificNames = ["Lotus japonicus", "Phaseolus vulgaris"];
+    let parts = [name];
+
+    scientificNames.forEach((sciName) => {
+      const regex = new RegExp(`(${sciName})`, "g");
+      parts = parts.flatMap((part) => {
+        if (typeof part !== "string") return part;
+        return part
+          .split(regex)
+          .map((subPart, index) =>
+            index % 2 === 1 ? <i key={subPart}>{subPart}</i> : subPart
+          );
+      });
+    });
+
+    return <>{parts}</>;
+  }
+
   return (
     <Box
       sx={{
@@ -197,8 +216,7 @@ export default function BlastPage() {
                             />
                           </ListItemIcon>
                           <ListItemText
-                            primary={ds.name}
-                            sx={{ fontStyle: "italic" }}
+                            primary={formatScientificName(ds.name)}
                           />
                         </ListItem>
                       );
