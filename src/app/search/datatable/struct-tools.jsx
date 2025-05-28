@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const pages = [
   { name: "Gene Expression", path: "/" },
-  { name: "JBrowser", path: "/jbrowser" },
+  { name: "Genome Browser", path: "/jbrowser" },
 ];
 
 export default function StructTools() {

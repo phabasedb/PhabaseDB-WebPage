@@ -23,7 +23,7 @@ export default function InformationCard() {
           <StructCard key={index} item={item} index={index} />
         ))}
 
-        {/**New Session Text Citing Phabase */}
+        {/**
         <Box
           sx={{
             display: "flex",
@@ -105,7 +105,7 @@ export default function InformationCard() {
               </Typography>
             </Card>
           </Box>
-        </Box>
+        </Box>*/}
       </Box>
     </Box>
   );

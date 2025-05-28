@@ -22,11 +22,11 @@ import Link from "next/link";
 
 const pages = [
   { name: "Home", path: "/" },
-  { name: "Gene Expression", path: "/" },
-  { name: "JBrowser", path: "/jbrowser" },
+  { name: "GeneExpression", path: "/" },
+  { name: "GenomeBrowser", path: "/jbrowser" },
   { name: "BLAST", path: "/blast" },
   { name: "Help", path: "/" },
-  { name: "About Us", path: "/about" },
+  { name: "AboutUs", path: "/about" },
 ];
 
 export default function NavBar() {
@@ -46,7 +46,12 @@ export default function NavBar() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* Small screen (movil) icon*/}
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
+              }}
+            >
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -83,7 +88,15 @@ export default function NavBar() {
                         color: "black",
                       }}
                     >
-                      <Typography sx={{ textAlign: "center" }}>
+                      <Typography
+                        sx={{
+                          textAlign: "center",
+                          fontSize: {
+                            xs: "1rem",
+                            sm: "1.1rem",
+                          },
+                        }}
+                      >
                         {page.name}
                       </Typography>
                     </Link>
@@ -113,6 +126,7 @@ export default function NavBar() {
                 display: { xs: "none", md: "flex" },
                 mr: 2,
                 justifyContent: "center",
+                gap: 1,
               }}
             >
               {pages.map((page) => (
@@ -127,9 +141,13 @@ export default function NavBar() {
                       my: 1,
                       color: "black",
                       display: "block",
-                      fontWeight: 500,
                       textTransform: "none",
                       textDecoration: "none",
+                      fontSize: {
+                        md: "1.2rem",
+                        lg: "1.3rem",
+                        xl: "1.4rem",
+                      },
                     }}
                     onClick={handleCloseNavMenu}
                   >

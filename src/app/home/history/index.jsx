@@ -12,7 +12,6 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  ListItemButton,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
@@ -23,7 +22,7 @@ export default function SearchHistory() {
   const [history, setHistory] = useState([]);
   const router = useRouter();
 
-  const generalTerms = [{ label: "GENES", icon: "/image/home/iconBean.webp" }];
+  const generalTerms = [{ label: "GENE BROWSER", term: "GENES" }];
 
   useEffect(() => {
     const storedHistory =
@@ -48,9 +47,6 @@ export default function SearchHistory() {
       <Box
         sx={{
           width: { xs: "90%", md: "70%" },
-          backgroundColor: "white",
-          borderRadius: 2,
-          boxShadow: 5,
         }}
       >
         <Box
@@ -64,19 +60,10 @@ export default function SearchHistory() {
           {generalTerms.map((termObj) => (
             <Button
               key={termObj.label}
-              onClick={() => handleItemClick(termObj.label)}
-              startIcon={
-                <Image
-                  src={termObj.icon}
-                  alt={`${termObj.label} icon`}
-                  width={24}
-                  height={24}
-                />
-              }
+              onClick={() => handleItemClick(termObj.term)}
               sx={{
                 textTransform: "none",
-                color: "blue",
-                textDecoration: "underline",
+                color: "#0B3AA1",
                 fontSize: {
                   xs: "1rem",
                   sm: "1.1rem",
@@ -87,7 +74,7 @@ export default function SearchHistory() {
                 p: 1,
               }}
             >
-              {termObj.label}
+              →{termObj.label}
             </Button>
           ))}
         </Box>
@@ -106,14 +93,13 @@ export default function SearchHistory() {
             <Typography
               variant="subtitle1"
               sx={{
-                fontWeight: 600,
                 p: 1,
                 fontSize: {
-                  xs: "1.1rem",
-                  sm: "1.2rem",
-                  md: "1.3rem",
-                  lg: "1.4rem",
-                  xl: "1.5rem",
+                  xs: "1rem",
+                  sm: "1.1rem",
+                  md: "1.2rem",
+                  lg: "1.3rem",
+                  xl: "1.4rem",
                 },
               }}
             >
@@ -150,8 +136,7 @@ export default function SearchHistory() {
                   <ListItemText
                     primary={item}
                     sx={{
-                      color: "blue",
-                      textDecoration: "underline",
+                      color: "#0B3AA1",
                       cursor: "pointer",
                     }}
                     primaryTypographyProps={{

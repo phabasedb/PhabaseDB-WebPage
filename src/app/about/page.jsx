@@ -1,5 +1,3 @@
-// src/app/about/page.jsx
-
 // standard
 
 // third party

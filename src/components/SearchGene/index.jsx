@@ -88,13 +88,14 @@ export default function SearchGene() {
 
         <Button
           variant="contained"
-          color="primary"
           onClick={handleSearch}
           sx={{
+            backgroundColor: "#E46951",
             borderRadius: 2,
             py: 1.5,
             px: 3,
             width: { xs: "100%", md: "auto" },
+            fontWeight: "bold",
           }}
         >
           SEARCH
