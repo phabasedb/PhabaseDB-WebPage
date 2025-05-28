@@ -1,5 +1,60 @@
 {
-  "description": "Our team comprises professionals with diverse expertise who are highly committed and motivated toward their projects, fostering a friendly and collaborative working environment",
+  "information": [
+    {
+      "title": "What is Phabase?",
+      "description": {
+        "intro": "Phabase is a public genomic database dedicated to Phaseolus spp., particularly to black bean Phaseolus vulgaris var. Negro Jamapa, an important crop in Mexico. The project offers access to high-quality genomic data, interactive tools for exploration and comparison, and integration with genome browsers and BLAST search functionality. Additionally, this platform offers a gene expression atlas, which integrates available transcriptome data from diferentes órganos y tejidos de P. vulgaris bajo distintas condiciones.",
+        "points": []
+      }
+    },
+    {
+      "title": "Our Mission",
+      "description": {
+        "intro": "Our mission is to support scientific research, agricultural improvement, and the conservation of the Negro Jamapa black bean by providing open and structured access to its genomic information.",
+        "points": []
+      }
+    },
+    {
+      "title": "Why the Negro Jamapa Black Bean?",
+      "description": {
+        "intro": "The Negro Jamapa black bean is a culturally and nutritionally significant variety in Mexico. By sequencing and making its genome publicly available, we aim to facilitate advancements in:",
+        "points": [
+          "Plant genetics",
+          "Crop improvement",
+          "Bioinformatics research"
+        ]
+      }
+    },
+    {
+      "title": "Key Features of Phabase",
+      "description": {
+        "intro": "",
+        "points": [
+          "🌱 Access to high-quality genome sequence data",
+          "🔎 Integrated BLAST search",
+          "🧬 Genome browser for intuitive navigation",
+          "📂 Data downloads in multiple formats",
+          "📊 Integrated gene expression atlas"
+        ]
+      }
+    },
+    {
+      "title": "Contact",
+      "description": {
+        "intro": "For inquiries or collaborations, please contact:",
+        "points": [],
+        "contact": {
+          "authors": [
+            "Jesús Montiel González",
+            "Damien Jean-Rene Formey de Saint Louvent"
+          ],
+          "institution": "Centro de Ciencias Genómicas, UNAM.",
+          "email": "phabasedb@ccg.unam.mx",
+          "website": "https://phabase.ccg.unam.mx"
+        }
+      }
+    }
+  ],
   "members": [
     {
       "photo": "/image/team/jesusm.webp",

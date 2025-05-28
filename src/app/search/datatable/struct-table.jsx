@@ -5,10 +5,6 @@ import { useMemo } from "react";
 
 // third party
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-const CircularProgress = dynamic(() =>
-  import("@mui/material/CircularProgress")
-);
 import { Box, Tooltip, Button, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import MUIDataTable from "mui-datatables";

@@ -32,7 +32,7 @@ export default function AboutUs() {
           boxShadow: 5,
         }}
       >
-        <Box sx={{ width: "90%", my: 1 }}>
+        <Box sx={{ width: "90%", mt: 1, mb: 3 }}>
           <Typography
             sx={{
               fontWeight: 600,
@@ -45,23 +45,140 @@ export default function AboutUs() {
               },
             }}
           >
-            Meet the Team
+            About Phabase
           </Typography>
-          <Typography
-            sx={{
-              fontSize: {
-                xs: "0.9rem",
-                sm: "1rem",
-                md: "1.1rem",
-                lg: "1.3rem",
-                xl: "1.5rem",
-              },
-              textAlign: "justify",
-              color: "text.secondary",
-            }}
-          >
-            {team.description}
-          </Typography>
+
+          {team.information.map((info, idx) => (
+            <Box key={idx} sx={{ mt: 2 }}>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: "1.1rem",
+                    sm: "1.2rem",
+                    md: "1.3rem",
+                    lg: "1.4rem",
+                    xl: "1.5rem",
+                  },
+                }}
+              >
+                {info.title}
+              </Typography>
+
+              {/* Intro */}
+              {info.description.intro && (
+                <Typography
+                  sx={{
+                    mt: 0.5,
+                    textAlign: "justify",
+                    color: "text.secondary",
+                    fontSize: {
+                      xs: "0.9rem",
+                      sm: "0.95rem",
+                      md: "1rem",
+                      lg: "1.1rem",
+                      xl: "1.2rem",
+                    },
+                  }}
+                >
+                  {info.description.intro}
+                </Typography>
+              )}
+
+              {/* Bullets */}
+              {info.description.points.length > 0 && (
+                <Box
+                  component="ul"
+                  sx={{ pl: 2, mt: 1, color: "text.secondary" }}
+                >
+                  {info.description.points.map((pt, i) => (
+                    <Box
+                      component="li"
+                      key={i}
+                      sx={{
+                        my: 0.5,
+                        fontSize: {
+                          xs: "0.9rem",
+                          sm: "0.95rem",
+                          md: "1rem",
+                          lg: "1.1rem",
+                          xl: "1.2rem",
+                        },
+                      }}
+                    >
+                      {pt}
+                    </Box>
+                  ))}
+                </Box>
+              )}
+
+              {/* Contact*/}
+              {info.description.contact && (
+                <Box sx={{ mt: 1, color: "text.secondary" }}>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: "0.9rem",
+                        sm: "0.95rem",
+                        md: "1rem",
+                        lg: "1.1rem",
+                        xl: "1.2rem",
+                      },
+                    }}
+                  >
+                    <strong>Authors:</strong>{" "}
+                    {info.description.contact.authors.join(", ")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: "0.9rem",
+                        sm: "0.95rem",
+                        md: "1rem",
+                        lg: "1.1rem",
+                        xl: "1.2rem",
+                      },
+                    }}
+                  >
+                    <strong>Institution:</strong>{" "}
+                    {info.description.contact.institution}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: "0.9rem",
+                        sm: "0.95rem",
+                        md: "1rem",
+                        lg: "1.1rem",
+                        xl: "1.2rem",
+                      },
+                    }}
+                  >
+                    <strong>Email:</strong> {info.description.contact.email}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: "0.9rem",
+                        sm: "0.95rem",
+                        md: "1rem",
+                        lg: "1.1rem",
+                        xl: "1.2rem",
+                      },
+                    }}
+                  >
+                    <strong>Website:</strong>{" "}
+                    <a
+                      href={info.description.contact.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {info.description.contact.website}
+                    </a>
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          ))}
         </Box>
       </Box>
 
