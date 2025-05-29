@@ -10,7 +10,7 @@ import Link from "next/link";
 // local
 
 const pages = [
-  { name: "Gene Expression", path: "/" },
+  /*{ name: "Gene Expression", path: "/" },*/
   { name: "Genome Browser", path: "/jbrowser" },
 ];
 

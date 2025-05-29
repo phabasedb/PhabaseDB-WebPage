@@ -22,10 +22,10 @@ import Link from "next/link";
 
 const pages = [
   { name: "Home", path: "/" },
-  { name: "GeneExpression", path: "/" },
+  /*{ name: "GeneExpression", path: "/" },*/
   { name: "GenomeBrowser", path: "/jbrowser" },
   { name: "BLAST", path: "/blast" },
-  { name: "Help", path: "/" },
+  /*{ name: "Help", path: "/" },*/
   { name: "AboutUs", path: "/about" },
 ];
 
