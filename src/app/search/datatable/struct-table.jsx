@@ -49,7 +49,7 @@ export default function StructTable({ term }) {
                   <InfoIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Gene Expression Visualization">
+              {/*<Tooltip title="Gene Expression Visualization">
                 <Button
                   size="small"
                   variant="contained"
@@ -59,7 +59,7 @@ export default function StructTable({ term }) {
                 >
                   GE
                 </Button>
-              </Tooltip>
+              </Tooltip>*/}
             </Box>
           );
         },
