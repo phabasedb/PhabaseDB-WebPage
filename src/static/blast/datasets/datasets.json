@@ -1,20 +1,20 @@
 [
   {
-    "database": "Lotus japonicus Gifu",
+    "database": "Phaseolus vulgaris Negro Jamapa",
     "nucleotide": [
       {
-        "name": "Lotus japonicus Gifu genome v1.2",
-        "path": "jamapa/Lotusjaponicus_Gifu_v1.2_genome"
+        "name": "Phaseolus vulgaris Negro Jamapa genome v1",
+        "path": "pvulgarisnj/Pvulgaris_Negro_Jamapa_v1_genome"
       },
       {
-        "name": "Lotus japonicus Gifu v1.3 CDS",
-        "path": "jamapa/Lotusjaponicus_Gifu_v1.3_cds"
+        "name": "Phaseolus vulgaris Negro Jamapa v1 CDS",
+        "path": "pvulgarisnj/Pvulgaris_Negro_Jamapa_v1_CDS"
       }
     ],
     "protein": [
       {
-        "name": "Lotus japonicus Gifu v1.3 Proteins",
-        "path": "jamapa/Lotusjaponicus_Gifu_v1.3_proteins"
+        "name": "Phaseolus vulgaris Negro Jamapa v1 Proteins",
+        "path": "pvulgarisnj/Pvulgaris_Negro_Jamapa_v1_proteins"
       }
     ]
   },
@@ -29,11 +29,11 @@
     "protein": []
   },
   {
-    "database": "Phaseolus vulgaris Negro Jamapa",
+    "database": "Phaseolus vulgaris BAT93",
     "nucleotide": [
       {
-        "name": "Phaseolus vulgaris Negro Jamapa genome",
-        "path": "pvnj/PvNJ_genome"
+        "name": "Phaseolus vulgaris BAT93 genome v10",
+        "path": "bat93/Pvulgaris_BAT93_v10_genome"
       }
     ],
     "protein": []

@@ -19,11 +19,11 @@ const validators = [
   {
     test: (value) => value.length >= MIN_INPUT_LENGTH,
     message: `The term cannot be less than ${MIN_INPUT_LENGTH} characters.`,
-  },
+  } /*
   {
     test: (value) => ALPHANUMERIC_PATTERN.test(value),
     message: "Only alphanumeric characters are allowed.",
-  },
+  },*/,
 ];
 
 // -------------------

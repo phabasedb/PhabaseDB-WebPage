@@ -40,7 +40,7 @@ export function buildJBrowseUrl({
   const qp = new URLSearchParams({
     config,
     loc,
-    assembly: ds.assamblyName,
+    assembly: ds.assemblyName,
     tracks,
   }).toString();
   const url = `${baseUrl}?${qp}`;

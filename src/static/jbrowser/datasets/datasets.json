@@ -1,18 +1,18 @@
 [
   {
     "_id": "PDBJAMAPAORG000001",
-    "organism": "Phaseolus vulgaris cv. Negro Jamapa v1.3",
-    "assamblyName": "LjG1.1",
-    "tracks": ["JamapaGenes-FeatureTrack", "LjG1.1-ReferenceSequenceTrack"],
+    "organism": "Phaseolus vulgaris cv. Negro Jamapa v1",
+    "assemblyName": "PvNJ1.1",
+    "tracks": ["JamapaGenes-FeatureTrack", "PvNJ1.1-ReferenceSequenceTrack"],
     "sessionDefect": {
       "views": [
         {
           "type": "LinearGenomeView",
-          "assembly": "LjG1.1",
-          "loc": "LjG1.1_chr1:1-137250648",
+          "assembly": "PvNJ1.1",
+          "loc": "PvNJ1.1_chr1:28549776-29016064",
           "tracks": [
             "JamapaGenes-FeatureTrack",
-            "LjG1.1-ReferenceSequenceTrack"
+            "PvNJ1.1-ReferenceSequenceTrack"
           ]
         }
       ]
@@ -28,11 +28,27 @@
         {
           "type": "LinearGenomeView",
           "assembly": "G19833",
-          "loc": "Chr01:1-51433939",
+          "loc": "Chr01:25001127-27354100",
           "tracks": [
             "G19833Genes-FeatureTrack",
             "G19833-ReferenceSequenceTrack"
           ]
+        }
+      ]
+    }
+  },
+  {
+    "_id": "PDBGBAT93ORG000001",
+    "organism": "Phaseolus vulgaris BAT93 v10",
+    "assemblyName": "BAT93",
+    "tracks": ["BAT93-ReferenceSequenceTrack"],
+    "sessionDefect": {
+      "views": [
+        {
+          "type": "LinearGenomeView",
+          "assembly": "BAT93",
+          "loc": "scaffold00001:1252689-1255505",
+          "tracks": ["BAT93-ReferenceSequenceTrack"]
         }
       ]
     }
