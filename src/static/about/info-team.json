@@ -82,5 +82,32 @@
         "ccg": "https://www.ccg.unam.mx/damien-jean-rene-formey-de-saint-louvent/"
       }
     }
-  ]
+  ],
+  "collaborations": {
+    "title": "🤝 Collaborations and Acknowledgments",
+    "intro": "Our platform has been built through the collaborative efforts of a multidisciplinary team of software engineers, database specialists, and bioinformatics researchers.\n\nWe gratefully acknowledge the contributions of the following team members:",
+    "acknowledgments": [
+      {
+        "name": "Pacheco",
+        "role": "Software engineer",
+        "desc": "responsible for the front-end interface and system integration."
+      },
+      {
+        "name": "Heladia Salgado",
+        "role": "Software Coordinator",
+        "desc": "Ensures seamless communication between the scientific team and developers. Guides the implementation of biological requirements into functional software features, tracks development progress, and helps align technological solutions with research goals."
+      }
+    ],
+    "thanksIntro": "We would like to thank the individuals who contributed their technical expertise to the development and deployment of this platform:",
+    "thanks": [
+      {
+        "name": "Andrés Leal",
+        "desc": "We are grateful for his valuable guidance in the development of the web services and for updating the application using Docker on the server."
+      },
+      {
+        "name": "Felipe Betancour",
+        "desc": "We thank him for his support in designing the database and for his backend development advice during the data processing implementation."
+      }
+    ]
+  }
 }

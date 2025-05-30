@@ -318,6 +318,93 @@ export default function AboutUs() {
           </Card>
         ))}
       </Box>
+      <Box
+        sx={{
+          width: "90%",
+          backgroundColor: "white",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          overflow: "hidden",
+          borderRadius: 2,
+          boxShadow: 5,
+        }}
+      >
+        <Box sx={{ width: "90%", mt: 1, mb: 3 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "1.1rem",
+                sm: "1.2rem",
+                md: "1.3rem",
+                lg: "1.4rem",
+                xl: "1.5rem",
+              },
+            }}
+          >
+            {collaborations.title}
+          </Typography>
+          <Typography
+            sx={{
+              mt: 0.5,
+              textAlign: "justify",
+              color: "text.secondary",
+              fontSize: {
+                xs: "0.9rem",
+                sm: "0.95rem",
+                md: "1rem",
+                lg: "1.1rem",
+                xl: "1.2rem",
+              },
+            }}
+          >
+            {collaborations.intro}
+          </Typography>
+          <Box component="ul" sx={{ pl: 2, mt: 1, color: "text.secondary" }}>
+            {collaborations.acknowledgments.map((item, i) => (
+              <Box
+                component="li"
+                key={i}
+                sx={{
+                  my: 0.5,
+                  fontSize: {
+                    xs: "0.9rem",
+                    sm: "0.95rem",
+                    md: "1rem",
+                    lg: "1.1rem",
+                    xl: "1.2rem",
+                  },
+                }}
+              >
+                <strong>[{item.name}]</strong> – {item.role} {item.desc}
+              </Box>
+            ))}
+          </Box>
+          <Typography
+            sx={{
+              my: 0.5,
+              textAlign: "justify",
+              color: "text.secondary",
+              fontSize: {
+                xs: "0.9rem",
+                sm: "0.95rem",
+                md: "1rem",
+                lg: "1.1rem",
+                xl: "1.2rem",
+              },
+            }}
+          >
+            {collaborations.thanksIntro}
+          </Typography>
+
+          {collaborations.thanks.map((item, i) => (
+            <Box key={i} sx={{ mt: 2, color: "text.secondary" }}>
+              <Typography component="em">{item.name}</Typography>
+              <Typography sx={{ mt: 0.5 }}>{item.desc}</Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     </Box>
   );
 }
