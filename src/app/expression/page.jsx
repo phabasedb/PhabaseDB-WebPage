@@ -25,7 +25,7 @@ export default function GeneExpressionPage() {
           boxShadow: 5,
         }}
       >
-        <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+        <Box>
           <img
             src="/image/home/geneexpression.webp"
             alt="Example Gene Expression"
