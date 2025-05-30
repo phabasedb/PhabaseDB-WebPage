@@ -6,6 +6,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LanguageIcon from "@mui/icons-material/Language";
 import ScienceIcon from "@mui/icons-material/Science";
 import IconButton from "@mui/material/IconButton";
+import SchoolIcon from "@mui/icons-material/School";
 
 // local
 import { team } from "@/static/about";
@@ -309,6 +310,19 @@ export default function AboutUs() {
                       size="small"
                     >
                       <LanguageIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+                {member.social.googleacademic && (
+                  <Tooltip title="Google Scholar">
+                    <IconButton
+                      component="a"
+                      href={member.social.googleacademic}
+                      target="_blank"
+                      rel="noopener"
+                      size="small"
+                    >
+                      <SchoolIcon />
                     </IconButton>
                   </Tooltip>
                 )}

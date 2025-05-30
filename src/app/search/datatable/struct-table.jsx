@@ -55,7 +55,10 @@ export default function StructTable({ term }) {
                   variant="contained"
                   color="primary"
                   sx={{ fontWeight: "bold" }}
-                  onClick={() => alert(`Ver Gene Expression de ${geneId}`)}
+                  onClick={
+                    () => router.push(`/expression`) // Rediriging gene/[idGene]
+                  }
+                  //onClick={() => alert(`Ver Gene Expression de ${geneId}`)}
                 >
                   GE
                 </Button>
