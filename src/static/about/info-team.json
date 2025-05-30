@@ -81,17 +81,6 @@
       "social": {
         "ccg": "https://www.ccg.unam.mx/damien-jean-rene-formey-de-saint-louvent/"
       }
-    },
-    {
-      "photo": "/image/team/helysalgado.webp",
-      "name": "Heladia Salgado Osorio",
-      "phone": "(777) 3132063",
-      "email": "heladia@ccg.unam.mx",
-      "institution": "Center for Genomic Sciences, UNAM",
-      "social": {
-        "ccg": "https://www.ccg.unam.mx/heladia-salgado-osorio/",
-        "googleacademic": "https://scholar.google.com/citations?user=ezI9LUUAAAAJ&hl=es"
-      }
     }
   ]
 }

@@ -313,19 +313,6 @@ export default function AboutUs() {
                     </IconButton>
                   </Tooltip>
                 )}
-                {member.social.googleacademic && (
-                  <Tooltip title="Google Scholar">
-                    <IconButton
-                      component="a"
-                      href={member.social.googleacademic}
-                      target="_blank"
-                      rel="noopener"
-                      size="small"
-                    >
-                      <SchoolIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
               </Box>
             </CardContent>
           </Card>
