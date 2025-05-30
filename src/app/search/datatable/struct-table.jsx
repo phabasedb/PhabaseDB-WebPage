@@ -72,7 +72,7 @@ export default function StructTable({ term }) {
   ];
 
   const options = {
-    filter: false,
+    filter: true,
     responsive: "simple",
     selectableRows: "none",
     viewColumns: false,

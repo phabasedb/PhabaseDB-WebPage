@@ -10,10 +10,10 @@ const validators = [
     test: (value) => value.trim() !== "",
     message: "The field cannot be empty.",
   },
-  {
+  /*{
     test: (value) => value.length <= MAX_INPUT_LENGTH,
     message: `The term cannot exceed ${MAX_INPUT_LENGTH} characters.`,
-  },
+  },*/
   {
     test: (value) => value.length >= MIN_INPUT_LENGTH,
     message: `The term cannot be less than ${MIN_INPUT_LENGTH} characters.`,

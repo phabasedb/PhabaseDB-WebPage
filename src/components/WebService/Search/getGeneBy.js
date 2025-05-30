@@ -6,8 +6,16 @@ import { gql } from "@apollo/client";
 // local
 
 export const GET_GENE_BY_DATATABLE = gql`
-  query GetGeneBy($search: String) {
-    getGeneBy(search: $search) {
+  query GetGeneBy(
+    $properties: [String]
+    $search: String
+    $fullMatchOnly: Boolean
+  ) {
+    getGeneBy(
+      properties: $properties
+      search: $search
+      fullMatchOnly: $fullMatchOnly
+    ) {
       data {
         _id
         gene {

@@ -12,10 +12,10 @@ import {
 // -------------------
 
 const validators = [
-  {
+  /*{
     test: (value) => value.length <= MAX_INPUT_LENGTH,
     message: `The term cannot exceed ${MAX_INPUT_LENGTH} characters.`,
-  },
+  },*/
   {
     test: (value) => value.length >= MIN_INPUT_LENGTH,
     message: `The term cannot be less than ${MIN_INPUT_LENGTH} characters.`,
@@ -101,8 +101,15 @@ export function useGeneQuery(searchTerm, query, variables, mapData) {
  * @param {string} query - Alphanumeric search term
  */
 export function useGeneSearch(query) {
-  return useGeneQuery(query, GET_GENE_BY_DATATABLE, { search: query }, (data) =>
-    mapGeneSummaries(data)
+  return useGeneQuery(
+    query,
+    GET_GENE_BY_DATATABLE,
+    {
+      search: query,
+      properties: ["gene._id", "gene.accessionId", "gene.description"],
+      fullMatchOnly: true,
+    },
+    (data) => mapGeneSummaries(data)
   );
 }
 
