@@ -6,7 +6,6 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LanguageIcon from "@mui/icons-material/Language";
 import ScienceIcon from "@mui/icons-material/Science";
 import IconButton from "@mui/material/IconButton";
-import SchoolIcon from "@mui/icons-material/School";
 
 // local
 import { team } from "@/static/about";
@@ -187,7 +186,7 @@ export default function AboutUs() {
       <Box
         sx={{
           width: "90%",
-          mt: 3,
+          my: 3,
           display: "flex",
           flexWrap: "wrap",
           gap: 2,
@@ -342,7 +341,7 @@ export default function AboutUs() {
               },
             }}
           >
-            {collaborations.title}
+            {team.collaborations.title}
           </Typography>
           <Typography
             sx={{
@@ -358,15 +357,15 @@ export default function AboutUs() {
               },
             }}
           >
-            {collaborations.intro}
+            {team.collaborations.intro}
           </Typography>
-          <Box component="ul" sx={{ pl: 2, mt: 1, color: "text.secondary" }}>
-            {collaborations.acknowledgments.map((item, i) => (
+          <Box sx={{ mt: 2, color: "text.secondary" }}>
+            {team.collaborations.acknowledgments.map((item, i) => (
               <Box
-                component="li"
                 key={i}
                 sx={{
-                  my: 0.5,
+                  mb: 1,
+                  textAlign: "justify",
                   fontSize: {
                     xs: "0.9rem",
                     sm: "0.95rem",
@@ -376,13 +375,13 @@ export default function AboutUs() {
                   },
                 }}
               >
-                <strong>[{item.name}]</strong> – {item.role} {item.desc}
+                <strong>{item.name}</strong> – {item.role} {item.desc}
               </Box>
             ))}
           </Box>
           <Typography
             sx={{
-              my: 0.5,
+              mt: 1,
               textAlign: "justify",
               color: "text.secondary",
               fontSize: {
@@ -394,13 +393,42 @@ export default function AboutUs() {
               },
             }}
           >
-            {collaborations.thanksIntro}
+            {team.collaborations.thanksIntro}
           </Typography>
 
-          {collaborations.thanks.map((item, i) => (
-            <Box key={i} sx={{ mt: 2, color: "text.secondary" }}>
-              <Typography component="em">{item.name}</Typography>
-              <Typography sx={{ mt: 0.5 }}>{item.desc}</Typography>
+          {team.collaborations.thanks.map((item, i) => (
+            <Box
+              key={i}
+              sx={{
+                mt: 1,
+                fontSize: {
+                  xs: "0.9rem",
+                  sm: "0.95rem",
+                  md: "1rem",
+                  lg: "1.1rem",
+                  xl: "1.2rem",
+                },
+                color: "text.secondary",
+              }}
+            >
+              <Typography>
+                <strong>{item.name}</strong>
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 0.5,
+                  fontSize: {
+                    xs: "0.9rem",
+                    sm: "0.95rem",
+                    md: "1rem",
+                    lg: "1.1rem",
+                    xl: "1.2rem",
+                  },
+                  textAlign: "justify",
+                }}
+              >
+                {item.desc}
+              </Typography>
             </Box>
           ))}
         </Box>

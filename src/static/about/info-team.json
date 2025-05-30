@@ -84,11 +84,11 @@
     }
   ],
   "collaborations": {
-    "title": "🤝 Collaborations and Acknowledgments",
+    "title": "Collaborations and Acknowledgments 🤝",
     "intro": "Our platform has been built through the collaborative efforts of a multidisciplinary team of software engineers, database specialists, and bioinformatics researchers.\n\nWe gratefully acknowledge the contributions of the following team members:",
     "acknowledgments": [
       {
-        "name": "Pacheco",
+        "name": "Emanuel Pacheco",
         "role": "Software engineer",
         "desc": "responsible for the front-end interface and system integration."
       },
@@ -105,7 +105,7 @@
         "desc": "We are grateful for his valuable guidance in the development of the web services and for updating the application using Docker on the server."
       },
       {
-        "name": "Felipe Betancour",
+        "name": "Felipe Betancourt-Figueroa",
         "desc": "We thank him for his support in designing the database and for his backend development advice during the data processing implementation."
       }
     ]
