@@ -87,6 +87,10 @@ export default function StructInfo({
     }
   };
 
+  const handleGeneExpressionClick = () => {
+    router.push("/expression");
+  };
+
   return (
     <Box
       sx={{
@@ -190,6 +194,14 @@ export default function StructInfo({
           sx={{ textTransform: "none" }}
         >
           BLAST
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleGeneExpressionClick}
+          sx={{ textTransform: "none" }}
+        >
+          GENE EXPRESSION
         </Button>
       </Box>
     </Box>
