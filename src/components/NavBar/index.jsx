@@ -91,10 +91,6 @@ export default function NavBar() {
                       <Typography
                         sx={{
                           textAlign: "center",
-                          fontSize: {
-                            xs: "1rem",
-                            sm: "1.1rem",
-                          },
                         }}
                       >
                         {page.name}
