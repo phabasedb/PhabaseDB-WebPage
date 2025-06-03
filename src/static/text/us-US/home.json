@@ -5,7 +5,7 @@
   },
   {
     "image": "/image/home/home2.webp",
-    "description": "Negro Jamapa is the predominant common bean variety consumed in central and southern Mexico. Annually, 30 tons are produced across the regions of Jalisco, Morelos, and Veracruz. Notably, Negro Jamapa serves as the primary model for functional genomics research conducted by various scientific groups."
+    "description": "Negro Jamapa is the predominant common bean variety consumed in central and southern Mexico. Notably, Negro Jamapa serves as the primary model for functional genomics research conducted by various scientific groups."
   },
   {
     "image": "/image/home/home3.webp",
@@ -14,9 +14,5 @@
   {
     "image": "/image/home/home4.webp",
     "description": "Negro Jamapa field in the central region of Mexico (Morelos)"
-  },
-  {
-    "image": "/image/home/home5.webp",
-    "description": "Confocal microscopy image showing a nodule slide with nitrogen-fixing bacteria colonizing the nodule cells"
   }
 ]
