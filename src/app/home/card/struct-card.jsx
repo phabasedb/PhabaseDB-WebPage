@@ -48,7 +48,7 @@ export default function StructCard({ item, index }) {
             alt="Informative image"
             sx={{
               width: "100%",
-              height: "100%",
+              height: "auto",
             }}
           />
         </Box>
