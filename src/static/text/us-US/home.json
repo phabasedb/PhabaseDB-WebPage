@@ -1,7 +1,8 @@
 [
   {
     "image": "/image/home/home1.webp",
-    "description": "Several Phaseolus species are an important source of protein for humans. However, functional genomics studies in these organisms have been challenging due to limited genomic and transcriptomic information. To address this issue, the Centre for Genomic Sciences developed Phabase, a platform designed to integrate genomic and transcriptome data from various Phaseolus species. Initially we present a de novo genome sequencing and transcriptome data of the common bean variety, Negro Jamapa."
+    "description": "Several Phaseolus species are an important source of protein for humans. However, functional genomics studies in these organisms have been challenging due to limited genomic and transcriptomic information. To address this issue, the Centre for Genomic Sciences developed Phabase, a platform designed to integrate genomic and transcriptome data from various Phaseolus species. Initially we present a de novo genome sequencing and transcriptome data of the common bean variety, Negro Jamapa.",
+    "italic": ["Phaseolus", "novo"]
   },
   {
     "image": "/image/home/home2.webp",
@@ -9,7 +10,8 @@
   },
   {
     "image": "/image/home/home3.webp",
-    "description": "Phaseolus spp. obtain nitrogenous compounds in the root nodules from a mutualistic association with soil bacteria called rhizobia."
+    "description": "Phaseolus spp. obtain nitrogenous compounds in the root nodules from a mutualistic association with soil bacteria called rhizobia.",
+    "italic": ["Phaseolus"]
   },
   {
     "image": "/image/home/home4.webp",

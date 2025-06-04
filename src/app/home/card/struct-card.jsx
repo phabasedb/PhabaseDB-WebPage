@@ -4,6 +4,7 @@
 import { Box, Card, CardMedia, Typography } from "@mui/material";
 
 // local
+import highlightText from "@/shared/text-Highlighter";
 
 export default function StructCard({ item, index }) {
   return (
@@ -76,7 +77,7 @@ export default function StructCard({ item, index }) {
               lineHeight: 1.5,
             }}
           >
-            {item.description}
+            {highlightText(item.description, item.italic)}
           </Typography>
         </Box>
       </Card>
