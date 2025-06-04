@@ -31,7 +31,7 @@ export default function SearchGene() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  // Search history storage function with a limit of 10.
+  // Search history storage function with a limit of 5.
   const handleSearch = () => {
     if (!validateInput(searchGene, setErrorGene)) return;
 

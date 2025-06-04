@@ -1,3 +1,9 @@
+//standard
+
+// third party
+
+//local
+
 /**
  * Converts an array of gene records to simple summaries.
  * @param {Array<Object>} records - GraphQL response with multiple genes
