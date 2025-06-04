@@ -36,7 +36,7 @@ export default function SearchGene() {
     if (!validateInput(searchGene, setErrorGene)) return;
 
     const history = readHistory();
-    const newHistory = updateHistoryArray(history, searchGene, 10);
+    const newHistory = updateHistoryArray(history, searchGene, 5);
     writeHistory(newHistory);
 
     router.push(`/search/${encodeURIComponent(searchGene)}`);

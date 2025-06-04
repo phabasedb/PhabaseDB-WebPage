@@ -106,13 +106,7 @@ export default function SearchHistory() {
               Search History
             </Typography>
           </Box>
-          <Box
-            sx={{
-              maxHeight: { xs: 250, sm: 265, md: 280, lg: 315, xl: 325 },
-              //overflowY: "auto",
-              p: 1,
-            }}
-          >
+          <Box>
             <List>
               {history.map((item, index) => (
                 <ListItem
