@@ -5,7 +5,7 @@ import { Box, Card, Typography, Link } from "@mui/material";
 
 // local
 import StructCard from "./struct-card";
-import { home } from "@/static/text/us-US";
+import { home } from "@/static/text/us-US/home";
 
 export default function InformationCard() {
   return (

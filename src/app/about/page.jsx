@@ -8,7 +8,7 @@ import ScienceIcon from "@mui/icons-material/Science";
 import IconButton from "@mui/material/IconButton";
 
 // local
-import { team } from "@/static/about";
+import { team } from "@/static/text/us-US/about";
 
 export default function AboutUs() {
   return (

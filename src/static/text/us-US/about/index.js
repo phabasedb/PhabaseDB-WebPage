@@ -3,6 +3,6 @@
 //third party
 
 //local
-import team from "./info-team.json";
+import team from "./about.json";
 
 export { team };
