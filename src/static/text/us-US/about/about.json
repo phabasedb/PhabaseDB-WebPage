@@ -2,22 +2,22 @@
   "information": [
     {
       "title": "What is Phabase?",
-      "description": {
-        "intro": "Phabase is a public genomic database dedicated to Phaseolus spp., particularly to black bean Phaseolus vulgaris var. Negro Jamapa, an important crop in Mexico. The project offers access to high-quality genomic data, interactive tools for exploration and comparison, and integration with genome browsers and BLAST search functionality. Additionally, this platform offers a gene expression atlas, which integrates available transcriptome data from diferentes órganos y tejidos de P. vulgaris bajo distintas condiciones.",
-        "points": []
+      "content": {
+        "description": "Phabase is a public genomic database dedicated to Phaseolus spp., particularly to black bean *Phaseolus vulgaris* var. Negro Jamapa, an important crop in Mexico. The project offers access to high-quality genomic data, interactive tools for exploration and comparison, and integration with genome browsers and BLAST search functionality. Additionally, this platform offers a gene expression atlas, which integrates available transcriptome data from different organs and tissues of P. vulgaris plants grown under different conditions and treatments.",
+        "points": [],
+        "italic": ["Phaseolus", "vulgaris", "P. vulgaris"]
       }
     },
     {
       "title": "Our Mission",
-      "description": {
-        "intro": "Our mission is to support scientific research, agricultural improvement, and the conservation of the Negro Jamapa black bean by providing open and structured access to its genomic information.",
-        "points": []
+      "content": {
+        "description": "Our mission is to support scientific research, agricultural improvement, and the conservation of the Negro Jamapa black bean by providing open and structured access to its genomic information."
       }
     },
     {
       "title": "Why the Negro Jamapa Black Bean?",
-      "description": {
-        "intro": "The Negro Jamapa black bean is a culturally and nutritionally significant variety in Mexico. By sequencing and making its genome publicly available, we aim to facilitate advancements in:",
+      "content": {
+        "description": "The Negro Jamapa black bean is a culturally and nutritionally significant variety in Mexico. By sequencing and making its genome publicly available, we aim to facilitate advancements in:",
         "points": [
           "Plant genetics",
           "Crop improvement",
@@ -27,8 +27,7 @@
     },
     {
       "title": "Key Features of Phabase",
-      "description": {
-        "intro": "",
+      "content": {
         "points": [
           "🌱 Access to high-quality genome sequence data",
           "🔎 Integrated BLAST search",
@@ -40,9 +39,8 @@
     },
     {
       "title": "Contact",
-      "description": {
-        "intro": "For inquiries or collaborations, please contact:",
-        "points": [],
+      "content": {
+        "description": "For inquiries or collaborations, please contact:",
         "contact": {
           "authors": [
             "Jesús Montiel González",
@@ -84,30 +82,30 @@
     }
   ],
   "collaborations": {
-    "title": "Collaborations and Acknowledgments 🤝",
-    "intro": "Our platform has been built through the collaborative efforts of a multidisciplinary team of software engineers, database specialists, and bioinformatics researchers.\n\nWe gratefully acknowledge the contributions of the following team members:",
-    "acknowledgments": [
-      {
-        "name": "Emanuel Pacheco",
-        "role": "Software engineer",
-        "desc": "responsible for the front-end interface and system integration."
-      },
-      {
-        "name": "Heladia Salgado",
-        "role": "Software Coordinator",
-        "desc": "Ensures seamless communication between the scientific team and developers. Guides the implementation of biological requirements into functional software features, tracks development progress, and helps align technological solutions with research goals."
-      }
-    ],
-    "thanksIntro": "We would like to thank the individuals who contributed their technical expertise to the development and deployment of this platform:",
-    "thanks": [
-      {
-        "name": "Andrés Leal",
-        "desc": "We are grateful for his valuable guidance in the development of the web services and for updating the application using Docker on the server."
-      },
-      {
-        "name": "Felipe Betancourt-Figueroa",
-        "desc": "We thank him for his support in designing the database and for his backend development advice during the data processing implementation."
-      }
-    ]
+    "title": "Collaborations and Acknowledgments",
+    "content": {
+      "description": "Our platform has been built through the collaborative efforts of a multidisciplinary team of software engineers, database specialists, and bioinformatics researchers.\n\nWe gratefully acknowledge the contributions of the following team members:",
+      "acknowledgments": [
+        {
+          "name": "Emanuel Pacheco",
+          "desc": "Software engineer responsible for the front-end interface and system integration."
+        },
+        {
+          "name": "Heladia Salgado",
+          "desc": "Software Coordinator. Ensures seamless communication between the scientific team and developers. Guides the implementation of biological requirements into functional software features, tracks development progress, and helps align technological solutions with research goals."
+        }
+      ],
+      "descrip-in-middle": "We would like to thank the individuals who contributed their technical expertise to the development and deployment of this platform:",
+      "thanks-people": [
+        {
+          "name": "Andrés Leal",
+          "desc": "We are grateful for his valuable guidance in the development of the web services and for updating the application using Docker on the server."
+        },
+        {
+          "name": "Felipe Betancourt-Figueroa",
+          "desc": "We thank him for his support in designing the database and for his backend development advice during the data processing implementation."
+        }
+      ]
+    }
   }
 }
