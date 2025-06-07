@@ -25,19 +25,19 @@ export function useBlast({
     setError(null);
     setHtmlResult("");
 
-    // 1) Validaciones básicas
+    // 1) Basic validations
     if (!query.trim()) {
-      setError("La secuencia no puede estar vacía.");
+      setError("The sequence cannot be empty.");
       setLoading(false);
       return;
     }
     if (selected.length === 0) {
-      setError("Debes seleccionar al menos una base de datos.");
+      setError("You must select at least one database.");
       setLoading(false);
       return;
     }
 
-    // 2) Validaciones avanzadas
+    // 2) Advanced validations
     const evErr = validateEvalue(evalue);
     const wsErr = validateWordSize(wordSize);
     const mtErr = validateMaxTargetSeqs(maxTargetSeqs);
@@ -48,7 +48,7 @@ export function useBlast({
       return;
     }
 
-    // 3) Construcción de parámetros avanzados
+    // 3) Construction of advanced parameters
     const args = [];
     evalue.trim() && args.push("-evalue", evalue.trim());
     wordSize.trim() && args.push("-word_size", wordSize.trim());
@@ -78,23 +78,19 @@ export function useBlast({
       });
 
       if (!res.ok) {
-        let msg = `Error HTTP ${res.status}`;
-        try {
-          msg = (await res.json()).message || msg;
-        } catch {}
-        throw new Error(msg);
+        if (res.status === 502) {
+          throw new Error(
+            "The BLAST service is not available at this time. Please try again later."
+          );
+        }
+        // For other errors we parse the JSON from the API
+        const { message } = await res.json();
+        throw new Error(message);
       }
 
-      const ctype = res.headers.get("content-type") || "";
-      if (ctype.includes("application/json")) {
-        const data = await res.json();
-        if (data.status === "error") throw new Error(data.message);
-        setHtmlResult(data.html || "");
-      } else if (ctype.includes("text/html")) {
-        setHtmlResult(await res.text());
-      } else {
-        throw new Error("Tipo de respuesta inesperado: " + ctype);
-      }
+      // Success (200): waiting for pure HTML
+      const html = await res.text();
+      setHtmlResult(html);
     } catch (e) {
       setError(e.message);
     } finally {

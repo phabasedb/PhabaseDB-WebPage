@@ -82,6 +82,15 @@ export default function BlastPage() {
       </>
     );
   };
+  const sequenceHolder = [
+    "Paste query sequence(s) in FASTA format here…",
+    "Examples:",
+    ">Query_1",
+    "ATGCTAGC",
+    ">Query_2",
+    "GCTAGCTA",
+    "...",
+  ].join("\n");
 
   return (
     <Box
@@ -127,7 +136,7 @@ export default function BlastPage() {
             </Typography>
             <TextField
               variant="outlined"
-              placeholder="Paste query sequence(s) in FASTA format here…"
+              placeholder={sequenceHolder}
               multiline
               fullWidth
               minRows={8}
@@ -296,9 +305,23 @@ export default function BlastPage() {
 
       {error && (
         <Box
-          sx={{ width: "90%", my: 2, color: "red", backgroundColor: "white" }}
+          sx={{
+            width: "90%",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            wordBreak: "break-word",
+            overflow: "hidden",
+            borderRadius: 2,
+            boxShadow: 5,
+          }}
         >
-          <Typography>{error}</Typography>
+          <Box sx={{ width: "90%", my: 1 }}>
+            <Typography color="error" textAlign="justify">
+              {error}
+            </Typography>
+          </Box>
         </Box>
       )}
 
