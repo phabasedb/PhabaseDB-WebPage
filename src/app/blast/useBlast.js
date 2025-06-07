@@ -83,6 +83,11 @@ export function useBlast({
             "The BLAST service is not available at this time. Please try again later."
           );
         }
+        if (res.status === 504) {
+          throw new Error(
+            "The request to the BLAST service has taken too long and has timed out. Please try again in a few minutes or reduce the size of your query and check parameters."
+          );
+        }
         // For other errors we parse the JSON from the API
         const { message } = await res.json();
         throw new Error(message);
