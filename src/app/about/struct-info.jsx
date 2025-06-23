@@ -1,7 +1,9 @@
-// about/InformationSection.jsx
+//standard
 
-import React from "react";
+//third party
 import { Box, Typography } from "@mui/material";
+
+//local
 import highlightText from "@/shared/text-Highlighter";
 
 export default function InformationSection({ information }) {
@@ -19,6 +21,7 @@ export default function InformationSection({ information }) {
       }}
     >
       <Box sx={{ width: "90%", mt: 1, mb: 3 }}>
+        {/* Title Page*/}
         <Typography
           sx={{
             fontWeight: 600,

@@ -1,7 +1,9 @@
-// about/CollaborationsSection.jsx
+//standard
 
-import React from "react";
+//third party
 import { Box, Typography } from "@mui/material";
+
+//local
 
 export default function CollaborationsSection({ collaborations }) {
   return (
@@ -18,6 +20,7 @@ export default function CollaborationsSection({ collaborations }) {
       }}
     >
       <Box sx={{ width: "90%", mt: 1, mb: 3 }}>
+        {/* Title */}
         <Typography
           sx={{
             fontSize: {
@@ -71,7 +74,6 @@ export default function CollaborationsSection({ collaborations }) {
                 {item.name}
               </Box>
               {" – "}
-              {/* Descripción en color secundario */}
               <Box component="span" sx={{ color: "text.secondary" }}>
                 {item.desc}
               </Box>

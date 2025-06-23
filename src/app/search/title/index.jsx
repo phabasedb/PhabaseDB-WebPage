@@ -7,7 +7,8 @@ import { Box, Typography } from "@mui/material";
 
 export default function Title() {
   return (
-    <Box sx={{ my: 2 }}>
+    <Box sx={{ my: 1 }}>
+      {/* Main Phabase title displayed on the search page */}
       <Typography
         variant="h1"
         sx={{

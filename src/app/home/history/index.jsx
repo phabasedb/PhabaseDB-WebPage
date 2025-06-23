@@ -22,14 +22,17 @@ export default function SearchHistory() {
   const [history, setHistory] = useState([]);
   const router = useRouter();
 
+  //Definition of general search terms.
   const generalTerms = [{ label: "GENE BROWSER", term: "GENES" }];
 
+  //Loads the search history from local cache (localStorage).
   useEffect(() => {
     const storedHistory =
       JSON.parse(localStorage.getItem("searchHistory")) || [];
     setHistory(storedHistory);
   }, []);
 
+  //Navigates to the search route for the selected term.
   const handleItemClick = (term) => {
     router.push(`/search/${encodeURIComponent(term)}`);
   };
@@ -37,49 +40,45 @@ export default function SearchHistory() {
   return (
     <Box
       sx={{
+        my: { xs: 3, md: 3 },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        my: { xs: 3, md: 4 },
         gap: 1,
       }}
     >
       <Box
         sx={{
           width: { xs: "90%", md: "70%" },
+          display: "flex",
+          justifyContent: { xs: "center", md: "flex-start" },
+          gap: 2,
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            //flexWrap: "wrap",
-            gap: 2,
-            justifyContent: { xs: "center", md: "flex-start" },
-          }}
-        >
-          {generalTerms.map((termObj) => (
-            <Button
-              key={termObj.label}
-              onClick={() => handleItemClick(termObj.term)}
-              sx={{
-                textTransform: "none",
-                color: "#0B3AA1",
-                fontSize: {
-                  xs: "1rem",
-                  sm: "1.1rem",
-                  md: "1.2rem",
-                  lg: "1.5rem",
-                  xl: "1.6rem",
-                },
-                p: 1,
-              }}
-            >
-              →{termObj.label}
-            </Button>
-          ))}
-        </Box>
+        {/*Iterates over general search terms and renders each as an interactive button */}
+        {generalTerms.map((termObj) => (
+          <Button
+            key={termObj.label}
+            onClick={() => handleItemClick(termObj.term)}
+            sx={{
+              textTransform: "none",
+              color: "#0B3AA1",
+              fontSize: {
+                xs: "1rem",
+                sm: "1.1rem",
+                md: "1.2rem",
+                lg: "1.5rem",
+                xl: "1.6rem",
+              },
+              p: 1,
+            }}
+          >
+            →{termObj.label}
+          </Button>
+        ))}
       </Box>
 
+      {/* Render search history only if items exist */}
       {history.length > 0 && (
         <Box
           sx={{
@@ -90,6 +89,7 @@ export default function SearchHistory() {
           }}
         >
           <Box>
+            {/* Search history title */}
             <Typography
               variant="subtitle1"
               sx={{
@@ -107,6 +107,7 @@ export default function SearchHistory() {
             </Typography>
           </Box>
           <Box>
+            {/* Renders the search history stored in local cache */}
             <List>
               {history.map((item, index) => (
                 <ListItem

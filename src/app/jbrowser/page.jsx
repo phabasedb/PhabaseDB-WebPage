@@ -1,15 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+//standard
+
+//third party
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
+
+//local
 import { datasets } from "@/static/jbrowser/datasets";
-import { buildJBrowseUrlFromSession } from "@/shared/builduri-jbrowse";
+import { buildJBrowseUrlDefectSession } from "@/shared/builduri-jbrowse";
 
 export default function JBrowsePage() {
-  const router = useRouter();
+  // Filters valid datasets that contain id, organism name, and session definition
+  const validDatasets = datasets.filter(
+    ({ _id, organism, sessionDefect }) => _id && organism && sessionDefect
+  );
 
-  const handleDatasetClick = (dataset) => {
-    const url = buildJBrowseUrlFromSession(dataset);
+  const handleDatasetClick = (sessionDefect) => {
+    // Handles dataset click by building the JBrowse URL and opening a new tab
+    const url = buildJBrowseUrlDefectSession({ sessionDefect });
     if (!url) return;
     window.open(url, "_blank", "noopener");
   };
@@ -35,6 +43,7 @@ export default function JBrowsePage() {
           boxShadow: 5,
         }}
       >
+        {/* Title Page */}
         <Box sx={{ width: "90%", my: 1 }}>
           <Typography
             sx={{
@@ -50,16 +59,17 @@ export default function JBrowsePage() {
           >
             Datasets available
           </Typography>
+          {/* Listing of the contents of the data set */}
           <List>
-            {datasets.map((dataset) => (
+            {validDatasets.map(({ _id, organism, sessionDefect }) => (
               <ListItem
-                key={dataset._id}
+                key={_id}
                 disablePadding
                 sx={{ cursor: "pointer" }}
-                onClick={() => handleDatasetClick(dataset)}
+                onClick={() => handleDatasetClick(sessionDefect)}
               >
                 <ListItemText
-                  primary={dataset.organism}
+                  primary={organism}
                   sx={{
                     color: "blue",
                     textDecoration: "underline",

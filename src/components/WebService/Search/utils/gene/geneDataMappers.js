@@ -11,14 +11,12 @@
  */
 export function mapGeneSummaries(records) {
   return (records || []).map((r) => ({
-    geneId: r._id,
+    id: r._id,
     accession: r.gene?.accessionId || "",
     name: r.gene?.name || "",
-    start: r.gene?.startPosition || 0,
-    end: r.gene?.endPosition || 0,
     chromosome: r.chromosome?.name || "",
-    organismId: r.organism?._id || "",
     organism: r.organism?.name || "",
+    organismId: r.organism?._id,
   }));
 }
 

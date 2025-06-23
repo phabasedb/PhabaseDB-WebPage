@@ -1,6 +1,6 @@
-// about/TeamSection.jsx
+//standard
 
-import React from "react";
+//third party
 import {
   Box,
   Card,
@@ -12,6 +12,8 @@ import {
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LanguageIcon from "@mui/icons-material/Language";
 import ScienceIcon from "@mui/icons-material/Science";
+
+//local
 
 export default function TeamSection({ members }) {
   return (
@@ -25,6 +27,7 @@ export default function TeamSection({ members }) {
         justifyContent: "center",
       }}
     >
+      {/* Members*/}
       {members.map((member) => (
         <Card
           key={member.email}

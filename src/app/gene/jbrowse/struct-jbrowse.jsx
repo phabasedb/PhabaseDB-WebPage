@@ -1,16 +1,32 @@
 "use client";
 
+//standard
 import { useMemo } from "react";
+
+//third party
 import { Box, Typography } from "@mui/material";
-import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
+
+//local
+import { buildJBrowseUrlPositions } from "@/shared/builduri-jbrowse";
+import { datasets } from "@/static/jbrowser/datasets";
 
 export default function StructJBrowse({ geneData }) {
+  // Validates the dataset using the organism ID and builds the JBrowse URL
   const { url, message } = useMemo(() => {
-    return buildJBrowseUrl({
-      organismId: geneData?.organism?.id,
+    const ds = datasets.find((d) => d._id === geneData?.organism?.id);
+    if (!ds) {
+      return {
+        url: null,
+        message:
+          "Unable to load the genome browser. No genomic data is currently available for the selected organism.",
+      };
+    }
+    return buildJBrowseUrlPositions({
       chromosome: geneData?.chromosome?.name,
       start: geneData?.start,
       end: geneData?.end,
+      assemblyName: ds?.assemblyName,
+      tracks: ds?.tracks,
     });
   }, [
     geneData?.organism?.id,
@@ -19,6 +35,7 @@ export default function StructJBrowse({ geneData }) {
     geneData?.end,
   ]);
 
+  // Error component to display user-friendly messages when something fails
   function ErrorBox({ text }) {
     return (
       <Box sx={{ my: 3, display: "flex", justifyContent: "center" }}>
@@ -39,11 +56,11 @@ export default function StructJBrowse({ geneData }) {
       </Box>
     );
   }
-
+  // If no valid URL is available, show the error message
   if (!url) {
     return <ErrorBox text={message} />;
   }
-
+  // Renders the genome browser inside an iframe
   return (
     <Box
       sx={{

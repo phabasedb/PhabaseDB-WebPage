@@ -10,12 +10,13 @@ export default function StructCard({ item, index }) {
   return (
     <Box
       sx={{
+        width: "90%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "90%",
       }}
     >
+      {/* Informative card component with responsive layout and visual effects */}
       <Card
         sx={{
           display: "flex",
@@ -43,6 +44,7 @@ export default function StructCard({ item, index }) {
             overflow: "hidden",
           }}
         >
+          {/* Informative image section */}
           <CardMedia
             component="img"
             image={item.image}
@@ -61,6 +63,7 @@ export default function StructCard({ item, index }) {
             justifyContent: "center",
           }}
         >
+          {/* Description section with dynamic text formatting */}
           <Typography
             variant="body1"
             sx={{

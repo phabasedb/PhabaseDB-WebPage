@@ -12,6 +12,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+
+// local
 import { useTheme } from "@mui/material/styles";
 import { validateInput } from "./utils/input-validation";
 import {
@@ -19,8 +21,6 @@ import {
   updateHistoryArray,
   writeHistory,
 } from "./utils/history-array";
-
-// local
 
 export default function SearchGene() {
   const [searchGene, setSearchGene] = useState("");
@@ -102,6 +102,7 @@ export default function SearchGene() {
         </Button>
       </Box>
 
+      {/**Conditional if there is an error in the search */}
       {!isSmallScreen && errorGene && (
         <Box
           sx={{

@@ -1,5 +1,4 @@
 //standard
-import React from "react";
 
 // third party
 import { Box } from "@mui/material";
@@ -10,6 +9,7 @@ import TeamSection from "./struct-team";
 import CollaborationsSection from "./struct-collabs";
 import { about } from "@/static/text/us-US/about";
 
+//Page divided into 3 sections: Information, team, and collaborators.
 export default function AboutUs() {
   return (
     <Box

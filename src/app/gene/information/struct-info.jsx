@@ -87,10 +87,6 @@ export default function StructInfo({
     }
   };
 
-  const handleGeneExpressionClick = () => {
-    router.push("/expression");
-  };
-
   return (
     <Box
       sx={{
@@ -141,7 +137,7 @@ export default function StructInfo({
         </Typography>
       </Box>
 
-      {/* Información detallada */}
+      {/* Detailed information */}
       <Box sx={{ width: "90%" }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <InfoItem label="Name" value={geneData.name} />
@@ -171,11 +167,12 @@ export default function StructInfo({
           mt: 2,
         }}
       >
+        {/* Definition of buttons that scroll to the defined sections */}
         {[
           { label: "SEQUENCES", key: "SEQUENCES-NV" },
           { label: "JBROWSER", key: "JBROWSER-NV" },
-          /*{ label: "GENE EXPRESSION", key: "EXPRESSION" },
-          { label: "SEQUENCE RETRIVAL", key: "RETRIVAL" },*/
+          { label: "GENE EXPRESSION", key: "EXPRESSION-NV" },
+          /*{ label: "SEQUENCE RETRIVAL", key: "RETRIVAL" },*/
         ].map((btn) => (
           <Button
             key={btn.key}
@@ -194,14 +191,6 @@ export default function StructInfo({
           sx={{ textTransform: "none" }}
         >
           BLAST
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleGeneExpressionClick}
-          sx={{ textTransform: "none" }}
-        >
-          GENE EXPRESSION
         </Button>
       </Box>
     </Box>

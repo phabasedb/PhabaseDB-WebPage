@@ -22,7 +22,7 @@ export default function Footer() {
         flexDirection: { xs: "column", sm: "row" },
         gap: { xs: 1, md: 0 },
         py: 1,
-        mt: 2,
+        mt: 1,
       }}
     >
       {/* Logo Left */}

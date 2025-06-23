@@ -11,14 +11,15 @@ export default function DataTable({ term }) {
   return (
     <Box
       sx={{
-        my: 3,
+        my: { xs: 3, md: 3 },
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
-        gap: { xs: 2, md: 3 },
         justifyContent: "center",
         alignItems: { xs: "center", md: "flex-start" },
+        gap: { xs: 2, md: 3 },
       }}
     >
+      {/* Responsive layout and positioning for data table */}
       <Box
         sx={{
           width: { xs: "90%", md: "70%" },
@@ -28,12 +29,13 @@ export default function DataTable({ term }) {
         <StructTable term={term} />
       </Box>
 
+      {/* Responsive layout and positioning for tools panel */}
       <Box
         sx={{
           width: { xs: "90%", md: "20%" },
           order: { xs: 2, md: 2 },
-          justifyContent: { md: "flex-start" },
           alignItems: { md: "center" },
+          justifyContent: { md: "flex-start" },
         }}
       >
         <StructTools />

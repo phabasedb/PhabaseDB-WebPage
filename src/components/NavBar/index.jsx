@@ -1,7 +1,7 @@
 "use client";
 
 // standard
-import React from "react";
+import { useState } from "react";
 
 // third party
 import {
@@ -30,7 +30,7 @@ const pages = [
 ];
 
 export default function NavBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,7 +41,7 @@ export default function NavBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, mb: { xs: 1, md: 1 } }}>
       <AppBar position="sticky" color="primary">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
