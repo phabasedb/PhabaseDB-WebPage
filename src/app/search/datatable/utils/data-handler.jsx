@@ -22,6 +22,7 @@ export default function DataHandler({ loading, error, data, term, children }) {
           alignItems: "center",
           backgroundColor: "white",
           borderRadius: 2,
+          boxShadow: 5,
         }}
       >
         <Typography
@@ -48,6 +49,7 @@ export default function DataHandler({ loading, error, data, term, children }) {
           alignItems: "center",
           backgroundColor: "white",
           borderRadius: 2,
+          boxShadow: 5,
         }}
       >
         <Typography

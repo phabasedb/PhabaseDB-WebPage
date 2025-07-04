@@ -3,7 +3,7 @@
 // third party
 
 //local
-import { VALID_SEARCH } from "shared/const-validateds";
+import { VALID_SEARCH_TERM } from "@/shared/const-validateds";
 import { useWrappedQuery } from "./genericQuery";
 import { GET_GENE_BY_DATATABLE, GET_GENE_BY_ID } from "./getGeneBy";
 import { GET_GENE_ALL_DATATABLE } from "./getGeneAll";
@@ -18,7 +18,7 @@ import { mapGeneSummaries, mapGeneDetail } from "./utils/gene/geneDataMappers";
  */
 export function useGeneQuery(searchTerm, query, variables, mapData) {
   // Pre-validation
-  for (const v of VALID_SEARCH) {
+  for (const v of VALID_SEARCH_TERM) {
     if (!v.test(searchTerm)) {
       return { data: null, loading: false, error: v.message };
     }

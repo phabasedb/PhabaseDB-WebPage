@@ -21,6 +21,7 @@ export default function StructTools() {
       sx={{
         background: "white",
         borderRadius: 2,
+        boxShadow: 5,
         textAlign: "center",
         py: 1,
       }}

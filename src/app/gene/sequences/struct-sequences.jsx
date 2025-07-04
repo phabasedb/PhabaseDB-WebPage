@@ -310,6 +310,7 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         width: "90%",
         backgroundColor: "white",
         borderRadius: 2,
+        boxShadow: 5,
         overflow: "hidden",
         py: 2,
       }}

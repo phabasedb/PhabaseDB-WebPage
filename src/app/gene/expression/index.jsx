@@ -14,7 +14,6 @@ export default function Expression({ geneData }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        border: 1,
       }}
     >
       <StructExpression geneData={geneData} />

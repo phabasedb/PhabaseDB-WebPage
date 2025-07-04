@@ -4,7 +4,7 @@
 import { Box, Card, CardMedia, Typography } from "@mui/material";
 
 // local
-import highlightText from "@/shared/text-Highlighter";
+import highlightText from "@/shared/text/utils/text-Highlighter";
 
 export default function StructCard({ item, index }) {
   return (
@@ -22,7 +22,7 @@ export default function StructCard({ item, index }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: 2,
+          boxShadow: 5,
           borderRadius: 1,
           flexDirection: {
             xs: "column",
@@ -31,7 +31,6 @@ export default function StructCard({ item, index }) {
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
           "&:hover": {
             transform: "scale(1.02)",
-            boxShadow: 5,
           },
         }}
       >

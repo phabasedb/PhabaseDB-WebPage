@@ -31,12 +31,7 @@ export default function GenePage() {
   const { data: detail, loading, error } = useGeneById(id);
 
   return (
-    <GeneHandler
-      loading={loading}
-      error={error}
-      data={detail ? [detail] : []}
-      idGene={id}
-    >
+    <GeneHandler loading={loading} error={error} data={detail} idGene={id}>
       <InnerGenePage detail={detail} />
     </GeneHandler>
   );

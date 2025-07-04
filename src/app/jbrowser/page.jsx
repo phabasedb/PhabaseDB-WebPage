@@ -7,7 +7,7 @@ import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
 //local
 import { datasets } from "@/static/jbrowser/datasets";
-import { buildJBrowseUrlDefectSession } from "@/shared/builduri-jbrowse";
+import { buildJBrowseUrlDefectSession } from "@/shared/jbrowser/builduri-jbrowse";
 
 export default function JBrowsePage() {
   // Filters valid datasets that contain id, organism name, and session definition

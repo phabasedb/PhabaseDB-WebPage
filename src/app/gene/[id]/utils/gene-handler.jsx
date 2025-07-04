@@ -33,6 +33,7 @@ export default function GeneHandler({
             alignItems: "center",
             overflow: "hidden",
             borderRadius: 2,
+            boxShadow: 5,
           }}
         >
           <Typography
@@ -51,7 +52,7 @@ export default function GeneHandler({
       </Box>
     );
 
-  if (!data || data.length === 0) {
+  if (!data || typeof data !== "object" || !data.geneId) {
     return (
       <Box
         sx={{
@@ -70,6 +71,7 @@ export default function GeneHandler({
             alignItems: "center",
             overflow: "hidden",
             borderRadius: 2,
+            boxShadow: 5,
           }}
         >
           <Typography

@@ -97,6 +97,7 @@ export default function StructInfo({
         alignItems: "center",
         overflow: "hidden",
         borderRadius: 2,
+        boxShadow: 5,
         py: 2,
         gap: 1,
       }}
