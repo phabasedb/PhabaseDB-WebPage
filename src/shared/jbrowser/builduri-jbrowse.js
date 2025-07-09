@@ -4,7 +4,7 @@
 
 // local
 import { VALID_SEARCH_JBR } from "../const-validateds";
-import { validateFieldsExpression } from "./utils/field-validation";
+import { validateFieldsJBrowser } from "./utils/field-validation";
 
 /**
  * Constructs the JBrowse URL from a sessionDefect object.
@@ -43,7 +43,7 @@ export function buildJBrowseUrlPositions({
   config = "config.json",
   baseUrl = process.env.NEXT_PUBLIC_URI_JBROWSE,
 }) {
-  const validationError = validateFieldsExpression(VALID_SEARCH_JBR, {
+  const validationError = validateFieldsJBrowser(VALID_SEARCH_JBR, {
     chromosome,
     start,
     end,

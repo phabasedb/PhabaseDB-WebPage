@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 //local
 
 /**
- * Muestra un recuadro de error centrado y estilizado.
+ * Function that displays a centered and stylized error box only for the gene page in each section.
  */
 export default function ErrorBoxPageGene({ text }) {
   return (

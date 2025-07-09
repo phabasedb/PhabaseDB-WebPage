@@ -11,7 +11,6 @@ import MUIDataTable from "mui-datatables";
 
 // local
 import { useGeneSearch, useAllGenes } from "@/components/WebService/Search";
-//import { buildJBrowseUrl } from "@/shared/builduri-jbrowse";
 import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
@@ -40,7 +39,9 @@ export default function StructTable({ term }) {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "row", sm: "column", xl: "row" },
+                  //multiple buttons
+                  //flexDirection: { xs: "row", sm: "column", xl: "row" },
+                  flexDirection: "row",
                   alignItems: "center",
                   gap: 1,
                 }}
@@ -54,19 +55,6 @@ export default function StructTable({ term }) {
                   >
                     <InfoIcon />
                   </IconButton>
-                </Tooltip>
-                <Tooltip title="Gene Expression Visualization">
-                  <Button
-                    size="small"
-                    variant="contained"
-                    color="primary"
-                    sx={{ fontWeight: "bold" }}
-                    onClick={
-                      () => router.push(`/expression`) // Rediriging gene/[idGene]
-                    }
-                  >
-                    GE
-                  </Button>
                 </Tooltip>
               </Box>
             );
@@ -87,10 +75,10 @@ export default function StructTable({ term }) {
       filter: true,
       responsive: "simple",
       selectableRows: "none",
-      viewColumns: false,
-      print: false,
       rowsPerPageOptions: [5, 10, 15, 25, 50, 100],
       rowsPerPage: 5,
+      viewColumns: true,
+      print: false,
 
       onDownload: (buildHead, buildBody, columns, data) => {
         const filteredColumns = columns.filter((col) => col.label !== "Tools");

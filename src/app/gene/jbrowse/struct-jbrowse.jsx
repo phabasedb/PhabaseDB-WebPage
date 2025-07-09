@@ -14,12 +14,12 @@ import ErrorBoxPageGene from "../shared/utils/error-box";
 export default function StructJBrowse({ geneData }) {
   // Validates the dataset using the organism ID and builds the JBrowse URL
   const { url, message } = useMemo(() => {
-    const ds = datasets.find((d) => d._id === geneData?.organism?.id);
+    const ds = datasets.find((d) => d.id === geneData?.organism?.id);
     if (!ds) {
       return {
         url: null,
         message:
-          "Unable to load the genome browser. No genomic data is currently available for the selected organism.",
+          "The genome browser could not be loaded. No genomic data is currently available for the selected organism. Please try again later or contact an administrator.",
       };
     }
     return buildJBrowseUrlPositions({
@@ -30,6 +30,7 @@ export default function StructJBrowse({ geneData }) {
       tracks: ds?.tracks || "",
     });
   }, [
+    datasets,
     geneData?.organism?.id,
     geneData?.chromosome?.name,
     geneData?.start,

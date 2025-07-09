@@ -10,7 +10,7 @@
  * @param {Object} data - Object to validate
  * @returns {string|null} First error message found, or null if valid
  */
-export function validateFieldsExpression(schema, data) {
+export function validateFieldsJBrowser(schema, data) {
   for (const key in schema) {
     const rules = schema[key];
 

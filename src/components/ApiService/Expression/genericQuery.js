@@ -43,20 +43,30 @@ export function useApiRequest(
     setLoading(true);
 
     fetch(url, options)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((json) => {
-        if (json.status !== "success") {
-          throw new Error(json.message || "API Error");
+      .then(async (res) => {
+        if (!res.ok) {
+          if (res.status === 502) {
+            throw new Error(
+              "The Gene Expression service is not available at this time. Please try again later or contact an administrator."
+            );
+          }
+          if (res.status === 504) {
+            throw new Error(
+              "The request to the Gene Expression service has taken too long and has timed out. Please try again in a few minutes or reduce the size of your IDs or columns."
+            );
+          }
+          // For other errors we parse the JSON from the API
+          const { message } = await res.json();
+          throw new Error(message);
         }
-        // 2) not_found opcional
+
+        const { result, not_found } = await res.json();
+
         if (mapperNotFound) {
-          setNotFound(json.not_found ? mapperNotFound(json.not_found) : null);
+          setNotFound(not_found ? mapperNotFound(not_found) : null);
         }
-        // 3) mapear resultado
-        return mapperSuccess(json.result);
+        // Success (200)
+        return mapperSuccess(result);
       })
       .then((mapped) => setData(mapped))
       .catch((err) => setError(err.message))

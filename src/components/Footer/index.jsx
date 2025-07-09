@@ -38,6 +38,7 @@ export default function Footer() {
           alt="Logo UNAM"
           width={200}
           height={100}
+          priority
         />
       </Box>
 
@@ -59,6 +60,7 @@ export default function Footer() {
           alt="Logo CCG"
           width={200}
           height={100}
+          priority
         />
       </Box>
     </Box>

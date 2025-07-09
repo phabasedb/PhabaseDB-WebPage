@@ -15,6 +15,7 @@ import {
   Button,
   MenuItem,
 } from "@mui/material";
+import Image from "next/image";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import Link from "next/link";
 
@@ -101,19 +102,23 @@ export default function NavBar() {
               </Menu>
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-              <img
+              <Image
                 src="/image/logos/logoHeadNav.webp"
-                alt="Logo"
-                style={{ height: 40 }}
+                alt="Logo PhabaseDB"
+                width={80}
+                height={40}
+                priority
               />
             </Box>
 
             {/* Screen normal and desktop*/}
             <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
-              <img
+              <Image
                 src="/image/logos/logoHeadNav.webp"
-                alt="Logo"
-                style={{ height: 40 }}
+                alt="Logo PhabaseDB"
+                width={80}
+                height={40}
+                priority
               />
             </Box>
             <Box

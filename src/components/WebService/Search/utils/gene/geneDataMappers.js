@@ -12,7 +12,7 @@
 export function mapGeneSummaries(records) {
   return (records || []).map((r) => ({
     id: r._id,
-    accession: r.gene?.accessionId || "",
+    accession: r.gene?.accessionId,
     name: r.gene?.name || "",
     chromosome: r.chromosome?.name || "",
     organism: r.organism?.name || "",
@@ -29,7 +29,7 @@ export function mapGeneDetail(r) {
   const record = r || {};
   return {
     geneId: record._id,
-    accession: record.gene?.accessionId || "",
+    accession: record.gene?.accessionId,
     name: record.gene?.name || "",
     start: record.gene?.startPosition || 0,
     end: record.gene?.endPosition || 0,
@@ -46,7 +46,7 @@ export function mapGeneDetail(r) {
       name: record.organism?.name || "",
     },
     transcripts: (record.transcripts || []).map((tx) => ({
-      id: tx._id,
+      id: tx._id || "",
       accession: tx.accessionId || "",
       start: tx.startPosition || 0,
       end: tx.endPosition || 0,

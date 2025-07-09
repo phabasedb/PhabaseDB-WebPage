@@ -6,8 +6,8 @@ import { useTheme, useMediaQuery } from "@mui/material";
 // local
 
 /**
- * Devuelve un ancho “fallback” según los breakpoints de Material UI.
- * Útil cuando aún no conocemos el ancho real del contenedor(por defecto).
+ * Returns a fallback width based on Material UI breakpoints.
+ * Useful when the actual container width is unknown (e.g., as a default).
  */
 export default function useBreakpointWidthExpChart() {
   const theme = useTheme();

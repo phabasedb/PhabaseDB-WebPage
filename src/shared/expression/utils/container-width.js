@@ -1,31 +1,34 @@
-// shared/expression/utils/container-width.js
+// standard
 
+// third party
 import { useRef, useState, useLayoutEffect, useEffect } from "react";
 
+// local
+
 /**
- * Hook que devuelve un `ref` para adjuntar al contenedor
- * y su ancho en px (`width`), recalculado:
- *   1) Justo después del layout inicial (useLayoutEffect).
- *   2) En cada resize de ventana (useEffect).
+ * Custom hook that returns a `ref` to attach to a container
+ * and its `width` in pixels, recalculated:
+ *   1) Right after initial layout (useLayoutEffect)
+ *   2) On every window resize (useEffect)
  */
 export default function useContainerWidth() {
   const ref = useRef(null);
   const [width, setWidth] = useState(0);
 
+  // Measures the container width and updates state
   const measure = () => {
     if (ref.current) {
       const w = ref.current.getBoundingClientRect().width;
       setWidth(w);
-      console.log("useContainerWidth (measure):", w);
     }
   };
 
-  // Medición inicial justo después del layout
+  // Initial measurement after layout
   useLayoutEffect(() => {
     measure();
   }, []);
 
-  // Re-medir en cada resize de ventana
+  // Re-measure on window resize
   useEffect(() => {
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);

@@ -12,7 +12,7 @@ import { buildJBrowseUrlDefectSession } from "@/shared/jbrowser/builduri-jbrowse
 export default function JBrowsePage() {
   // Filters valid datasets that contain id, organism name, and session definition
   const validDatasets = datasets.filter(
-    ({ _id, organism, sessionDefect }) => _id && organism && sessionDefect
+    ({ id, organism, sessionDefect }) => id && organism && sessionDefect
   );
 
   const handleDatasetClick = (sessionDefect) => {
@@ -61,9 +61,9 @@ export default function JBrowsePage() {
           </Typography>
           {/* Listing of the contents of the data set */}
           <List>
-            {validDatasets.map(({ _id, organism, sessionDefect }) => (
+            {validDatasets.map(({ id, organism, sessionDefect }) => (
               <ListItem
-                key={_id}
+                key={id}
                 disablePadding
                 sx={{ cursor: "pointer" }}
                 onClick={() => handleDatasetClick(sessionDefect)}

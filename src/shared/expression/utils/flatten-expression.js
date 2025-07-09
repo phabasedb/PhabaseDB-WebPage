@@ -23,14 +23,16 @@ export function flattenExpressionData(data) {
   if (isArray && data.length === 0) {
     return {
       data: [],
-      error: "It cannot be flattened: the gene array is empty.",
+      error:
+        "A data flattening problem occurred, you must have mandatory data for the gene expression display.",
     };
   }
 
   if (isObject && Object.keys(data).length === 0) {
     return {
       data: [],
-      error: "It cannot be flattened: the expression object is empty.",
+      error:
+        "A data flattening problem occurred, you must have mandatory data for the gene expression display.",
     };
   }
 

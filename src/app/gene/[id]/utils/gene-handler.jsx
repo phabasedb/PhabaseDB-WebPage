@@ -1,4 +1,9 @@
+//standard
+
+//third party
 import { CircularProgress, Box, Typography } from "@mui/material";
+
+//local
 
 export default function GeneHandler({
   loading,

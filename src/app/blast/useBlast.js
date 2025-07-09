@@ -80,7 +80,7 @@ export function useBlast({
       if (!res.ok) {
         if (res.status === 502) {
           throw new Error(
-            "The BLAST service is not available at this time. Please try again later."
+            "The BLAST service is not available at this time. Please try again later or contact an administrator."
           );
         }
         if (res.status === 504) {

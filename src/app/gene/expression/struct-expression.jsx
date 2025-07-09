@@ -1,9 +1,14 @@
 "use client";
 
+//standard
 import { useEffect, useRef, useMemo } from "react";
+
+//third party
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import MUIDataTable from "mui-datatables";
+
+//local
 import { datasets } from "@/static/expression/datasets";
 import { useGeneMatrix } from "@/components/ApiService/Expression";
 import { flattenExpressionData } from "@/shared/expression/utils/flatten-expression";
@@ -12,35 +17,15 @@ import GeneExpressionChart from "@/components/ExpressionChart";
 import useBreakpointWidthExpChart from "@/shared/expression/utils/breakpoints-widthChart";
 import useContainerWidth from "@/shared/expression/utils/container-width";
 import ErrorBoxPageGene from "../shared/utils/error-box";
+import { downloadSVG } from "@/shared/expression/utils/download-svg";
 
 export default function StructExpression({ geneData }) {
-  // Hooks: siempre en el mismo orden
   const svgRef = useRef(null);
 
-  const handleDownload = () => {
-    if (!svgRef.current) return;
-
-    const serializer = new XMLSerializer();
-    const source = serializer.serializeToString(svgRef.current);
-
-    const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${geneData?.accession || "chart"}.svg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(url);
-  };
-
-  // Early returns: después de los hooks
-  const ds = datasets.find((d) => d._id === geneData?.organism?.id);
+  const ds = datasets.find((d) => d.id === geneData?.organism?.id);
   if (!ds) {
     return (
-      <ErrorBoxPageGene text="Unable to load the genome browser. No genomic data is currently available for the selected organism." />
+      <ErrorBoxPageGene text="The gene expression viewer could not be loaded. No genomic data is currently available for the selected organism. Please try again later or contact an administrator." />
     );
   }
 
@@ -53,7 +38,7 @@ export default function StructExpression({ geneData }) {
 
   const { data, loading, error } = useGeneMatrix(
     geneData?.accession,
-    datasets.find((d) => d._id === geneData?.organism?.id)?.matrix?.path || ""
+    ds?.matrix?.path || ""
   );
 
   const { data: flatData, error: flattenError } = useMemo(
@@ -79,7 +64,7 @@ export default function StructExpression({ geneData }) {
 
   if (loading) {
     return (
-      <Box sx={{ textAlign: "center", my: 3 }}>
+      <Box sx={{ textAlign: "center", my: 1 }}>
         <CircularProgress />
       </Box>
     );
@@ -96,6 +81,11 @@ export default function StructExpression({ geneData }) {
 
   const chartWidth = containerWidth > 0 ? containerWidth : fallbackWidth;
 
+  const handleDownload = () => {
+    const name = geneData?.accession || "chart";
+    downloadSVG(svgRef.current, `${name}.svg`);
+  };
+
   return (
     <Box
       ref={containerRef}
@@ -109,7 +99,8 @@ export default function StructExpression({ geneData }) {
         overflow: "hidden",
         borderRadius: 2,
         boxShadow: 5,
-        py: 2,
+        pt: 2,
+        pb: 1,
         gap: 1,
       }}
     >
@@ -128,8 +119,7 @@ export default function StructExpression({ geneData }) {
             display: "grid",
             gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
             alignItems: "center",
-            px: 2,
-            py: 1,
+            gap: { xs: 1, md: 0 },
           }}
         >
           <Box sx={{ textAlign: "left" }}>
@@ -149,7 +139,12 @@ export default function StructExpression({ geneData }) {
               Gene Expression
             </Typography>
           </Box>
-          <Box sx={{ textAlign: "right" }}>
+          <Box
+            sx={{
+              textAlign: "right",
+              mt: { xs: 2, md: 0 },
+            }}
+          >
             <Button
               variant="contained"
               startIcon={<DownloadIcon />}
@@ -192,18 +187,18 @@ export default function StructExpression({ geneData }) {
         }}
       >
         <MUIDataTable
-          title={`Transcripts of gene ${geneData?.accession}`}
+          title={`Gene Expression Table for ${geneData?.accession}`}
           data={rows_mui}
           columns={columns_mui}
           options={{
+            responsive: "standard",
+            tableBodyWidth: "100%",
             selectableRows: "none",
             filter: true,
+            viewColumns: true,
             pagination: false,
             print: false,
-            viewColumns: false,
-            responsive: "standard",
             fixedHeader: false,
-            tableBodyWidth: "100%",
           }}
         />
       </Box>

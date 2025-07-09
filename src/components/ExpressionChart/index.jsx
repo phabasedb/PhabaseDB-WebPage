@@ -1,15 +1,22 @@
-import React, { useEffect, useRef } from "react";
+//standard
+import { useEffect, useRef } from "react";
+
+//third party
 import { Box } from "@mui/material";
 import * as d3 from "d3";
+
+//local
 
 export default function GeneExpressionChart({
   data,
   columnWidth = 100,
   svgRef,
 }) {
+  // Reference variables in the container (graphic) and in the tooltips
   const containerRef = useRef(null);
   const tooltipRef = useRef(null);
 
+  // Function to display information (tooltips) at a specific position on the chart.
   function getEventCoords(event) {
     if (event.touches && event.touches.length > 0) {
       return {
@@ -24,10 +31,12 @@ export default function GeneExpressionChart({
     }
   }
 
+  // Extract unique conditions from the data
   const conditions =
     Array.isArray(data) && data.length
       ? Array.from(new Set(data.map((d) => d.condition)))
       : [];
+  // Group transcripts by ID and associate their expression data
   const transcriptsData =
     Array.isArray(data) && data.length
       ? Array.from(
@@ -36,25 +45,51 @@ export default function GeneExpressionChart({
         )
       : [];
 
+  // Start of the necessary precomputations for the chart
+  // Calculate the maximum length of transcript IDs
   const maxLenId = transcriptsData.length
     ? Math.max(...transcriptsData.map((t) => t.transcriptId.length))
     : 0;
+
+  // Computes left margin using the longest ID: 8 px per character + 10 px additional margin
   const marginLeft = maxLenId * 8 + 10;
+
+  // Calculate the maximum length among condition names
   const maxConditionLen = conditions.length
     ? Math.max(...conditions.map((c) => c.length))
     : 0;
+
+  // Estimated bottom margin: max condition length * 8 px + 10 extra px
   const marginBottom = maxConditionLen * 8 + 10;
 
+  // Total chart drawing width (column width × number of conditions)
   const chartWidth = columnWidth * conditions.length;
+
+  // Height of the line chart
   const lineHeight = 300;
+
+  // Height of the gradient color bar
   const colorBarHeight = 30;
+
+  // Height per row in the heatmap
   const heatmapRowHeight = 30;
+
+  // Total heatmap height (number of transcripts × row height)
   const heatmapHeight = transcriptsData.length * heatmapRowHeight;
-  const spacingTopColorBar = 90; // o prueba con 60, 80 según gusto
+
+  // Space between line chart and color bar
+  const spacingTopColorBar = 90;
+
+  // Space between color bar and heatmap
   const spacingBottomColorBar = 50;
 
+  // Definition of margins (using precomputed marginBottom and marginLeft)
   const margin = { top: 30, right: 30, bottom: marginBottom, left: marginLeft };
+
+  // Total SVG width (margins + chart area)
   const width = margin.left + chartWidth + margin.right;
+
+  // Total SVG height (lines, bars, spacings, heatmap, margins)
   const height =
     margin.top +
     lineHeight +
@@ -65,20 +100,26 @@ export default function GeneExpressionChart({
     margin.bottom;
 
   useEffect(() => {
+    // Validation: if `data` is empty or undefined, exit
     if (!data || data.length === 0) return;
 
+    // Get the maximum value from the data
     const maxVal = d3.max(data, (d) => d.value) || 0;
 
+    // Fully create and configure the SVG canvas for the chart
     const svg = d3
       .select(svgRef.current)
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMinYMin meet");
+    // Clear any previous content inside the SVG
     svg.selectAll("*").remove();
 
+    // Create the tooltip on the assigned container
     const tooltip = d3.select(tooltipRef.current);
 
+    // Create the line chart
     const xLine = d3
       .scalePoint()
       .domain(conditions)
@@ -158,6 +199,7 @@ export default function GeneExpressionChart({
         focusG.selectAll("*").remove();
       });
 
+    // Retrieve all data points information for the tooltips
     const allPoints = transcriptsData.flatMap((t) =>
       t.expression.map((e) => ({ transcript: t.transcriptId, ...e }))
     );
@@ -216,6 +258,7 @@ export default function GeneExpressionChart({
         tooltip.style("opacity", 0);
       });
 
+    // Construction of the color gradient bar
     const defs = svg.append("defs");
     const grad = defs.append("linearGradient").attr("id", "colorGradient");
     grad.attr("x1", "0%").attr("y1", "0%").attr("x2", "100%").attr("y2", "0%");
@@ -236,7 +279,7 @@ export default function GeneExpressionChart({
         })`
       );
 
-    // Título arriba
+    // Title
     colorBarG
       .append("text")
       .attr("x", 0)
@@ -246,7 +289,7 @@ export default function GeneExpressionChart({
       .style("font-weight", "bold")
       .text("Relative expression");
 
-    // Etiquetas "Low" y "High" sobre la barra
+    // Add "Low" and "High" labels above the gradient bar
     colorBarG
       .append("text")
       .attr("x", 0)
@@ -263,14 +306,14 @@ export default function GeneExpressionChart({
       .style("font-size", "12px")
       .text("High");
 
-    // Barra de gradiente
+    // Definition of the gradient bar
     colorBarG
       .append("rect")
       .attr("width", chartWidth)
       .attr("height", colorBarHeight)
       .attr("fill", "url(#colorGradient)");
 
-    // Números debajo
+    // Display numeric values below the bar
     colorBarG
       .append("text")
       .attr("x", 0)
@@ -287,6 +330,7 @@ export default function GeneExpressionChart({
       .style("font-size", "12px")
       .text(maxVal.toFixed(2));
 
+    // Create the SVG container for the Heatmap (<g> group)
     const heatG = svg
       .append("g")
       .attr(
@@ -378,6 +422,7 @@ export default function GeneExpressionChart({
         tooltip.style("opacity", 0);
       });
 
+    // Rendering the labels: conditions (X-axis) and transcripts (Y-axis)
     heatG
       .append("g")
       .attr("transform", `translate(0,${heatmapHeight})`)

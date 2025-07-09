@@ -29,20 +29,22 @@ export function useWrappedQuery(query, variables, extractData, mapData) {
   }
 
   if (apolloError?.networkError) {
-    console.error("Network error:", apolloError.networkError);
+    //console.error("Network error:", apolloError.networkError);
     return {
       data: null,
       loading: false,
-      error: "Service not available. Please try again later.",
+      error:
+        "Service not available. Please try again later or contact an administrator.",
     };
   }
 
   if (apolloError?.graphQLErrors?.length) {
-    console.error("GraphQL errors:", apolloError.graphQLErrors);
+    //console.error("GraphQL errors:", apolloError.graphQLErrors);
     return {
       data: null,
       loading: false,
-      error: "Error in server query. Please try again.",
+      error:
+        "Error in server query. Please try again later or contact an administrator.",
     };
   }
 

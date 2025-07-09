@@ -75,12 +75,12 @@ export default function StructInfo({
   );
 
   const handleBlastClick = () => {
-    if (geneData.accession && geneData.sequence) {
+    if (geneData?.accession && geneData?.sequence) {
       sessionStorage.setItem(
         "blastPrefill",
         JSON.stringify({
-          accession: geneData.accession,
-          sequence: geneData.sequence,
+          accession: geneData?.accession,
+          sequence: geneData?.sequence,
         })
       );
       router.push("/blast");
@@ -116,7 +116,7 @@ export default function StructInfo({
             fontWeight: 500,
           }}
         >
-          {geneData.accession}
+          {geneData?.accession}
         </Typography>
       </Box>
 
@@ -141,20 +141,20 @@ export default function StructInfo({
       {/* Detailed information */}
       <Box sx={{ width: "90%" }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <InfoItem label="Name" value={geneData.name} />
-          <InfoItem label="Gene Identifier" value={geneData.accession} />
-          <InfoItem label="Organism" value={geneData.organism.name} />
-          <InfoItem label="Chromosome" value={geneData.chromosome.name} />
+          <InfoItem label="Name" value={geneData?.name} />
+          <InfoItem label="Gene Identifier" value={geneData?.accession} />
+          <InfoItem label="Organism" value={geneData?.organism?.name} />
+          <InfoItem label="Chromosome" value={geneData?.chromosome?.name} />
           <TranscriptsSection
-            transcripts={geneData.transcripts}
+            transcripts={geneData?.transcripts}
             selected={selectedTranscript}
             onChange={setSelectedTranscript}
           />
           <InfoItem
             label="Location"
-            value={`${geneData.start} - ${geneData.end}`}
+            value={`${geneData?.start} - ${geneData?.end}`}
           />
-          <InfoItem label="Description" value={geneData.description} />
+          <InfoItem label="Description" value={geneData?.description} />
         </Box>
       </Box>
 

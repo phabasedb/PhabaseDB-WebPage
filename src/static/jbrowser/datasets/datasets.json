@@ -1,6 +1,6 @@
 [
   {
-    "_id": "PDBJAMAPAORG000001",
+    "id": "PDBJAMAPAORG000001",
     "organism": "Phaseolus vulgaris cv. Negro Jamapa v1",
     "assemblyName": "PvNJ1.1",
     "tracks": ["JamapaGenes-FeatureTrack", "PvNJ1.1-ReferenceSequenceTrack"],
@@ -19,7 +19,7 @@
     }
   },
   {
-    "_id": "PDBG19833ORG000001",
+    "id": "PDBG19833ORG000001",
     "organism": "Phaseolus vulgaris G19833 v2.1",
     "assemblyName": "G19833",
     "tracks": ["G19833Genes-FeatureTrack", "G19833-ReferenceSequenceTrack"],
@@ -38,7 +38,7 @@
     }
   },
   {
-    "_id": "PDBGBAT93ORG000001",
+    "id": "PDBGBAT93ORG000001",
     "organism": "Phaseolus vulgaris BAT93 v10",
     "assemblyName": "BAT93",
     "tracks": ["BAT93-ReferenceSequenceTrack"],

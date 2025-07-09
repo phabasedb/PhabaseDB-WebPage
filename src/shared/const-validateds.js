@@ -40,37 +40,43 @@ export const VALID_SEARCH_JBR = {
   chromosome: [
     {
       test: (c) => typeof c === "string" && c.trim() !== "",
-      message: "Chromosome name is required.",
+      message:
+        "Something went wrong: chromosome name is required. Please try again later or contact an administrator.",
     },
   ],
   start: [
     {
       test: (v) => Number.isInteger(Number(v)) && Number(v) >= 0,
-      message: "Start position must be a non-negative integer.",
+      message:
+        "Something went wrong: start position must be a non-negative integer. Please try again later or contact an administrator.",
     },
   ],
   end: [
     {
       test: (v) => Number.isInteger(Number(v)) && Number(v) >= 0,
-      message: "End position must be a non-negative integer.",
+      message:
+        "Something went wrong: end position must be a non-negative integer. Please try again later or contact an administrator.",
     },
   ],
   range: [
     {
       test: ({ start, end }) => Number(start) <= Number(end),
-      message: "Start position cannot be greater than end position.",
+      message:
+        "Something went wrong: start position cannot be greater than end position. Please try again later or contact an administrator.",
     },
   ],
   assemblyName: [
     {
       test: (a) => typeof a === "string" && a.trim() !== "",
-      message: "Reference genome (assembly name) is required.",
+      message:
+        "Something went wrong: reference genome (assembly name) is required. Please try again later or contact an administrator.",
     },
   ],
   tracks: [
     {
       test: (arr) => Array.isArray(arr) && arr.length > 0,
-      message: "At least one track must be provided.",
+      message:
+        "Something went wrong: at least one track must be provided. Please try again later or contact an administrator.",
     },
   ],
 };
@@ -82,44 +88,51 @@ export const VALID_SEARCH_EXP = {
   id: [
     {
       test: (v) => typeof v === "string" && v.trim() !== "",
-      message: "Gene ID cannot be empty.",
+      message:
+        "Something went wrong: gene ID cannot be empty. Please try again later or contact an administrator.",
     },
     {
       test: (v) => v.length >= MIN_INPUT_LENGTH,
-      message: `Gene ID must be at least ${MIN_INPUT_LENGTH} characters.`,
+      message: `Something went wrong: gene ID must be at least ${MIN_INPUT_LENGTH} characters long. Please try again later or contact an administrator.`,
     },
   ],
 
   ids: [
     {
       test: (arr) => Array.isArray(arr) && arr.length > 0,
-      message: "Gene ID list cannot be empty.",
+      message:
+        "Something went wrong: gene ID list cannot be empty. Please try again later or contact an administrator.",
     },
     {
       test: (arr) => arr.every((v) => typeof v === "string" && v.trim() !== ""),
-      message: "Each gene ID must be a non-empty string.",
+      message:
+        "Something went wrong: each gene ID must be a non-empty string. Please try again later or contact an administrator.",
     },
   ],
 
   columns: [
     {
       test: (arr) => Array.isArray(arr) && arr.length > 0,
-      message: "Columns array cannot be empty.",
+      message:
+        "Something went wrong: columns list cannot be empty. Please try again later or contact an administrator.",
     },
     {
       test: (arr) => arr.every((v) => typeof v === "string" && v.trim() !== ""),
-      message: "Each column name must be a non-empty string.",
+      message:
+        "Something went wrong: each column name must be a non-empty string. Please try again later or contact an administrator.",
     },
   ],
 
   path: [
     {
       test: (p) => typeof p === "string" && p.trim() !== "",
-      message: "Path cannot be empty.",
+      message:
+        "Something went wrong: path cannot be empty. Please try again later or contact an administrator.",
     },
     {
       test: (p) => p.endsWith(".csv"),
-      message: "Path must point to a .csv file.",
+      message:
+        "Something went wrong: path must point to a .csv file. Please try again later or contact an administrator.",
     },
   ],
 };

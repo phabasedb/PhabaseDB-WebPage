@@ -29,7 +29,7 @@ export function useGeneMatrix(id, path) {
 }
 
 // MATRIX COLUMNS FOR IDS GEN/TRANSCRIPT AND COLUMNS
-export function useGenesIdsMatrix(ids, path, columns) {
+export function useGenesIdsMatrix(ids, columns, path) {
   return useApiRequest(
     () => ({
       url: `${process.env.NEXT_PUBLIC_URI_EXPGENE}/gene/ids`,

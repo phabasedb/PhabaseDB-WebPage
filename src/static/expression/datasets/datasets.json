@@ -1,6 +1,6 @@
 [
   {
-    "_id": "PDBJAMAPAORG000001",
+    "id": "PDBJAMAPAORG000001",
     "database": "Phaseolus vulgaris Negro Jamapa",
     "matrix": { "path": "pvulgarisnj/GEA_NJ_matrix_data.csv" },
     "metadata": { "path": "pvulgarisnj/GEA_NJ_meta_data.csv" }
