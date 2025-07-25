@@ -29,7 +29,12 @@ export function useApiRequest(
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 1) Validar todos los campos
+    // Reset previous state on new request
+    setError(null);
+    setData(null);
+    setNotFound(null);
+
+    // Validations
     for (const [value, rules] of validators) {
       const msg = validateField(value, rules);
       if (msg) {
