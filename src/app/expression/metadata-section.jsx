@@ -10,7 +10,7 @@ import { useMetaData } from "@/components/ApiService/Expression";
 
 //Name of the columns defined for the table
 const columnsDef = [
-  { name: "column", label: "Column" },
+  { name: "library", label: "Library" },
   { name: "organism", label: "Organism" },
   { name: "cultivar", label: "Cultivar" },
   { name: "genotype", label: "Genotype" },
@@ -20,6 +20,20 @@ const columnsDef = [
   { name: "time_post_treatment", label: "Time post‑treatment/inoculation" },
   { name: "additional_info", label: "Additional information" },
   { name: "reference", label: "Reference" },
+  {
+    name: "doi",
+    label: "DOI",
+    options: {
+      customBodyRender: (value) => {
+        if (value === "-") return "-";
+        return (
+          <a href={value} target="_blank" rel="noopener noreferrer">
+            {value}
+          </a>
+        );
+      },
+    },
+  },
 ];
 
 export function MetadataSection({ selected, onSelectCols }) {
@@ -82,7 +96,7 @@ export function MetadataSection({ selected, onSelectCols }) {
     customToolbarSelect: () => null,
     onRowSelectionChange: (_, __, rowsSelected) => {
       // rowsSelected preserves click order
-      const cols = rowsSelected.map((i) => data[i].column);
+      const cols = rowsSelected.map((i) => data[i].library);
       setSelectedCols(cols);
     },
   };

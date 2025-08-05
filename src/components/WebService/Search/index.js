@@ -46,6 +46,7 @@ export function useGeneSearch(term) {
       properties: [
         "gene._id",
         "gene.accessionId",
+        "gene.name",
         "gene.description",
         "transcripts.accessionId",
       ],
