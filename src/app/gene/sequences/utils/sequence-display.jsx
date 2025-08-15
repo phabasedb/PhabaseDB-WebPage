@@ -11,11 +11,23 @@ import {
 } from "./sequence-highlighter";
 
 // Gene and Transcript selected
-export function DisplayGenTrans({ sequence, start, annotations }) {
+export function DisplayGenTrans({
+  sequence,
+  seqlength,
+  start,
+  strand,
+  annotations,
+}) {
   // Compute the highlighted sequence using a helper function
   const highlightedSequence = useMemo(() => {
-    return renderSequenceGenTrans(sequence, start, annotations);
-  }, [sequence, start, annotations]);
+    return renderSequenceGenTrans(
+      sequence,
+      seqlength,
+      start,
+      strand,
+      annotations
+    );
+  }, [sequence, seqlength, start, strand, annotations]);
 
   return (
     <Box sx={{ px: 1 }}>
@@ -33,11 +45,17 @@ export function DisplayGenTrans({ sequence, start, annotations }) {
 }
 
 // CDS of the transcript selected
-export function DisplayCDS({ sequence, start, annotations }) {
+export function DisplayCDS({
+  sequence,
+  seqlength,
+  start,
+  strand,
+  annotations,
+}) {
   // Compute the highlighted CDS sequence using a helper function
   const highlightedSequence = useMemo(() => {
-    return renderSequenceCDS(sequence, start, annotations);
-  }, [sequence, start, annotations]);
+    return renderSequenceCDS(sequence, seqlength, start, strand, annotations);
+  }, [sequence, seqlength, start, strand, annotations]);
 
   return (
     <Box sx={{ px: 1 }}>

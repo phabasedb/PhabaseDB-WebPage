@@ -56,6 +56,7 @@ export const GET_GENE_BY_ID = gql`
           endPosition
           strand
           sequence
+          length
           description
         }
         chromosome {
@@ -72,7 +73,9 @@ export const GET_GENE_BY_ID = gql`
           accessionId
           startPosition
           endPosition
+          strand
           sequence
+          length
           product {
             aminoacidSequence
             sequence

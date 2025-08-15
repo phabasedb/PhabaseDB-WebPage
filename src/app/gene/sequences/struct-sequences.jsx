@@ -207,7 +207,9 @@ export default function StructSequences({ geneData, selectedTranscript }) {
       </Box>
       <DisplayGenTrans
         sequence={geneData?.sequence}
+        seqlength={geneData?.length}
         start={geneData?.start}
+        strand={geneData?.strand}
         annotations={annotations}
       />
     </Box>
@@ -233,7 +235,9 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         </Box>
         <DisplayGenTrans
           sequence={selectedTranscript?.sequence}
+          seqlength={selectedTranscript?.length}
           start={selectedTranscript?.start}
+          strand={selectedTranscript?.strand}
           annotations={annotations}
         />
       </Box>
@@ -262,7 +266,9 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         </Box>
         <DisplayCDS
           sequence={selectedTranscript?.sequence}
+          seqlength={selectedTranscript?.length}
           start={selectedTranscript?.start}
+          strand={selectedTranscript?.strand}
           annotations={annotations}
         />
       </Box>

@@ -9,13 +9,38 @@ const COLOR_PAIRS = {
   CDS: ["#ACBADA", "#D8DFEE"],
 };
 
+export function getRelativePositions(
+  absStart,
+  absEnd,
+  start,
+  seqlength,
+  strand
+) {
+  if (strand === "reverse") {
+    return {
+      relStart: seqlength - (absEnd - start + 1),
+      relEnd: seqlength - (absStart - start),
+    };
+  }
+  return {
+    relStart: absStart - start,
+    relEnd: absEnd - start + 1,
+  };
+}
+
 // Renders a gene/transcript sequence with highlighted annotations (UTRs and CDS)
-export function renderSequenceGenTrans(sequence, start, annotations = []) {
+export function renderSequenceGenTrans(
+  sequence,
+  seqlength,
+  start,
+  strand,
+  annotations = []
+) {
   if (!annotations || annotations.length === 0) return sequence;
 
-  const seqLength = sequence.length;
+  //const seqLength = sequence.length;
   // Create an array to store highlight info (color and priority) for each character in the sequence
-  const highlights = Array.from({ length: seqLength }, () => ({
+  const highlights = Array.from({ length: seqlength }, () => ({
     color: null,
     priority: 0,
   }));
@@ -29,8 +54,15 @@ export function renderSequenceGenTrans(sequence, start, annotations = []) {
 
   // Apply an annotation to the highlights array
   const applyAnnotation = (absStart, absEnd, type, priority) => {
-    const relStart = absStart - start;
-    const relEnd = absEnd - start + 1;
+    //const relStart = absStart - start;
+    //const relEnd = absEnd - start + 1;
+    const { relStart, relEnd } = getRelativePositions(
+      absStart,
+      absEnd,
+      start,
+      seqlength,
+      strand
+    );
 
     // Select alternating color based on annotation type
     const colors = COLOR_PAIRS[type] || ["#FFFFFF"]; // Fallback to white if type is not defined
@@ -40,7 +72,7 @@ export function renderSequenceGenTrans(sequence, start, annotations = []) {
     colorCounters[type]++;
 
     // Apply highlight color to positions with lower priority being overridden by higher priority annotations
-    for (let i = relStart; i < relEnd && i < seqLength; i++) {
+    for (let i = relStart; i < relEnd && i < seqlength; i++) {
       if (priority > highlights[i].priority) {
         highlights[i] = { color, priority };
       }
@@ -61,7 +93,7 @@ export function renderSequenceGenTrans(sequence, start, annotations = []) {
   let currentColor = highlights[0].color;
   let currentText = sequence[0];
 
-  for (let i = 1; i < seqLength; i++) {
+  for (let i = 1; i < seqlength; i++) {
     const { color } = highlights[i];
     if (color === currentColor) {
       currentText += sequence[i];
@@ -95,12 +127,18 @@ export function renderSequenceGenTrans(sequence, start, annotations = []) {
 // ---
 
 // Renders the CDS sequence with highlighted annotations
-export function renderSequenceCDS(sequence, start, annotations = []) {
+export function renderSequenceCDS(
+  sequence,
+  seqlength,
+  start,
+  strand,
+  annotations = []
+) {
   if (!sequence || !annotations || annotations.length === 0) return null;
 
-  const seqLength = sequence.length;
+  //const seqLength = sequence.length;
   // Initialize an array to store highlight information for each character
-  const highlights = Array.from({ length: seqLength }, () => ({
+  const highlights = Array.from({ length: seqlength }, () => ({
     color: null,
     priority: 0,
   }));
@@ -110,8 +148,15 @@ export function renderSequenceCDS(sequence, start, annotations = []) {
 
   // Function to apply a CDS annotation highlight
   const applyCDSAnnotation = (absStart, absEnd) => {
-    const relStart = absStart - start;
-    const relEnd = absEnd - start + 1;
+    //const relStart = absStart - start;
+    //const relEnd = absEnd - start + 1;
+    const { relStart, relEnd } = getRelativePositions(
+      absStart,
+      absEnd,
+      start,
+      seqlength,
+      strand
+    );
 
     // Select alternating color for CDS
     const colors = COLOR_PAIRS["CDS"];
@@ -121,7 +166,7 @@ export function renderSequenceCDS(sequence, start, annotations = []) {
     cdsColorCounter++;
 
     // Apply highlight for valid positions
-    for (let i = relStart; i < relEnd && i < seqLength; i++) {
+    for (let i = relStart; i < relEnd && i < seqlength; i++) {
       if (i >= 0) {
         highlights[i] = { color, priority: 1 };
       }
@@ -146,7 +191,7 @@ export function renderSequenceCDS(sequence, start, annotations = []) {
   let currentColor = null;
   let currentText = "";
 
-  for (let i = 0; i < seqLength; i++) {
+  for (let i = 0; i < seqlength; i++) {
     const { color } = highlights[i];
     if (color) {
       // If the same color continues, accumulate the sequence

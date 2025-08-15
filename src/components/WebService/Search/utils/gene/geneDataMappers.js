@@ -35,6 +35,7 @@ export function mapGeneDetail(r) {
     end: record.gene?.endPosition || 0,
     strand: record.gene?.strand || "",
     sequence: record.gene?.sequence || "",
+    length: record.gene?.length || 0,
     description: record.gene?.description || "",
     chromosome: {
       id: record.chromosome?._id || "",
@@ -50,7 +51,9 @@ export function mapGeneDetail(r) {
       accession: tx.accessionId || "",
       start: tx.startPosition || 0,
       end: tx.endPosition || 0,
+      strand: tx.strand || "",
       sequence: tx.sequence || "",
+      length: tx.length || 0,
       aminoAcidSeq: tx.product?.aminoacidSequence || "",
       cdsSeq: tx.product?.sequence || "",
       utrs: (tx.utrs || []).map((u) => ({
