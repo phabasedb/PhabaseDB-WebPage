@@ -108,6 +108,10 @@
         {
           "name": "Turgut Yigit Akyol",
           "desc": "We thank him for his valuable contribution to the assembly of the P. vulgaris Negro Jamapa genome."
+        },
+        {
+          "name": "Eber Daniel Villa Rodríguez",
+          "desc": "Responsible for the gene annotation and expression atlas module for Negro Jamapa."
         }
       ]
     }
