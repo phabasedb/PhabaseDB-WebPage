@@ -27,9 +27,6 @@ export function mapGenesIdsMatrixExpression(result) {
 
 export function mapNotFoundIdsMatrixExpression(notFound) {
   return {
-    genes: Array.isArray(notFound.genes) ? notFound.genes : [],
-    transcripts: Array.isArray(notFound.transcripts)
-      ? notFound.transcripts
-      : [],
+    ids: Array.isArray(notFound?.ids) ? notFound.ids : [],
   };
 }

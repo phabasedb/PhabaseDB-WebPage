@@ -2,7 +2,23 @@
   {
     "id": "PDBJAMAPAORG000001",
     "database": "Phaseolus vulgaris Negro Jamapa",
-    "matrix": { "path": "pvulgarisnj/GEA_NJ_matrix_data.csv" },
-    "metadata": { "path": "pvulgarisnj/GEA_NJ_meta_data.csv" }
+    "types": {
+      "GENES": {
+        "title": "Phaseolus vulgaris Negro Jamapa — GENES",
+        "metadata": { "path": "pvulgarisnj/pvulgarisnj_meta_GENES_v1.csv" },
+        "matrices": {
+          "raw": { "path": "pvulgarisnj/pvulgarisnj_raw_GENES_v1.csv" },
+          "scorez": { "path": "pvulgarisnj/pvulgarisnj_scorez_GENES_v1.csv" }
+        }
+      },
+      "MiRNA": {
+        "title": "Phaseolus vulgaris Negro Jamapa — MiRNAs",
+        "metadata": { "path": "pvulgarisnj/pvulgarisnj_meta_MiRNA_v1.csv" },
+        "matrices": {
+          "raw": { "path": "pvulgarisnj/pvulgarisnj_raw_MiRNA_v1.csv" },
+          "scorez": { "path": "pvulgarisnj/pvulgarisnj_scorez_MiRNA_v1.csv" }
+        }
+      }
+    }
   }
 ]

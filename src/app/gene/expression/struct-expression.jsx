@@ -38,7 +38,7 @@ export default function StructExpression({ geneData }) {
 
   const { data, loading, error } = useGeneMatrix(
     geneData?.accession,
-    ds?.matrix?.path || ""
+    ds?.types?.GENES?.matrices?.scorez?.path || ""
   );
 
   const { data: flatData, error: flattenError } = useMemo(
@@ -174,7 +174,8 @@ export default function StructExpression({ geneData }) {
         >
           <GeneExpressionChart
             data={flatData}
-            columnWidth={100}
+            columnWidth={20}
+            graphType="scorez"
             svgRef={svgRef}
           />
         </Box>

@@ -23,11 +23,11 @@ import Link from "next/link";
 
 const pages = [
   { name: "Home", path: "/" },
-  { name: "GeneExpression", path: "/expression" },
-  { name: "GenomeBrowser", path: "/jbrowser" },
+  { name: "Expression Atlas", path: "/expression" },
+  { name: "Genome Browser", path: "/jbrowser" },
   { name: "BLAST", path: "/blast" },
   /*{ name: "Help", path: "/" },*/
-  { name: "AboutUs", path: "/about" },
+  { name: "About Us", path: "/about" },
 ];
 
 export default function NavBar() {
@@ -141,6 +141,7 @@ export default function NavBar() {
                     sx={{
                       my: 1,
                       color: "black",
+                      backgroundColor: "#A1C935",
                       display: "block",
                       textTransform: "none",
                       textDecoration: "none",

@@ -17,6 +17,7 @@ export function MatrixSection({
   ids,
   columns,
   matrixPath,
+  graphType,
   chartWidth,
   measure,
 }) {
@@ -212,7 +213,8 @@ export function MatrixSection({
           >
             <GeneExpressionChart
               data={flatData}
-              columnWidth={100}
+              graphType={graphType}
+              columnWidth={20}
               svgRef={svgRef}
             />
           </Box>
@@ -237,7 +239,7 @@ export function MatrixSection({
           />
         </Box>
       )}
-      {notFound && notFound.genes.length > 0 && (
+      {notFound && notFound.ids.length > 0 && (
         <Box
           sx={{
             width: "100%",
@@ -256,30 +258,7 @@ export function MatrixSection({
               overflowWrap: "break-word",
             }}
           >
-            Genes not found: {notFound.genes.join(", ")}
-          </Typography>
-        </Box>
-      )}
-      {notFound && notFound.transcripts.length > 0 && (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            variant="body2"
-            color="error"
-            sx={{
-              p: 2,
-              lineHeight: 1.5,
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-            }}
-          >
-            Transcripts not found: {notFound.transcripts.join(", ")}
+            IDs not found: {notFound.ids.join(", ")}
           </Typography>
         </Box>
       )}

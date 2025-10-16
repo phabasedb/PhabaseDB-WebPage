@@ -8,13 +8,14 @@ import {
   Box,
   Typography,
   TextField,
-  Chip,
-  Autocomplete,
   MenuItem,
   Select,
   FormControl,
   InputLabel,
   Button,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@mui/material";
 
 //local
@@ -25,73 +26,84 @@ import useBreakpointWidthExpChart from "@/shared/expression/utils/breakpoints-wi
 import useContainerWidth from "@/shared/expression/utils/container-width";
 
 export default function GeneExpressionPage() {
-  // Selection states and values
-  const [tags, setTags] = useState([]);
-  const [selectedDs, setSelectedDs] = useState(null);
+  // Estados principales
+  const [selectedType, setSelectedType] = useState(null);
   const [selectedCols, setSelectedCols] = useState([]);
+  const [idsText, setIdsText] = useState("");
+  const [graphType, setGraphType] = useState("raw");
 
-  // States of charge
+  // Estados de carga
   const [loadedMeta, setLoadedMeta] = useState(false);
   const [triggerMatrix, setTriggerMatrix] = useState(false);
 
-  // States to capture values on click (“fixed” values for MatrixSection)
+  // Valores fijos para MatrixSection
   const [matrixIds, setMatrixIds] = useState([]);
   const [matrixColumns, setMatrixColumns] = useState([]);
-  const [matrixDs, setMatrixDs] = useState(null);
+  const [matrixPath, setMatrixPath] = useState("");
 
-  // Filter datasets to include only those with an id, database name, and valid matrix & metadata paths
-  const validDatasets = datasets.filter(
-    ({ id, database, matrix, metadata }) =>
-      id && database && matrix?.path && metadata?.path
-  );
+  // Extraer datasets válidos (nueva estructura con types)
+  const validTypes = [];
+  datasets.forEach((d) => {
+    Object.entries(d.types).forEach(([key, typeData]) => {
+      validTypes.push({
+        parentId: d.id,
+        parentDatabase: d.database,
+        key,
+        ...typeData, // title, metadata, matrices
+      });
+    });
+  });
 
+  // Tamaños dinámicos
+  const { ref: refMeta, width: wMeta, measure: mMeta } = useContainerWidth();
   const {
-    ref: containerRefMeta,
-    width: containerWidthMeta,
-    measure: containerMeasureMeta,
+    ref: refMatrix,
+    width: wMatrix,
+    measure: mMatrix,
   } = useContainerWidth();
-
-  const {
-    ref: containerRefMatrix,
-    width: containerWidthMatrx,
-    measure: containerMeasureMatrix,
-  } = useContainerWidth();
-
   const fallbackWidth = useBreakpointWidthExpChart();
+  const chartWidthMeta = wMeta > 0 ? wMeta : fallbackWidth;
+  const chartWidthMatrix = wMatrix > 0 ? wMatrix : fallbackWidth;
 
-  const sequenceHolder = [
-    "Paste IDs here. Examples: ID Gene:PvNJ1.1_chr11_0419600 or ID Transcript:PvNJ1.1_chr11_0419600.t1 ...",
-  ];
+  // --- Funciones ---
+  const handleSelectChange = (e) => {
+    const value = e.target.value;
+    const found = validTypes.find((d) => d.title === value);
+    setSelectedType(found);
+  };
 
-  //Calculation of box width for metadata table
-  const chartWidthMeta =
-    containerWidthMeta > 0 ? containerWidthMeta : fallbackWidth;
-  //Calculation of the width of the box for the matrix table
-  const chartWidthMatrix =
-    containerWidthMatrx > 0 ? containerWidthMatrx : fallbackWidth;
-
-  // Function to handle "Load
   const handleLoad = () => {
-    if (selectedDs) {
-      setLoadedMeta(true);
-    }
+    if (selectedType) setLoadedMeta(true);
   };
 
   // Function to handle "Clear
   const handleClear = () => {
     setLoadedMeta(false);
+    setSelectedType(null);
     setSelectedCols([]);
+    setIdsText("");
     setTriggerMatrix(false);
     setMatrixIds([]);
     setMatrixColumns([]);
-    setMatrixDs(null);
+    setMatrixPath("");
   };
 
   // Function to handle "Gene Expression
   const handleGeneExpression = () => {
-    setMatrixIds(tags);
+    const idsList = idsText
+      .split(/\s+/)
+      .map((id) => id.trim())
+      .filter((id) => id !== "");
+
+    setMatrixIds(idsList);
     setMatrixColumns(selectedCols);
-    setMatrixDs(selectedDs);
+
+    const path =
+      graphType === "raw"
+        ? selectedType.matrices.raw.path
+        : selectedType.matrices.scorez.path;
+
+    setMatrixPath(path);
     setTriggerMatrix(true);
   };
 
@@ -117,7 +129,7 @@ export default function GeneExpressionPage() {
           boxShadow: 5,
         }}
       >
-        <Box ref={containerRefMeta} sx={{ width: "90%", my: 1 }}>
+        <Box ref={refMeta} sx={{ width: "90%", my: 1 }}>
           {/** Title */}
           <Typography
             sx={{
@@ -134,34 +146,7 @@ export default function GeneExpressionPage() {
             Gene Expression
           </Typography>
 
-          {/** Input IDs Gene/Transcript */}
-          <Box sx={{ my: 1 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              IDs Gene/Transcript:
-            </Typography>
-            <Autocomplete
-              multiple
-              freeSolo
-              options={[]}
-              value={tags}
-              onChange={(event, newValue) => setTags(newValue)}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => {
-                  const { key, ...props } = getTagProps({ index });
-                  return <Chip key={key} label={option} {...props} />;
-                })
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  placeholder={tags.length === 0 ? sequenceHolder : "Add ID"}
-                />
-              )}
-            />
-          </Box>
-
-          {/** Dataset selection con Load y Clear */}
+          {/* 1️⃣ Dataset selection */}
           <Box sx={{ my: 1 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               Dataset selection:
@@ -179,18 +164,14 @@ export default function GeneExpressionPage() {
               <FormControl sx={{ flex: 1, width: { xs: "100%", md: "auto" } }}>
                 <InputLabel>Select dataset</InputLabel>
                 <Select
-                  value={selectedDs?.id || ""}
+                  value={selectedType?.title || ""}
                   label="Select dataset"
-                  onChange={(e) =>
-                    setSelectedDs(
-                      validDatasets.find((d) => d.id === e.target.value)
-                    )
-                  }
+                  onChange={handleSelectChange}
                   disabled={loadedMeta}
                 >
-                  {validDatasets.map((ds) => (
-                    <MenuItem key={ds.id} value={ds.id}>
-                      {ds.database}
+                  {validTypes.map((ds) => (
+                    <MenuItem key={ds.title} value={ds.title}>
+                      {ds.title}
                     </MenuItem>
                   ))}
                 </Select>
@@ -208,7 +189,7 @@ export default function GeneExpressionPage() {
                 <Button
                   variant="contained"
                   onClick={handleLoad}
-                  disabled={!selectedDs || loadedMeta}
+                  disabled={!selectedType || loadedMeta}
                   sx={{ flex: { xs: 1, md: "none" } }}
                 >
                   Load
@@ -226,22 +207,66 @@ export default function GeneExpressionPage() {
             </Box>
           </Box>
 
-          {/* MetadataSection is mounted only when loaded */}
-          {loadedMeta && selectedDs && (
+          {/* 2️⃣ MetadataSection */}
+          {loadedMeta && selectedType && (
             <Box sx={{ my: 2, width: chartWidthMeta }}>
               <MetadataSection
-                selected={selectedDs}
+                selected={selectedType}
                 onSelectCols={setSelectedCols}
               />
             </Box>
           )}
 
-          {/* Final action, result of MatrixSection*/}
+          {/* 3️⃣ IDs Gene/Transcript */}
+          {loadedMeta && (
+            <Box sx={{ my: 1 }}>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                IDs Gene/Transcript:
+              </Typography>
+              <TextField
+                multiline
+                fullWidth
+                rows={3}
+                placeholder="Paste IDs separated by spaces..."
+                value={idsText}
+                onChange={(e) => setIdsText(e.target.value)}
+              />
+            </Box>
+          )}
+
+          {/* 4️⃣ Tipo de gráfica */}
+          {loadedMeta && (
+            <Box sx={{ my: 2 }}>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                Data transform:
+              </Typography>
+              <FormControl>
+                <RadioGroup
+                  row
+                  value={graphType}
+                  onChange={(e) => setGraphType(e.target.value)}
+                >
+                  <FormControlLabel
+                    value="raw"
+                    control={<Radio />}
+                    label="Normalized"
+                  />
+                  <FormControlLabel
+                    value="scorez"
+                    control={<Radio />}
+                    label="Z-Score"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+          )}
+
+          {/* 5️⃣ Botón para graficar */}
           <Box sx={{ textAlign: "center", my: 2 }}>
             <Button
               variant="contained"
               onClick={handleGeneExpression}
-              disabled={!loadedMeta || !tags.length || !selectedCols.length}
+              disabled={!loadedMeta || !idsText.trim() || !selectedCols.length}
             >
               Gene Expression
             </Button>
@@ -250,9 +275,9 @@ export default function GeneExpressionPage() {
       </Box>
 
       {/* Matrix section */}
-      {triggerMatrix && matrixDs && (
+      {triggerMatrix && (
         <Box
-          ref={containerRefMatrix}
+          ref={refMatrix}
           sx={{
             width: "90%",
             backgroundColor: "white",
@@ -269,9 +294,10 @@ export default function GeneExpressionPage() {
           <MatrixSection
             ids={matrixIds}
             columns={matrixColumns}
-            matrixPath={matrixDs.matrix.path}
+            matrixPath={matrixPath}
+            graphType={graphType}
             chartWidth={chartWidthMatrix}
-            measure={containerMeasureMatrix}
+            measure={mMatrix}
           />
         </Box>
       )}

@@ -10,6 +10,7 @@ import * as d3 from "d3";
 export default function GeneExpressionChart({
   data,
   columnWidth = 100,
+  graphType,
   svgRef,
 }) {
   // Reference variables in the container (graphic) and in the tooltips
@@ -60,19 +61,25 @@ export default function GeneExpressionChart({
     : 0;
 
   // Estimated bottom margin: max condition length * 8 px + 10 extra px
-  const marginBottom = maxConditionLen * 8 + 10;
+  const marginBottom = maxConditionLen * 7 + 5;
 
   // Total chart drawing width (column width × number of conditions)
-  const chartWidth = columnWidth * conditions.length;
+  const chartWidth =
+    columnWidth *
+    (conditions.length <= 15
+      ? 3 * conditions.length
+      : conditions.length <= 30
+      ? 2 * conditions.length
+      : conditions.length);
 
   // Height of the line chart
-  const lineHeight = 300;
+  const lineHeight = 200;
 
   // Height of the gradient color bar
-  const colorBarHeight = 30;
+  const colorBarHeight = 25;
 
   // Height per row in the heatmap
-  const heatmapRowHeight = 30;
+  const heatmapRowHeight = 25;
 
   // Total heatmap height (number of transcripts × row height)
   const heatmapHeight = transcriptsData.length * heatmapRowHeight;
@@ -84,7 +91,7 @@ export default function GeneExpressionChart({
   const spacingBottomColorBar = 50;
 
   // Definition of margins (using precomputed marginBottom and marginLeft)
-  const margin = { top: 30, right: 30, bottom: marginBottom, left: marginLeft };
+  const margin = { top: 10, right: 30, bottom: marginBottom, left: marginLeft };
 
   // Total SVG width (margins + chart area)
   const width = margin.left + chartWidth + margin.right;
@@ -103,7 +110,8 @@ export default function GeneExpressionChart({
     // Validation: if `data` is empty or undefined, exit
     if (!data || data.length === 0) return;
 
-    // Get the maximum value from the data
+    // Get the maximum and minimun value from the data
+    const minVal = d3.min(data, (d) => d.value) || 0;
     const maxVal = d3.max(data, (d) => d.value) || 0;
 
     // Fully create and configure the SVG canvas for the chart
@@ -127,7 +135,7 @@ export default function GeneExpressionChart({
       .padding(0.5);
     const yLine = d3
       .scaleLinear()
-      .domain([0, maxVal])
+      .domain([minVal, maxVal])
       .nice()
       .range([lineHeight, 0]);
 
@@ -146,6 +154,19 @@ export default function GeneExpressionChart({
       .call((g) => g.selectAll("text").style("font-size", "12px"))
       .select(".domain")
       .remove();
+
+    // 🔹 Si existen valores negativos, dibuja una línea base en y=0
+    if (minVal < 0) {
+      lineG
+        .append("line")
+        .attr("x1", 0)
+        .attr("x2", chartWidth)
+        .attr("y1", yLine(0))
+        .attr("y2", yLine(0))
+        .attr("stroke", "#000")
+        .attr("stroke-width", 1)
+        .attr("stroke-dasharray", "4,2"); // discontinua opcional
+    }
 
     const lineGen = d3
       .line()
@@ -270,65 +291,69 @@ export default function GeneExpressionChart({
       .attr("offset", (d) => `${d * 100}%`)
       .attr("stop-color", (d) => d3.interpolateYlGnBu(d));
 
-    const colorBarG = svg
-      .append("g")
-      .attr(
-        "transform",
-        `translate(${margin.left},${
-          margin.top + lineHeight + spacingTopColorBar
-        })`
-      );
+    if (graphType === "scorez" || graphType !== "scorez") {
+      const colorBarG = svg
+        .append("g")
+        .attr(
+          "transform",
+          `translate(${margin.left},${
+            margin.top + lineHeight + spacingTopColorBar
+          })`
+        );
 
-    // Title
-    colorBarG
-      .append("text")
-      .attr("x", 0)
-      .attr("y", -spacingTopColorBar / 2 + 10)
-      .attr("text-anchor", "start")
-      .style("font-size", "14px")
-      .style("font-weight", "bold")
-      .text("Relative expression");
+      // Title
+      colorBarG
+        .append("text")
+        .attr("x", 0)
+        .attr("y", -spacingTopColorBar / 2 + 10)
+        .attr("text-anchor", "start")
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .text("Relative expression");
 
-    // Add "Low" and "High" labels above the gradient bar
-    colorBarG
-      .append("text")
-      .attr("x", 0)
-      .attr("y", -5)
-      .attr("text-anchor", "start")
-      .style("font-size", "12px")
-      .text("Low");
+      // Add "Low" and "High" labels above the gradient bar
+      colorBarG
+        .append("text")
+        .attr("x", 0)
+        .attr("y", -5)
+        .attr("text-anchor", "start")
+        .style("font-size", "12px")
+        .text("Low");
 
-    colorBarG
-      .append("text")
-      .attr("x", chartWidth)
-      .attr("y", -5)
-      .attr("text-anchor", "end")
-      .style("font-size", "12px")
-      .text("High");
+      colorBarG
+        .append("text")
+        .attr("x", 150)
+        .attr("y", -5)
+        .attr("text-anchor", "end")
+        .style("font-size", "12px")
+        .text("High");
 
-    // Definition of the gradient bar
-    colorBarG
-      .append("rect")
-      .attr("width", chartWidth)
-      .attr("height", colorBarHeight)
-      .attr("fill", "url(#colorGradient)");
+      // Definition of the gradient bar
+      colorBarG
+        .append("rect")
+        .attr("width", 150)
+        .attr("height", colorBarHeight)
+        .attr("fill", "url(#colorGradient)");
 
-    // Display numeric values below the bar
-    colorBarG
-      .append("text")
-      .attr("x", 0)
-      .attr("y", colorBarHeight + 15)
-      .attr("text-anchor", "start")
-      .style("font-size", "12px")
-      .text("0");
+      // Only for non-scorez, add numeric min/max
+      if (graphType !== "scorez") {
+        colorBarG
+          .append("text")
+          .attr("x", 0)
+          .attr("y", colorBarHeight + 15)
+          .attr("text-anchor", "start")
+          .style("font-size", "12px")
+          .text(minVal.toFixed(2)); // usa minVal calculado dinámicamente
 
-    colorBarG
-      .append("text")
-      .attr("x", chartWidth)
-      .attr("y", colorBarHeight + 15)
-      .attr("text-anchor", "end")
-      .style("font-size", "12px")
-      .text(maxVal.toFixed(2));
+        colorBarG
+          .append("text")
+          .attr("x", 150)
+          .attr("y", colorBarHeight + 15)
+          .attr("text-anchor", "end")
+          .style("font-size", "12px")
+          .text(maxVal.toFixed(2)); // usa maxVal calculado dinámicamente
+      }
+    }
 
     // Create the SVG container for the Heatmap (<g> group)
     const heatG = svg
@@ -354,9 +379,27 @@ export default function GeneExpressionChart({
       .domain(transcriptsData.map((t) => t.transcriptId))
       .range([0, heatmapHeight])
       .padding(0.05);
-    const colorScaleHM = d3
-      .scaleSequential(d3.interpolateYlGnBu)
-      .domain([0, maxVal]);
+
+    let colorScaleHM;
+    if (graphType === "scorez") {
+      // cada transcript tiene su propio dominio
+      const transcriptDomains = Object.fromEntries(
+        transcriptsData.map((t) => {
+          const values = t.expression.map((e) => e.value);
+          const minVal = Math.min(...values);
+          const maxValT = Math.max(...values); // para uso interno
+          return [
+            t.transcriptId,
+            d3.scaleSequential(d3.interpolateYlGnBu).domain([minVal, maxValT]),
+          ];
+        })
+      );
+      colorScaleHM = (d) => transcriptDomains[d.transcript](d.value);
+    } else {
+      colorScaleHM = d3
+        .scaleSequential(d3.interpolateYlGnBu)
+        .domain([0, maxVal]);
+    }
 
     heatG
       .selectAll("rect.cell")
@@ -371,7 +414,13 @@ export default function GeneExpressionChart({
       .attr("y", (d) => yHeat(d.transcript))
       .attr("width", xHeat.bandwidth())
       .attr("height", yHeat.bandwidth())
-      .attr("fill", (d) => colorScaleHM(d.value))
+      .attr("fill", (d) => {
+        if (graphType === "scorez") {
+          return colorScaleHM(d); // usa función por transcript
+        } else {
+          return colorScaleHM(d.value); // normal global
+        }
+      })
       .style("cursor", "pointer")
       .on("mouseover touchstart", (event, d) => {
         heatG.selectAll("rect.cell").attr("stroke", null);
@@ -432,7 +481,7 @@ export default function GeneExpressionChart({
       .attr("x", 8)
       .attr("y", -heatmapRowHeight / 2)
       .style("text-anchor", "start")
-      .style("font-size", "12px");
+      .style("font-size", "11px");
 
     heatG
       .append("g")
