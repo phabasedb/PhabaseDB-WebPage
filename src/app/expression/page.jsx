@@ -143,7 +143,7 @@ export default function GeneExpressionPage() {
               },
             }}
           >
-            Gene Expression
+            Expression Atlas
           </Typography>
 
           {/* 1️⃣ Dataset selection */}
@@ -268,7 +268,7 @@ export default function GeneExpressionPage() {
               onClick={handleGeneExpression}
               disabled={!loadedMeta || !idsText.trim() || !selectedCols.length}
             >
-              Gene Expression
+              Expression Atlas
             </Button>
           </Box>
         </Box>

@@ -104,7 +104,7 @@ export function MetadataSection({ selected, onSelectCols }) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <MUIDataTable
-        title={`Metadata for ${selected.database}`}
+        title={`Metadata for ${selected.title}`}
         data={data}
         columns={columnsDef}
         options={options}
