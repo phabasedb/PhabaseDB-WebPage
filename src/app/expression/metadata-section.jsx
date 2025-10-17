@@ -18,12 +18,17 @@ const columnsDef = [
   { name: "treatment", label: "Treatment" },
   { name: "inocula", label: "Inocula" },
   { name: "time_post_treatment", label: "Time post‑treatment/inoculation" },
-  { name: "additional_info", label: "Additional information" },
+  {
+    name: "additional_info",
+    label: "Additional information",
+    options: { filter: false },
+  },
   { name: "reference", label: "Reference" },
   {
     name: "doi",
     label: "DOI",
     options: {
+      filter: false,
       customBodyRender: (value) => {
         if (value === "-") return "-";
         return (
@@ -39,6 +44,8 @@ const columnsDef = [
 export function MetadataSection({ selected, onSelectCols }) {
   const { data, error, loading } = useMetaData(selected?.metadata?.path || "");
   const [selectedCols, setSelectedCols] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   // Propagate selection order up
   useEffect(() => {
@@ -86,16 +93,20 @@ export function MetadataSection({ selected, onSelectCols }) {
     filter: true,
     pagination: true,
     print: false,
-    viewColumns: false,
+    viewColumns: true,
     responsive: "standard",
-    rowsPerPageOptions: [5, 10, 15],
-    rowsPerPage: 5,
+    page,
+    rowsPerPage,
+    onChangePage: (currentPage) => setPage(currentPage),
+    onChangeRowsPerPage: (number) => {
+      setRowsPerPage(number === -1 ? data.length : number);
+    },
+    rowsPerPageOptions: [10, 25, 50, 100, { value: -1, label: "All" }],
     selectableRows: "multiple",
     selectableRowsOnClick: true,
     selectableRowsHeader: true,
     customToolbarSelect: () => null,
     onRowSelectionChange: (_, __, rowsSelected) => {
-      // rowsSelected preserves click order
       const cols = rowsSelected.map((i) => data[i].library);
       setSelectedCols(cols);
     },

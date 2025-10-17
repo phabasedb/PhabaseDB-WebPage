@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 // local
 import StructTable from "./struct-table";
-import StructTools from "./struct-tools";
+//import StructTools from "./struct-tools";
 
 export default function DataTable({ term }) {
   return (
@@ -22,14 +22,14 @@ export default function DataTable({ term }) {
       {/* Responsive layout and positioning for data table */}
       <Box
         sx={{
-          width: { xs: "90%", md: "70%" },
+          width: { xs: "90%", md: "90%" },
           order: { xs: 1, md: 1 },
         }}
       >
         <StructTable term={term} />
       </Box>
 
-      {/* Responsive layout and positioning for tools panel */}
+      {/* Responsive layout and positioning for tools panel 
       <Box
         sx={{
           width: { xs: "90%", md: "20%" },
@@ -39,7 +39,7 @@ export default function DataTable({ term }) {
         }}
       >
         <StructTools />
-      </Box>
+      </Box>*/}
     </Box>
   );
 }

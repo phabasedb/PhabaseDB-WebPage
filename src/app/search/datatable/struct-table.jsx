@@ -73,13 +73,12 @@ export default function StructTable({ term }) {
   const options = useMemo(
     () => ({
       filter: true,
-      responsive: "simple",
-      selectableRows: "none",
-      rowsPerPageOptions: [5, 10, 15, 25, 50, 100],
-      rowsPerPage: 5,
       viewColumns: true,
       print: false,
-
+      responsive: "simple",
+      selectableRows: "none",
+      rowsPerPageOptions: [10, 25, 50, 100],
+      rowsPerPage: 10,
       onDownload: (buildHead, buildBody, columns, data) => {
         const filteredColumns = columns.filter((col) => col.label !== "Tools");
         const filteredData = data.map((row) => {
