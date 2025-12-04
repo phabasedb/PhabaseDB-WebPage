@@ -32,7 +32,7 @@
     }
   },
   {
-    "id": "PDBGBAT93ORG000001",
+    "id": "PDBBAT93AORG000001",
     "organism": "Phaseolus vulgaris BAT93 v10",
     "assemblyName": "BAT93",
     "tracks": ["BAT93-FeatureTrack", "BAT93-ReferenceSequenceTrack"],

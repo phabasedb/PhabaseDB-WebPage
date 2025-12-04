@@ -68,11 +68,15 @@ export default function SearchGene() {
           variant="outlined"
           placeholder="Search Gene"
           value={searchGene}
+          error={!!errorGene}
+          helperText={isSmallScreen ? errorGene : ""}
           onChange={(e) => {
             setSearchGene(e.target.value);
+            if (errorGene) setErrorGene("");
           }}
-          error={isSmallScreen && !!errorGene}
-          helperText={isSmallScreen ? errorGene : ""}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch();
+          }}
           InputProps={{
             style: {
               borderRadius: 25,
