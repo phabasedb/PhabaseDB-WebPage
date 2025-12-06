@@ -14,16 +14,13 @@ import { useGeneSearch, useAllGenes } from "@/components/WebService/Search";
 import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
-  // Definition of functions linked to predefined search terms
   const hookGeneralTerms = { GENES: useAllGenes };
 
-  // Selects the appropriate hook based on the search term
   const hookToUse = hookGeneralTerms[term] || (() => useGeneSearch(term));
 
   const { data, loading, error } = hookToUse();
   const router = useRouter();
 
-  //Column definitions for the MUI-Datatables table
   const columns = useMemo(
     () => [
       {
@@ -39,8 +36,6 @@ export default function StructTable({ term }) {
               <Box
                 sx={{
                   display: "flex",
-                  //multiple buttons
-                  //flexDirection: { xs: "row", sm: "column", xl: "row" },
                   flexDirection: "row",
                   alignItems: "center",
                   gap: 1,
@@ -69,7 +64,6 @@ export default function StructTable({ term }) {
     []
   );
 
-  //Configuration options definition for the MUI-Datatables table
   const options = useMemo(
     () => ({
       filter: true,

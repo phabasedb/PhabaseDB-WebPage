@@ -22,17 +22,14 @@ export default function SearchHistory() {
   const [history, setHistory] = useState([]);
   const router = useRouter();
 
-  //Definition of general search terms.
   const generalTerms = [{ label: "GENE BROWSER", term: "GENES" }];
 
-  //Loads the search history from local cache (localStorage).
   useEffect(() => {
     const storedHistory =
       JSON.parse(localStorage.getItem("searchHistory")) || [];
     setHistory(storedHistory);
   }, []);
 
-  //Navigates to the search route for the selected term.
   const handleItemClick = (term) => {
     router.push(`/search/${encodeURIComponent(term)}`);
   };
@@ -55,7 +52,6 @@ export default function SearchHistory() {
           gap: 2,
         }}
       >
-        {/*Iterates over general search terms and renders each as an interactive button */}
         {generalTerms.map((termObj) => (
           <Button
             key={termObj.label}
@@ -78,7 +74,6 @@ export default function SearchHistory() {
         ))}
       </Box>
 
-      {/* Render search history only if items exist */}
       {history.length > 0 && (
         <Box
           sx={{
@@ -89,7 +84,6 @@ export default function SearchHistory() {
           }}
         >
           <Box>
-            {/* Search history title */}
             <Typography
               variant="subtitle1"
               sx={{
@@ -107,7 +101,6 @@ export default function SearchHistory() {
             </Typography>
           </Box>
           <Box>
-            {/* Renders the search history stored in local cache */}
             <List>
               {history.map((item, index) => (
                 <ListItem

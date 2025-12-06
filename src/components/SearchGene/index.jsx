@@ -27,21 +27,20 @@ export default function SearchGene() {
   const [errorGene, setErrorGene] = useState("");
   const router = useRouter();
 
-  // Responsive row menssage error invalid input
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  // Search history storage function with a limit of 5.
   const handleSearch = () => {
-    if (!validateInput(searchGene, setErrorGene)) return;
+    const normalized = searchGene.trim();
+
+    if (!validateInput(normalized, setErrorGene)) return;
 
     const history = readHistory();
-    const newHistory = updateHistoryArray(history, searchGene, 5);
+    const newHistory = updateHistoryArray(history, normalized, 5);
     writeHistory(newHistory);
 
-    router.push(`/search/${encodeURIComponent(searchGene)}`);
+    router.push(`/search/${encodeURIComponent(normalized)}`);
   };
-  // ---
 
   return (
     <Box
@@ -106,7 +105,6 @@ export default function SearchGene() {
         </Button>
       </Box>
 
-      {/**Conditional if there is an error in the search */}
       {!isSmallScreen && errorGene && (
         <Box
           sx={{

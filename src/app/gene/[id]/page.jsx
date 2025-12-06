@@ -26,7 +26,6 @@ function useSelectedTranscript(formattedDetail) {
 }
 
 export default function GenePage() {
-  // The id is extracted from the URL and passed to the gene handler.
   const { id } = useParams();
   const { data: detail, loading, error } = useGeneById(id);
 

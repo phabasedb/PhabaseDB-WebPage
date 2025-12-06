@@ -3,7 +3,7 @@
 // third party
 
 //local
-import { VALID_SEARCH_TERM } from "@/shared/const-validateds";
+import { VALID_URL_RULES } from "@/shared/const-validateds";
 import { useWrappedQuery } from "./genericQuery";
 import { GET_GENE_BY_DATATABLE, GET_GENE_BY_ID } from "./getGeneBy";
 import { GET_GENE_ALL_DATATABLE } from "./getGeneAll";
@@ -17,8 +17,7 @@ import { mapGeneSummaries, mapGeneDetail } from "./utils/gene/geneDataMappers";
  * @param {function} mapData - Function for mapping the data
  */
 export function useGeneQuery(searchTerm, query, variables, mapData) {
-  // Pre-validation
-  for (const v of VALID_SEARCH_TERM) {
+  for (const v of VALID_URL_RULES) {
     if (!v.test(searchTerm)) {
       return { data: null, loading: false, error: v.message };
     }
@@ -31,8 +30,6 @@ export function useGeneQuery(searchTerm, query, variables, mapData) {
     mapData
   );
 }
-
-// -------------------
 
 /**
  * Hook to search for genes and get an array of summaries.

@@ -21,7 +21,7 @@ export function useWrappedQuery(query, variables, extractData, mapData) {
     error: apolloError,
   } = useQuery(query, {
     variables,
-    skip: variables?.search === "" || false,
+    skip: !variables || variables.search === "",
   });
 
   if (loading) {
@@ -29,7 +29,6 @@ export function useWrappedQuery(query, variables, extractData, mapData) {
   }
 
   if (apolloError?.networkError) {
-    //console.error("Network error:", apolloError.networkError);
     return {
       data: null,
       loading: false,
@@ -39,7 +38,6 @@ export function useWrappedQuery(query, variables, extractData, mapData) {
   }
 
   if (apolloError?.graphQLErrors?.length) {
-    //console.error("GraphQL errors:", apolloError.graphQLErrors);
     return {
       data: null,
       loading: false,

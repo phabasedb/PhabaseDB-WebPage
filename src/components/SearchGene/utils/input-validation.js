@@ -3,7 +3,7 @@
 // third party
 
 //local
-import { VALID_SEARCH_TERM } from "shared/const-validateds";
+import { VALID_INPUT_RULES } from "shared/const-validateds";
 
 /**
  * Runs through each validator and sets error message on first failure.
@@ -12,7 +12,7 @@ import { VALID_SEARCH_TERM } from "shared/const-validateds";
  * @returns {boolean} true if all tests pass, false otherwise
  */
 export function validateInput(value, setError) {
-  for (const { test, message } of VALID_SEARCH_TERM) {
+  for (const { test, message } of VALID_INPUT_RULES) {
     if (!test(value)) {
       setError(message);
       return false;

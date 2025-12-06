@@ -25,7 +25,6 @@ export default function Title() {
           gap: { xs: 1, md: 2 },
         }}
       >
-        {/* Phabase logo*/}
         <Box
           component="img"
           src="/image/logos/logoPhabaseIA.webp"
@@ -41,7 +40,6 @@ export default function Title() {
             height: "auto",
           }}
         />
-        {/* Phabase title*/}
         <Typography
           variant="h1"
           sx={{
@@ -59,7 +57,6 @@ export default function Title() {
           Phabase
         </Typography>
       </Box>
-      {/* Phabase subtitle*/}
       <Typography
         variant="h2"
         color="secondary"

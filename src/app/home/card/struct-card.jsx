@@ -16,7 +16,6 @@ export default function StructCard({ item, index }) {
         alignItems: "center",
       }}
     >
-      {/* Informative card component with responsive layout and visual effects */}
       <Card
         sx={{
           display: "flex",
@@ -43,7 +42,6 @@ export default function StructCard({ item, index }) {
             overflow: "hidden",
           }}
         >
-          {/* Informative image section */}
           <CardMedia
             component="img"
             image={item.image}
@@ -62,7 +60,6 @@ export default function StructCard({ item, index }) {
             justifyContent: "center",
           }}
         >
-          {/* Description section with dynamic text formatting */}
           <Typography
             variant="body1"
             sx={{
