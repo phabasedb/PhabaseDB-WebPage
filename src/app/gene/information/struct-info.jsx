@@ -65,7 +65,7 @@ export default function StructInfo({
         >
           {transcripts.map((tx) => (
             <ToggleButton key={tx.id} value={tx.id} sx={commonTypographyStyle}>
-              {tx.accession}
+              {tx.accessionId}
             </ToggleButton>
           ))}
         </ToggleButtonGroup>

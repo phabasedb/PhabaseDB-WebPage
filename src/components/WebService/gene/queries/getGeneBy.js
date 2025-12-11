@@ -64,8 +64,8 @@ export const GET_GENE_BY_ID = gql`
         gene {
           accessionId
           name
-          start
-          end
+          startPosition
+          endPosition
           strand
           sequence
           length
@@ -83,8 +83,8 @@ export const GET_GENE_BY_ID = gql`
         transcripts {
           _id
           accessionId
-          start
-          end
+          startPosition
+          endPosition
           strand
           sequence
           length
@@ -92,23 +92,22 @@ export const GET_GENE_BY_ID = gql`
             sequence
             length
             aminoacidSequence
-            aminoacidLength
           }
           utrs {
-            start
-            end
+            startPosition
+            endPosition
             sequence
             type
           }
           exons {
-            start
-            end
+            startPosition
+            endPosition
             sequence
             type
           }
           cds {
-            start
-            end
+            startPosition
+            endPosition
             sequence
             type
           }
