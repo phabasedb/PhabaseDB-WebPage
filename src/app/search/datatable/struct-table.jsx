@@ -16,12 +16,11 @@ import DataHandler from "./utils/data-handler";
 export default function StructTable({ term }) {
   const router = useRouter();
 
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(0); //Pagina 0
+  const [limit, setLimit] = useState(10); // 10/25/50/100
 
   const GENERAL_TERMS = {
     GENES: (vars) => useAllGenes(vars),
-    //more..
   };
 
   const isGeneral = !!GENERAL_TERMS[term];
@@ -44,7 +43,7 @@ export default function StructTable({ term }) {
           filter: false,
           sort: false,
           customBodyRender: (_, tableMeta) => {
-            const geneId = tableMeta.rowData[1];
+            const geneId = tableMeta.rowData[1]; // accession
 
             return (
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -76,10 +75,11 @@ export default function StructTable({ term }) {
       filter: false,
       viewColumns: true,
       print: false,
-      download: false,
-      search: false,
       responsive: "simple",
       selectableRows: "none",
+      download: false,
+
+      serverSide: true,
 
       page: pagination?.currentPage ?? 0,
       rowsPerPage: pagination?.limit ?? limit,

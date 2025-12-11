@@ -20,10 +20,10 @@ export function fetchAllGenes(query, { limit, page }, mapper) {
 
   if (!Array.isArray(rawData) || rawData.length === 0) {
     return {
-      data: null,
+      data: [],
       pagination,
       loading: false,
-      error: `No genes found in the database: '${term}'`,
+      error: `No genes found in the database`,
     };
   }
 
