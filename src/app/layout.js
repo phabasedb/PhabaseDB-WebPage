@@ -9,7 +9,7 @@ import { Box } from "@mui/material";
 import theme from "mui-config/theme";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import WebServiceProvider from "@/components/WebService/Provider";
+import WebServiceProvider from "@/components/WebService/client/Provider";
 
 export const metadata = {
   title: "PhabaseDB",

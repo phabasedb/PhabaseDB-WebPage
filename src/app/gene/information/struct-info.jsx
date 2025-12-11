@@ -13,7 +13,10 @@ import { useRouter } from "next/navigation";
 // local
 
 export default function StructInfo({
-  geneData,
+  gene,
+  organism,
+  chromosome,
+  transcripts,
   selectedTranscript,
   setSelectedTranscript,
   onNavClick,
@@ -47,7 +50,7 @@ export default function StructInfo({
           Transcripts:
         </Box>
       </Typography>
-      {transcripts.length > 0 ? (
+      {transcripts && transcripts.length > 0 ? (
         <ToggleButtonGroup
           orientation="vertical"
           exclusive
@@ -74,18 +77,28 @@ export default function StructInfo({
     </Box>
   );
 
+  // BLAST handler
   const handleBlastClick = () => {
-    if (geneData?.accession && geneData?.sequence) {
+    if (gene?.accessionId && gene?.sequence) {
       sessionStorage.setItem(
         "blastPrefill",
         JSON.stringify({
-          accession: geneData?.accession,
-          sequence: geneData?.sequence,
+          accession: gene.accessionId,
+          sequence: gene.sequence,
         })
       );
       router.push("/blast");
     }
   };
+
+  const navButtons = [
+    { label: "SEQUENCES", key: "SEQUENCES-NV" },
+    { label: "JBROWSER", key: "JBROWSER-NV" },
+    { label: "EXPRESSION", key: "EXPRESSION-NV" },
+  ];
+  if (organism?.id === "PBDJAMAPAORG000001") {
+    navButtons.push({ label: "GENE EXPRESSION", key: "EXPRESSION-NV" });
+  }
 
   return (
     <Box
@@ -116,7 +129,7 @@ export default function StructInfo({
             fontWeight: 500,
           }}
         >
-          {geneData?.accession}
+          {gene?.accession}
         </Typography>
       </Box>
 
@@ -141,20 +154,17 @@ export default function StructInfo({
       {/* Detailed information */}
       <Box sx={{ width: "90%" }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <InfoItem label="Name" value={geneData?.name} />
-          <InfoItem label="Gene Identifier" value={geneData?.accession} />
-          <InfoItem label="Organism" value={geneData?.organism?.name} />
-          <InfoItem label="Chromosome" value={geneData?.chromosome?.name} />
+          <InfoItem label="Name" value={gene?.name} />
+          <InfoItem label="Gene Identifier" value={gene?.accessionId} />
+          <InfoItem label="Organism" value={organism?.name} />
+          <InfoItem label="Chromosome" value={chromosome?.name} />
           <TranscriptsSection
-            transcripts={geneData?.transcripts}
+            transcripts={transcripts}
             selected={selectedTranscript}
             onChange={setSelectedTranscript}
           />
-          <InfoItem
-            label="Location"
-            value={`${geneData?.start} - ${geneData?.end}`}
-          />
-          <InfoItem label="Description" value={geneData?.description} />
+          <InfoItem label="Location" value={`${gene?.start} - ${gene?.end}`} />
+          <InfoItem label="Description" value={gene?.description} />
         </Box>
       </Box>
 
@@ -168,13 +178,7 @@ export default function StructInfo({
           mt: 2,
         }}
       >
-        {/* Definition of buttons that scroll to the defined sections */}
-        {[
-          { label: "SEQUENCES", key: "SEQUENCES-NV" },
-          { label: "JBROWSER", key: "JBROWSER-NV" },
-          { label: "GENE EXPRESSION", key: "EXPRESSION-NV" },
-          /*{ label: "SEQUENCE RETRIVAL", key: "RETRIVAL" },*/
-        ].map((btn) => (
+        {navButtons.map((btn) => (
           <Button
             key={btn.key}
             variant="contained"

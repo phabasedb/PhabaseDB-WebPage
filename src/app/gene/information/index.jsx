@@ -7,7 +7,10 @@ import { Box } from "@mui/material";
 import StructInfo from "./struct-info";
 
 export default function Information({
-  geneData,
+  gene,
+  organism,
+  chromosome,
+  transcripts,
   selectedTranscript,
   setSelectedTranscript,
   onNavClick,
@@ -22,7 +25,10 @@ export default function Information({
       }}
     >
       <StructInfo
-        geneData={geneData}
+        gene={gene}
+        organism={organism}
+        chromosome={chromosome}
+        transcripts={transcripts}
         selectedTranscript={selectedTranscript}
         setSelectedTranscript={setSelectedTranscript}
         onNavClick={onNavClick}

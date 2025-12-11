@@ -2,7 +2,7 @@
   {
     "id": "PDBJAMAPAORG000001",
     "organism": "Phaseolus vulgaris cv. Negro Jamapa v1",
-    "assemblyName": "JAMAPA",
+    "assembly": "JAMAPA",
     "tracks": ["JAMAPA-FeatureTrack", "JAMAPA-ReferenceSequenceTrack"],
     "sessionDefect": {
       "views": [
@@ -18,7 +18,7 @@
   {
     "id": "PDBG19833ORG000001",
     "organism": "Phaseolus vulgaris G19833 v2.1",
-    "assemblyName": "G19833",
+    "assembly": "G19833",
     "tracks": ["G19833-FeatureTrack", "G19833-ReferenceSequenceTrack"],
     "sessionDefect": {
       "views": [
@@ -34,7 +34,7 @@
   {
     "id": "PDBBAT93AORG000001",
     "organism": "Phaseolus vulgaris BAT93 v10",
-    "assemblyName": "BAT93",
+    "assembly": "BAT93",
     "tracks": ["BAT93-FeatureTrack", "BAT93-ReferenceSequenceTrack"],
     "sessionDefect": {
       "views": [

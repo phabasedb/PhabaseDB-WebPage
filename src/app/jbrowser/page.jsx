@@ -6,18 +6,16 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
 //local
-import { datasets } from "@/static/jbrowser/datasets";
-import { buildJBrowseUrlDefectSession } from "@/shared/jbrowser/builduri-jbrowse";
+import { datasets } from "@/static/jbrowse/datasets";
+import { createJBrowseUrlFromSession } from "@/shared/jbrowse/builduri-jbrowse";
 
 export default function JBrowsePage() {
-  // Filters valid datasets that contain id, organism name, and session definition
   const validDatasets = datasets.filter(
     ({ id, organism, sessionDefect }) => id && organism && sessionDefect
   );
 
   const handleDatasetClick = (sessionDefect) => {
-    // Handles dataset click by building the JBrowse URL and opening a new tab
-    const url = buildJBrowseUrlDefectSession({ sessionDefect });
+    const url = createJBrowseUrlFromSession({ sessionDefect });
     if (!url) return;
     window.open(url, "_blank", "noopener");
   };

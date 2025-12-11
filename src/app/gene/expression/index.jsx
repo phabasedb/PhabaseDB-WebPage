@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 // local
 import StructExpression from "./struct-expression";
 
-export default function Expression({ geneData }) {
+export default function Expression({ gene, organism }) {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ export default function Expression({ geneData }) {
         alignItems: "center",
       }}
     >
-      <StructExpression geneData={geneData} />
+      <StructExpression gene={gene} organism={organism} />
     </Box>
   );
 }

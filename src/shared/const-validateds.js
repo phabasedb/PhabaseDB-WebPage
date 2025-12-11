@@ -6,7 +6,7 @@
 
 export const MIN_INPUT_LENGTH = 3;
 
-export const VALID_INPUT_RULES = [
+export const VALID_INPUT_TERM = [
   {
     test: (v) => typeof v === "string",
     message: "Invalid value. The search term must be a string.",
@@ -28,7 +28,7 @@ export const VALID_INPUT_RULES = [
 
 export const MIN_TERM_LENGTH = 3;
 
-export const VALID_URL_RULES = [
+export const VALID_URL_TERM = [
   { test: (v) => typeof v === "string", message: "Invalid term." },
   { test: (v) => v.trim() !== "", message: "Search term cannot be empty." },
   {
@@ -74,11 +74,11 @@ export const VALID_SEARCH_JBR = {
         "Something went wrong: start position cannot be greater than end position. Please try again later or contact an administrator.",
     },
   ],
-  assemblyName: [
+  assembly: [
     {
       test: (a) => typeof a === "string" && a.trim() !== "",
       message:
-        "Something went wrong: reference genome (assembly name) is required. Please try again later or contact an administrator.",
+        "Something went wrong: reference genome (assembly) is required. Please try again later or contact an administrator.",
     },
   ],
   tracks: [

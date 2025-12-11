@@ -19,10 +19,10 @@ import useContainerWidth from "@/shared/expression/utils/container-width";
 import ErrorBoxPageGene from "../shared/utils/error-box";
 import { downloadSVG } from "@/shared/expression/utils/download-svg";
 
-export default function StructExpression({ geneData }) {
+export default function StructExpression({ gene, organism }) {
   const svgRef = useRef(null);
 
-  const ds = datasets.find((d) => d.id === geneData?.organism?.id);
+  const ds = datasets.find((d) => d.id === organism?.id);
   if (!ds) {
     return (
       <ErrorBoxPageGene text="The gene expression viewer could not be loaded. No genomic data is currently available for the selected organism. Please try again later or contact an administrator." />
@@ -37,7 +37,7 @@ export default function StructExpression({ geneData }) {
   const fallbackWidth = useBreakpointWidthExpChart();
 
   const { data, loading, error } = useGeneMatrix(
-    geneData?.accession,
+    gene?.accessionId,
     ds?.types?.GENES?.matrices?.scorez?.path || ""
   );
 
@@ -82,7 +82,7 @@ export default function StructExpression({ geneData }) {
   const chartWidth = containerWidth > 0 ? containerWidth : fallbackWidth;
 
   const handleDownload = () => {
-    const name = geneData?.accession || "chart";
+    const name = gene?.accessionId || "chart";
     downloadSVG(svgRef.current, `${name}.svg`);
   };
 
@@ -188,7 +188,7 @@ export default function StructExpression({ geneData }) {
         }}
       >
         <MUIDataTable
-          title={`Gene Expression Table for ${geneData?.accession}`}
+          title={`Gene Expression Table for ${gene?.accessionId}`}
           data={rows_mui}
           columns={columns_mui}
           options={{

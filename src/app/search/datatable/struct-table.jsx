@@ -1,25 +1,39 @@
 "use client";
 
 // standard
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // third party
-import { Box, Tooltip, Button, IconButton } from "@mui/material";
+import { Box, Tooltip, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import MUIDataTable from "mui-datatables";
 
 // local
-import { useGeneSearch, useAllGenes } from "@/components/WebService/Search";
+import { useAllGenes, useGeneByTerm } from "@/components/WebService/gene";
 import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
-  const hookGeneralTerms = { GENES: useAllGenes };
-
-  const hookToUse = hookGeneralTerms[term] || (() => useGeneSearch(term));
-
-  const { data, loading, error } = hookToUse();
   const router = useRouter();
+
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+
+  const GENERAL_TERMS = {
+    GENES: (vars) => useAllGenes(vars),
+    //more..
+  };
+
+  const isGeneral = !!GENERAL_TERMS[term];
+
+  const hookToUse = isGeneral
+    ? GENERAL_TERMS[term]
+    : (vars) => useGeneByTerm(term, vars);
+
+  const { data, loading, error, pagination } = hookToUse({
+    limit,
+    page,
+  });
 
   const columns = useMemo(
     () => [
@@ -29,23 +43,16 @@ export default function StructTable({ term }) {
         options: {
           filter: false,
           sort: false,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            const geneId = tableMeta.rowData[1]; // “accession” column
+          customBodyRender: (_, tableMeta) => {
+            const geneId = tableMeta.rowData[1];
 
             return (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 1,
-                }}
-              >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Tooltip title="Gene Information">
                   <IconButton
                     color="primary"
-                    onClick={
-                      () => router.push(`/gene/${geneId}`) // Rediriging gene/[idGene]
+                    onClick={() =>
+                      router.push(`/gene/${encodeURIComponent(geneId)}`)
                     }
                   >
                     <InfoIcon />
@@ -56,40 +63,45 @@ export default function StructTable({ term }) {
           },
         },
       },
-      { name: "accession", label: "Gene ID" },
-      { name: "name", label: "Gene Name" },
-      { name: "chromosome", label: "Chromosome Name" },
-      { name: "organism", label: "Organism Name" },
+      { name: "genAccessionId", label: "Gene ID" },
+      { name: "genName", label: "Gene Name" },
+      { name: "chromosomeName", label: "Chromosome Name" },
+      { name: "organismName", label: "Organism Name" },
     ],
-    []
+    [router]
   );
 
   const options = useMemo(
     () => ({
-      filter: true,
+      filter: false,
       viewColumns: true,
       print: false,
+      download: false,
+      search: false,
       responsive: "simple",
       selectableRows: "none",
+
+      page: pagination?.currentPage ?? 0,
+      rowsPerPage: pagination?.limit ?? limit,
+      count: pagination?.totalResults ?? 0,
+
       rowsPerPageOptions: [10, 25, 50, 100],
-      rowsPerPage: 10,
-      onDownload: (buildHead, buildBody, columns, data) => {
-        const filteredColumns = columns.filter((col) => col.label !== "Tools");
-        const filteredData = data.map((row) => {
-          const filteredRowData = row.data.filter(
-            (_, index) => columns[index].label !== "Tools"
-          );
-          return { data: filteredRowData };
-        });
-        const csvContent = buildHead(filteredColumns) + buildBody(filteredData);
-        return "\uFEFF" + csvContent;
+
+      onTableChange: (action, tableState) => {
+        if (action === "changePage") {
+          setPage(tableState.page);
+        }
+        if (action === "changeRowsPerPage") {
+          setLimit(tableState.rowsPerPage);
+          setPage(0);
+        }
       },
     }),
-    []
+    [pagination, limit]
   );
 
   return (
-    <DataHandler loading={loading} error={error} data={data} term={term}>
+    <DataHandler loading={loading} error={error}>
       <MUIDataTable data={data} columns={columns} options={options} />
     </DataHandler>
   );

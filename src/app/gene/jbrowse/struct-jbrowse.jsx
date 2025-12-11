@@ -7,41 +7,47 @@ import { useMemo } from "react";
 import { Box } from "@mui/material";
 
 //local
-import { buildJBrowseUrlPositions } from "@/shared/jbrowser/builduri-jbrowse";
-import { datasets } from "@/static/jbrowser/datasets";
+import { createJBrowseUrlFromCoords } from "@/shared/jbrowse/builduri-jbrowse";
+import { datasets } from "@/static/jbrowse/datasets";
 import ErrorBoxPageGene from "../shared/utils/error-box";
 
-export default function StructJBrowse({ geneData }) {
-  // Validates the dataset using the organism ID and builds the JBrowse URL
-  const { url, message } = useMemo(() => {
-    const ds = datasets.find((d) => d.id === geneData?.organism?.id);
+export default function StructJBrowse({ gene, organism, chromosome }) {
+  const { url, internalMessage, userMessage } = useMemo(() => {
+    const ds = datasets.find((d) => d.id === organism?.id);
+
     if (!ds) {
+      const msg = "No genomic data available for this gene/organism.";
       return {
         url: null,
-        message:
-          "The genome browser could not be loaded. No genomic data is currently available for the selected organism. Please try again later or contact an administrator.",
+        internalMessage: "Dataset not found",
+        userMessage: msg,
       };
     }
-    return buildJBrowseUrlPositions({
-      chromosome: geneData?.chromosome?.name,
-      start: geneData?.start,
-      end: geneData?.end,
-      assemblyName: ds?.assemblyName || "",
-      tracks: ds?.tracks || "",
-    });
-  }, [
-    datasets,
-    geneData?.organism?.id,
-    geneData?.chromosome?.name,
-    geneData?.start,
-    geneData?.end,
-  ]);
 
-  // If no valid URL is available, show the error message
+    const { url, message } = createJBrowseUrlFromCoords({
+      chromosome: chromosome?.name,
+      start: gene?.start,
+      end: gene?.end,
+      assembly: ds.assembly,
+      tracks: ds.tracks,
+    });
+
+    if (!url) {
+      return {
+        url: null,
+        internalMessage: message,
+        userMessage: "Unable to load genome browser. Please try again later.",
+      };
+    }
+
+    return { url, internalMessage: null, userMessage: null };
+  }, [gene, organism, chromosome]);
+
   if (!url) {
-    return <ErrorBoxPageGene text={message} />;
+    if (internalMessage) console.error("JBrowse Error:", internalMessage);
+    return <ErrorBoxPageGene text={userMessage} />;
   }
-  // Renders the genome browser inside an iframe
+
   return (
     <Box
       sx={{

@@ -5,16 +5,14 @@ import { gql } from "@apollo/client";
 
 // local
 
-export const GET_GENE_ALL_DATATABLE = gql`
-  query GetAllGenes {
-    getAllGenes {
+export const GET_GENE_ALL = gql`
+  query GetAllGenes($limit: Int, $page: Int) {
+    getAllGenes(limit: $limit, page: $page) {
       data {
         _id
         gene {
           accessionId
           name
-          start
-          end
         }
         chromosome {
           name
@@ -23,6 +21,12 @@ export const GET_GENE_ALL_DATATABLE = gql`
           _id
           name
         }
+      }
+      pagination {
+        totalResults
+        limit
+        currentPage
+        hasNextPage
       }
     }
   }

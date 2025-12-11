@@ -4,17 +4,21 @@
     "nucleotide": [
       {
         "name": "Phaseolus vulgaris Negro Jamapa genome v1",
-        "path": "pvulgarisnj/Pvulgaris_Negro_Jamapa_v1_genome"
+        "path": "pvulgarisnj/pvulgarisnj_genome_v1"
+      },
+      {
+        "name": "Phaseolus vulgaris Negro Jamapa v1 Transcripts",
+        "path": "pvulgarisnj/pvulgarisnj_transcripts_v1"
       },
       {
         "name": "Phaseolus vulgaris Negro Jamapa v1 CDS",
-        "path": "pvulgarisnj/Pvulgaris_Negro_Jamapa_v1_CDS"
+        "path": "pvulgarisnj/pvulgarisnj_cds_v1"
       }
     ],
     "protein": [
       {
         "name": "Phaseolus vulgaris Negro Jamapa v1 Proteins",
-        "path": "pvulgarisnj/Pvulgaris_Negro_Jamapa_v1_proteins"
+        "path": "pvulgarisnj/pvulgarisnj_proteins_v1"
       }
     ]
   },
@@ -22,20 +26,46 @@
     "database": "Phaseolus vulgaris G19833",
     "nucleotide": [
       {
-        "name": "Phaseolus vulgaris G19833 genome v2.0",
-        "path": "g19833/Pvulgaris_G19833_442_v2.0_genome"
+        "name": "Phaseolus vulgaris G19833 genome v2.1",
+        "path": "g19833/g19833_genome_v2.1"
+      },
+      {
+        "name": "Phaseolus vulgaris G19833 v2.1 Transcripts",
+        "path": "g19833/g19833_transcripts_v2.1"
+      },
+      {
+        "name": "Phaseolus vulgaris G19833 v2.1 CDS",
+        "path": "g19833/g19833_cds_v2.1"
       }
     ],
-    "protein": []
+    "protein": [
+      {
+        "name": "Phaseolus vulgaris G19833 CDS v2.1 Proteins",
+        "path": "g19833/g19833_proteins_v2.1"
+      }
+    ]
   },
   {
     "database": "Phaseolus vulgaris BAT93",
     "nucleotide": [
       {
         "name": "Phaseolus vulgaris BAT93 genome v10",
-        "path": "bat93/Pvulgaris_BAT93_v10_genome"
+        "path": "bat93/bat93_genome_v10"
+      },
+      {
+        "name": "Phaseolus vulgaris BAT93 v10 Transcripts",
+        "path": "bat93/bat93_transcripts_v10"
+      },
+      {
+        "name": "Phaseolus vulgaris BAT93 v10 CDS",
+        "path": "bat93/bat93_cds_v10"
       }
     ],
-    "protein": []
+    "protein": [
+      {
+        "name": "Phaseolus vulgaris BAT93  v10 Proteins",
+        "path": "bat93/bat93_proteins_v10"
+      }
+    ]
   }
 ]

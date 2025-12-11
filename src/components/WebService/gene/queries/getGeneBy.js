@@ -5,13 +5,17 @@ import { gql } from "@apollo/client";
 
 // local
 
-export const GET_GENE_BY_DATATABLE = gql`
+export const GET_GENE_BY_TERM = gql`
   query GetGeneBy(
+    $limit: Int
+    $page: Int
     $properties: [String]
     $search: String
     $fullMatchOnly: Boolean
   ) {
     getGeneBy(
+      limit: $limit
+      page: $page
       properties: $properties
       search: $search
       fullMatchOnly: $fullMatchOnly
@@ -21,8 +25,6 @@ export const GET_GENE_BY_DATATABLE = gql`
         gene {
           accessionId
           name
-          start
-          end
         }
         chromosome {
           name
@@ -32,17 +34,27 @@ export const GET_GENE_BY_DATATABLE = gql`
           name
         }
       }
+      pagination {
+        totalResults
+        limit
+        currentPage
+        hasNextPage
+      }
     }
   }
 `;
 
 export const GET_GENE_BY_ID = gql`
   query GetGeneBy(
+    $limit: Int
+    $page: Int
     $properties: [String]
     $search: String
     $fullMatchOnly: Boolean
   ) {
     getGeneBy(
+      limit: $limit
+      page: $page
       properties: $properties
       search: $search
       fullMatchOnly: $fullMatchOnly
@@ -50,8 +62,8 @@ export const GET_GENE_BY_ID = gql`
       data {
         _id
         gene {
-          name
           accessionId
+          name
           start
           end
           strand
@@ -77,8 +89,10 @@ export const GET_GENE_BY_ID = gql`
           sequence
           length
           product {
-            aminoacidSequence
             sequence
+            length
+            aminoacidSequence
+            aminoacidLength
           }
           utrs {
             start
@@ -99,6 +113,12 @@ export const GET_GENE_BY_ID = gql`
             type
           }
         }
+      }
+      pagination {
+        totalResults
+        limit
+        currentPage
+        hasNextPage
       }
     }
   }

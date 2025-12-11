@@ -10,7 +10,7 @@ import {
   mapGenesIdsMatrixExpression,
   mapNotFoundIdsMatrixExpression,
 } from "./utils/gene/geneMatrixDataMappers";
-import { mapMetaDataExpression } from "./utils/metadata/metaDataMappers";
+import { mapMetaDataExpression } from "./utils/gene/metaDataMappers";
 
 // MATRIX FOR A GEN
 export function useGeneMatrix(id, path) {

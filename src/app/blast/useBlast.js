@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   validateEvalue,
   validateWordSize,
@@ -20,12 +20,24 @@ export function useBlast({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleBlast = async () => {
+  // Ref para guardar el AbortController actual
+  const abortRef = useRef(null);
+
+  const handleBlast = useCallback(async () => {
+    // Cancelar petición anterior si existe
+    if (abortRef.current) {
+      abortRef.current.abort();
+    }
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const signal = controller.signal;
+
     setLoading(true);
     setError(null);
     setHtmlResult("");
 
-    // 1) Basic validations
+    // Validaciones básicas
     if (!query.trim()) {
       setError("The sequence cannot be empty.");
       setLoading(false);
@@ -37,7 +49,7 @@ export function useBlast({
       return;
     }
 
-    // 2) Advanced validations
+    // Validaciones avanzadas
     const evErr = validateEvalue(evalue);
     const wsErr = validateWordSize(wordSize);
     const mtErr = validateMaxTargetSeqs(maxTargetSeqs);
@@ -48,7 +60,7 @@ export function useBlast({
       return;
     }
 
-    // 3) Construction of advanced parameters
+    // Construcción de parámetros avanzados
     const args = [];
     evalue.trim() && args.push("-evalue", evalue.trim());
     wordSize.trim() && args.push("-word_size", wordSize.trim());
@@ -75,6 +87,7 @@ export function useBlast({
           db: selected,
           params: advancedParams,
         }),
+        signal, // <-- le pasamos la señal al fetch
       });
 
       if (!res.ok) {
@@ -88,20 +101,42 @@ export function useBlast({
             "The request to the BLAST service has taken too long and has timed out. Please try again in a few minutes or reduce the size of your query and check parameters."
           );
         }
-        // For other errors we parse the JSON from the API
         const { message } = await res.json();
         throw new Error(message);
       }
 
-      // Success (200): waiting for pure HTML
       const html = await res.text();
       setHtmlResult(html);
     } catch (e) {
+      if (e.name === "AbortError") {
+        // La petición fue cancelada, no hacemos nada
+        return;
+      }
       setError(e.message);
     } finally {
       setLoading(false);
+      abortRef.current = null; // limpiamos el ref
     }
-  };
+  }, [
+    type,
+    selected,
+    query,
+    evalue,
+    wordSize,
+    maxTargetSeqs,
+    filterQuery,
+    allowGaps,
+    matrix,
+  ]);
+
+  // Cleanup al desmontar: cancelar cualquier fetch pendiente
+  useEffect(() => {
+    return () => {
+      if (abortRef.current) {
+        abortRef.current.abort();
+      }
+    };
+  }, []);
 
   return { handleBlast, loading, error, htmlResult };
 }
