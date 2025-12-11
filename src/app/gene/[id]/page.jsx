@@ -11,6 +11,7 @@ import { useGeneById } from "@/components/WebService/gene";
 import GeneHandler from "./utils/gene-handler";
 
 import Information from "../information";
+import Sequences from "../sequences";
 import JBrowse from "../jbrowse";
 import Expression from "../expression";
 
@@ -44,11 +45,13 @@ function InnerGenePage({ data }) {
   const { gene, organism, chromosome, transcripts } = data;
 
   const jbrowseRef = useRef(null);
+  const sequencesRef = useRef(null);
   const expressionRef = useRef(null);
 
   const handleNavClick = (target) => {
     const mapRef = {
       "JBROWSER-NV": jbrowseRef,
+      "SEQUENCES-NV": sequencesRef,
       "EXPRESSION-NV": expressionRef,
     };
     mapRef[target]?.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,6 +68,10 @@ function InnerGenePage({ data }) {
         setSelectedTranscript={setSelectedTranscript}
         onNavClick={handleNavClick}
       />
+
+      <section ref={sequencesRef} id="sequences-section">
+        <Sequences geneData={data} selectedTranscript={selectedTranscript} />
+      </section>
 
       <section ref={jbrowseRef} id="jbrowse-section">
         <JBrowse gene={gene} organism={organism} chromosome={chromosome} />
