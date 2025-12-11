@@ -1,9 +1,7 @@
-//standard
+// standard
 import { useState, useEffect } from "react";
 
-// third party
-
-//local
+// local
 import { validateField } from "./utils/field-validation";
 
 /**
@@ -15,7 +13,6 @@ import { validateField } from "./utils/field-validation";
  * @param {Function} mapperSuccess   → (json) => mappedData
  * @param {Function} [mapperNotFound]→ (json.not_found) => mappedNotFound
  */
-
 export function useApiRequest(
   getRequestInfo,
   deps,
@@ -29,25 +26,29 @@ export function useApiRequest(
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Reset previous state on new request
-    setError(null);
+    // Creamos un AbortController para poder cancelar el fetch
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    // Reset previous state
     setData(null);
     setNotFound(null);
+    setError(null);
 
-    // Validations
+    // Validaciones
     for (const [value, rules] of validators) {
       const msg = validateField(value, rules);
       if (msg) {
         setError(msg);
         setLoading(false);
-        return;
+        return () => controller.abort(); // cancelar si ya no hacemos fetch
       }
     }
 
     const { url, options } = getRequestInfo();
     setLoading(true);
 
-    fetch(url, options)
+    fetch(url, { ...options, signal })
       .then(async (res) => {
         if (!res.ok) {
           if (res.status === 502) {
@@ -60,7 +61,6 @@ export function useApiRequest(
               "The request to the Gene Expression service has taken too long and has timed out. Please try again in a few minutes or reduce the size of your IDs or columns."
             );
           }
-          // For other errors we parse the JSON from the API
           const { message } = await res.json();
           throw new Error(message);
         }
@@ -70,12 +70,22 @@ export function useApiRequest(
         if (mapperNotFound) {
           setNotFound(not_found ? mapperNotFound(not_found) : null);
         }
-        // Success (200)
+
         return mapperSuccess(result);
       })
       .then((mapped) => setData(mapped))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        // Si fue abortado, no hacemos nada
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
+      })
+      .finally(() => {
+        if (!signal.aborted) setLoading(false);
+      });
+
+    // Cleanup al desmontar: cancelamos fetch pendiente
+    return () => controller.abort();
   }, deps);
 
   return { data, notFound, loading, error };
