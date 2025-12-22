@@ -1,18 +1,21 @@
 // local
 import { useQuey } from "../hooks/useQuery";
+import { GET_GENE_BY_TERM } from "../queries/getGeneBy";
+import { mapGeneSummaries } from "../mappers/geneDataMappers";
 
-export function fetchGeneByTerm(
-  term,
-  query,
-  { limit, page, properties, fullMatchOnly },
-  mapper
-) {
-  const { data, loading, error } = useQuey(query, {
+export function useGeneByTerm(term, { limit, page }) {
+  const { data, loading, error } = useQuey(GET_GENE_BY_TERM, {
     limit,
     page,
-    properties,
     search: term,
-    fullMatchOnly,
+    properties: [
+      "gene._id",
+      "gene.accessionId",
+      "gene.name",
+      "gene.description",
+      "transcripts.accessionId",
+    ],
+    fullMatchOnly: true,
   });
 
   if (loading) {
@@ -35,7 +38,7 @@ export function fetchGeneByTerm(
     };
   }
 
-  const mapped = mapper(rawData);
+  const mapped = mapGeneSummaries(rawData);
 
   return {
     data: mapped,

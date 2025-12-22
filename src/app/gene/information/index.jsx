@@ -11,9 +11,8 @@ export default function Information({
   organism,
   chromosome,
   transcripts,
-  selectedTranscript,
-  setSelectedTranscript,
-  onNavClick,
+  selectedTranscriptId,
+  onSelectTranscript,
 }) {
   return (
     <Box
@@ -29,9 +28,8 @@ export default function Information({
         organism={organism}
         chromosome={chromosome}
         transcripts={transcripts}
-        selectedTranscript={selectedTranscript}
-        setSelectedTranscript={setSelectedTranscript}
-        onNavClick={onNavClick}
+        selectedTranscriptId={selectedTranscriptId}
+        onSelectTranscript={onSelectTranscript}
       />
     </Box>
   );

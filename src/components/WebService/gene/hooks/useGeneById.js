@@ -1,18 +1,15 @@
 // local
 import { useQuey } from "../hooks/useQuery";
+import { GET_GENE_BY_ID } from "../queries/getGeneBy";
+import { mapGeneDetail } from "../mappers/geneDataMappers";
 
-export function fetchGeneById(
-  geneId,
-  query,
-  { limit, page, properties, fullMatchOnly },
-  mapper
-) {
-  const { data, loading, error } = useQuey(query, {
-    limit,
-    page,
-    properties,
+export function useGeneById(geneId) {
+  const { data, loading, error } = useQuey(GET_GENE_BY_ID, {
+    limit: 1,
+    page: 0,
     search: geneId,
-    fullMatchOnly,
+    properties: ["gene._id", "gene.accessionId"],
+    fullMatchOnly: true,
   });
 
   if (loading) {
@@ -24,22 +21,19 @@ export function fetchGeneById(
   }
 
   const rawData = data?.getGeneBy?.data || [];
-  const pagination = data?.getGeneBy?.pagination || null;
 
   if (!Array.isArray(rawData) || rawData.length === 0) {
     return {
       data: null,
-      pagination,
       loading: false,
       error: `No result found for Gen ID: '${geneId}'`,
     };
   }
 
-  const mapped = mapper(rawData[0]);
+  const mapped = mapGeneDetail(rawData[0]);
 
   return {
     data: mapped,
-    pagination,
     loading: false,
     error: null,
   };

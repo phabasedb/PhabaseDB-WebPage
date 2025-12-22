@@ -1,315 +1,47 @@
 // standard
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
 // third party
-import {
-  Box,
-  Typography,
-  Button,
-  Tabs,
-  Tab,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
+import { Box, Tabs, Tab, useMediaQuery, useTheme } from "@mui/material";
 
-// local
-import { DisplayGenTrans, DisplayCDS } from "./utils/sequence-display";
+//local
+import SequencesHeader from "./components/SequencesHeader";
+import TabPanel from "./utils/TabPanel";
+import { SEQUENCE_TABS } from "./utils/sequenceTabs.config";
+import { downloadFasta } from "./utils/downloadFasta";
 
-// Legend colors for 5' UTRs, CDS, and 3' UTRs
-const LEGEND_COLORS = {
-  fiveUTR: { oneColor: "#AED2B3", twoColor: "#D7E9D9" },
-  CDS: { oneColor: "#ACBADA", twoColor: "#D8DFEE" },
-  threeUTR: { oneColor: "#CBA8C5", twoColor: "#E3D0E0" },
-};
-
-// Component that displays a legend item with a label and two color boxes
-function LegendItem({ label, oneColor, twoColor }) {
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <Typography variant="body2">{label}</Typography>
-      <Box sx={{ display: "flex" }}>
-        <Box sx={{ width: 16, height: 16, backgroundColor: oneColor }} />
-        <Box sx={{ width: 16, height: 16, backgroundColor: twoColor }} />
-      </Box>
-    </Box>
-  );
-}
-
-// Component for displaying tab content (TabPanel)
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`sequence-tabpanel-${index}`}
-      aria-labelledby={`sequence-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            background: "#D9D9D9",
-            my: 1,
-          }}
-        >
-          <Box sx={{ width: "95%", my: 2, background: "white" }}>
-            {children}
-          </Box>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-export default function StructSequences({ geneData, selectedTranscript }) {
-  // Responsive configuration for tabs
+export default function StructSequences({
+  gene,
+  chromosome,
+  selectedTranscript,
+}) {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
-  // State for tabs
+  // Tabs state
   const [tabValue, setTabValue] = useState("genomic");
-  const handleTabChange = (event, newView) => {
-    setTabValue(newView);
+  const activeTab = SEQUENCE_TABS.find((tab) => tab.value === tabValue);
+
+  const handleTabChange = (_, newValue) => {
+    setTabValue(newValue);
   };
 
-  // Calculate sequence lengths
-  const getSequenceLength = (sequence) => sequence?.length || "N/A";
-
-  const genomicLength = getSequenceLength(geneData?.gene?.sequence);
-  const transcriptLength = getSequenceLength(selectedTranscript?.sequence);
-  const peptideLength = getSequenceLength(
-    selectedTranscript?.product?.aminoacidSequence
-  );
-  // Calculate total CDS length
-  const cdsLength = useMemo(() => {
-    if (selectedTranscript?.cds?.length > 0) {
-      return selectedTranscript.cds.reduce((total, cd) => {
-        if (cd?.start && cd?.end) {
-          const cdLength = cd.end - cd.start + 1;
-          return total + cdLength;
-        }
-        return total;
-      }, 0);
-    }
-    return "N/A";
-  }, [selectedTranscript]);
-  // ---
-
-  // Build UTR and CDS annotations for the selected transcript
-  const annotations = useMemo(() => {
-    const ann = [];
-    if (selectedTranscript) {
-      if (selectedTranscript?.utrs) {
-        selectedTranscript.utrs.forEach((utr) => {
-          ann.push({
-            start: utr?.start,
-            end: utr?.end,
-            type: utr?.type,
-          });
-        });
-      }
-      if (selectedTranscript?.cds) {
-        selectedTranscript.cds.forEach((cd) => {
-          ann.push({
-            start: cd?.start,
-            end: cd?.end,
-            type: cd?.type,
-          });
-        });
-      }
-    }
-    return ann;
-  }, [selectedTranscript]);
-  // ---
-
-  // Function to generate FASTA file content with a given header and sequence, wrapping lines at lineWidth characters
-  function generateFastaContent(header, sequence, lineWidth = 60) {
-    let formattedSequence = "";
-    for (let i = 0; i < sequence.length; i += lineWidth) {
-      formattedSequence += sequence.substring(i, i + lineWidth) + "\n";
-    }
-    return `>${header}\n${formattedSequence}`;
-  }
-
-  // Function to handle sequence download based on the selected tab
   const handleDownload = () => {
-    let header = "";
-    let sequence = "";
+    if (!activeTab?.buildFasta) return;
 
-    switch (tabValue) {
-      case "genomic":
-        if (!geneData?.gene?.sequence) {
-          alert("No genomic sequence available.");
-          return;
-        }
-        header = geneData?.gene?.accessionId;
-        sequence = geneData?.gene?.sequence;
-        break;
-      case "transcript":
-        if (!selectedTranscript?.sequence) {
-          alert("No transcript sequence available.");
-          return;
-        }
-        header = selectedTranscript?.accessionId;
-        sequence = selectedTranscript?.sequence;
-        break;
-      case "cds":
-        if (!selectedTranscript?.cds || selectedTranscript?.cds.length === 0) {
-          alert("No CDS available for this transcript.");
-          return;
-        }
-        header = selectedTranscript?.accessionId;
-        sequence = selectedTranscript?.product?.sequence || "";
-        if (!sequence) {
-          alert("CDS sequence not available.");
-          return;
-        }
-        break;
-      case "peptide":
-        if (!selectedTranscript?.product?.aminoacidSequence) {
-          alert("No peptide sequence available.");
-          return;
-        }
-        header = selectedTranscript?.accessionId;
-        sequence = selectedTranscript?.product?.aminoacidSequence;
-        break;
-      default:
-        return;
-    }
+    const fastaContent = activeTab.buildFasta({
+      gene,
+      chromosome,
+      selectedTranscript,
+    });
 
-    const fastaContent = generateFastaContent(header, sequence);
-    const blob = new Blob([fastaContent], { type: "text/plain" });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${tabValue}_${header}_sequence.fa`;
-    link.click();
-    window.URL.revokeObjectURL(url);
+    if (!fastaContent) return;
+
+    downloadFasta({
+      content: fastaContent,
+      filename: `${tabValue}.fasta`,
+    });
   };
-  // ---
-
-  // Auxiliary functions for rendering each tab
-  const renderGenomicTab = () => (
-    <Box>
-      <Box sx={{ p: 1 }}>
-        <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-          {">"}
-          {geneData?.chromosome?.name} | {geneData?.gene?.accessionId} |{" "}
-          {geneData?.chromosome?.type}: {geneData?.gene?.start}..
-          {geneData?.gene?.end} {geneData?.gene?.strand}
-        </Typography>
-      </Box>
-      <DisplayGenTrans
-        sequence={geneData?.gene?.sequence}
-        seqlength={geneData?.gene?.length}
-        start={geneData?.gene?.start}
-        strand={geneData?.gene?.strand}
-        annotations={annotations}
-      />
-    </Box>
-  );
-
-  const renderTranscriptTab = () => {
-    if (!selectedTranscript) {
-      return (
-        <Box sx={{ p: 1 }}>
-          <Typography variant="body1">Transcript no available.</Typography>
-        </Box>
-      );
-    }
-    return (
-      <Box>
-        <Box sx={{ p: 1 }}>
-          <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-            {">"}
-            {geneData?.chromosome?.name} | {selectedTranscript?.accessionId} :{" "}
-            {selectedTranscript?.start}..
-            {selectedTranscript?.end}
-          </Typography>
-        </Box>
-        <DisplayGenTrans
-          sequence={selectedTranscript?.sequence}
-          seqlength={selectedTranscript?.length}
-          start={selectedTranscript?.start}
-          strand={selectedTranscript?.strand}
-          annotations={annotations}
-        />
-      </Box>
-    );
-  };
-
-  const renderCDSTab = () => {
-    if (
-      !selectedTranscript ||
-      !selectedTranscript?.cds ||
-      selectedTranscript?.cds.length === 0
-    ) {
-      return (
-        <Box sx={{ p: 1 }}>
-          <Typography variant="body1">CDS no available.</Typography>
-        </Box>
-      );
-    }
-    return (
-      <Box>
-        <Box sx={{ p: 1 }}>
-          <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-            {">"}
-            {geneData?.chromosome?.name} | {selectedTranscript?.accessionId} |
-            CDS
-          </Typography>
-        </Box>
-        <DisplayCDS
-          sequence={selectedTranscript?.sequence}
-          seqlength={selectedTranscript?.length}
-          start={selectedTranscript?.start}
-          strand={selectedTranscript?.strand}
-          annotations={annotations}
-        />
-      </Box>
-    );
-  };
-
-  const renderPeptideTab = () => {
-    if (
-      !selectedTranscript ||
-      !selectedTranscript?.product ||
-      selectedTranscript?.product.length === 0
-    ) {
-      return (
-        <Box sx={{ p: 1 }}>
-          <Typography variant="body1">Peptide no available</Typography>
-        </Box>
-      );
-    }
-    return (
-      <Box>
-        <Box sx={{ p: 1 }}>
-          <Typography sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-            {">"}
-            {geneData?.chromosome?.name} | {selectedTranscript?.accessionId} |
-            Peptide
-          </Typography>
-        </Box>
-        <Box sx={{ px: 1 }}>
-          <Typography
-            variant="body1"
-            sx={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}
-          >
-            {selectedTranscript?.product?.aminoacidSequence}
-          </Typography>
-        </Box>
-      </Box>
-    );
-  };
-
-  // ---
 
   return (
     <Box
@@ -322,93 +54,9 @@ export default function StructSequences({ geneData, selectedTranscript }) {
         py: 2,
       }}
     >
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{
-            width: "90%",
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" },
-            alignItems: "center",
-            gap: { xs: 1, md: 0 },
-          }}
-        >
-          <Box sx={{ textAlign: "left" }}>
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: {
-                  xs: "1.2rem",
-                  sm: "1.4rem",
-                  md: "1.8rem",
-                  lg: "2.0rem",
-                  xl: "2.4rem",
-                },
-                fontWeight: 500,
-              }}
-            >
-              Sequences
-            </Typography>
-          </Box>
+      <SequencesHeader onDownload={handleDownload} />
 
-          {/* Columna 2: Leyenda (y botón para xs) */}
-          <Box
-            sx={{
-              textAlign: { xs: "right", md: "center" },
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                justifyContent: { xs: "flex-end", md: "center" },
-              }}
-            >
-              <LegendItem label="5'UTR" {...LEGEND_COLORS.fiveUTR} />
-              <LegendItem label="CDS" {...LEGEND_COLORS.CDS} />
-              <LegendItem label="3'UTR" {...LEGEND_COLORS.threeUTR} />
-            </Box>
-            {/* En xs, mostramos el botón debajo de la leyenda */}
-            <Box
-              sx={{
-                display: { xs: "block", md: "none" },
-                mt: { xs: 2, md: 0 },
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<DownloadIcon />}
-                onClick={handleDownload}
-              >
-                DOWNLOAD
-              </Button>
-            </Box>
-          </Box>
-
-          {/* Columna 3: Botón (solo para md y superiores) */}
-          <Box
-            sx={{ textAlign: "right", display: { xs: "none", md: "block" } }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<DownloadIcon />}
-              onClick={handleDownload}
-            >
-              DOWNLOAD
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-
-      {/* CONTENEDOR DE TABS */}
+      {/* TABS */}
       <Box
         sx={{
           width: "100%",
@@ -427,41 +75,39 @@ export default function StructSequences({ geneData, selectedTranscript }) {
             orientation={isMdUp ? "horizontal" : "vertical"}
             aria-label="Sequence Tabs"
           >
-            <Tab
-              label={`Genomic [${genomicLength}]`}
-              value="genomic"
-              sx={{ maxWidth: "unset" }}
-            />
-            <Tab
-              label={`Transcript [${transcriptLength}]`}
-              value="transcript"
-              sx={{ maxWidth: "unset" }}
-            />
-            <Tab
-              label={`CDS [${cdsLength}]`}
-              value="cds"
-              sx={{ maxWidth: "unset" }}
-            />
-            <Tab
-              label={`Peptide [${peptideLength}]`}
-              value="peptide"
-              sx={{ maxWidth: "unset" }}
-            />
+            {SEQUENCE_TABS.map((tab) => {
+              if (tab.requiresTranscript && !selectedTranscript) return null;
+
+              const length =
+                tab.getLength({
+                  gene,
+                  selectedTranscript,
+                }) ?? "N/A";
+
+              return (
+                <Tab
+                  key={tab.value}
+                  value={tab.value}
+                  label={tab.label(length)}
+                  sx={{ maxWidth: "unset" }}
+                />
+              );
+            })}
           </Tabs>
 
-          {/* Paneles de cada pestaña */}
-          <TabPanel value={tabValue} index="genomic">
-            {renderGenomicTab()}
-          </TabPanel>
-          <TabPanel value={tabValue} index="transcript">
-            {renderTranscriptTab()}
-          </TabPanel>
-          <TabPanel value={tabValue} index="cds">
-            {renderCDSTab()}
-          </TabPanel>
-          <TabPanel value={tabValue} index="peptide">
-            {renderPeptideTab()}
-          </TabPanel>
+          {SEQUENCE_TABS.map((tab) => {
+            if (tab.requiresTranscript && !selectedTranscript) return null;
+
+            return (
+              <TabPanel key={tab.value} value={tabValue} index={tab.value}>
+                {tab.render({
+                  gene,
+                  chromosome,
+                  selectedTranscript,
+                })}
+              </TabPanel>
+            );
+          })}
         </Box>
       </Box>
     </Box>

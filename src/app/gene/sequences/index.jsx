@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 // local
 import StructSequences from "./struct-sequences";
 
-export default function Sequences({ geneData, selectedTranscript }) {
+export default function Sequences({ gene, chromosome, selectedTranscript }) {
   return (
     <Box
       sx={{
@@ -17,7 +17,8 @@ export default function Sequences({ geneData, selectedTranscript }) {
       }}
     >
       <StructSequences
-        geneData={geneData}
+        gene={gene}
+        chromosome={chromosome}
         selectedTranscript={selectedTranscript}
       />
     </Box>

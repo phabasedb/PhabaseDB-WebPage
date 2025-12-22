@@ -1,7 +1,7 @@
 "use client";
 
 // standard
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // third party
@@ -10,26 +10,20 @@ import InfoIcon from "@mui/icons-material/Info";
 import MUIDataTable from "mui-datatables";
 
 // local
-import { useAllGenes, useGeneByTerm } from "@/components/WebService/gene";
+import { useGeneSearch } from "@/components/WebService/gene";
 import DataHandler from "./utils/data-handler";
 
 export default function StructTable({ term }) {
   const router = useRouter();
 
-  const [page, setPage] = useState(0); //Pagina 0
-  const [limit, setLimit] = useState(10); // 10/25/50/100
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
 
-  const GENERAL_TERMS = {
-    GENES: (vars) => useAllGenes(vars),
-  };
+  useEffect(() => {
+    setPage(0);
+  }, [term]);
 
-  const isGeneral = !!GENERAL_TERMS[term];
-
-  const hookToUse = isGeneral
-    ? GENERAL_TERMS[term]
-    : (vars) => useGeneByTerm(term, vars);
-
-  const { data, loading, error, pagination } = hookToUse({
+  const { data, loading, error, pagination } = useGeneSearch(term, {
     limit,
     page,
   });
@@ -72,6 +66,7 @@ export default function StructTable({ term }) {
 
   const options = useMemo(
     () => ({
+      search: false,
       filter: false,
       viewColumns: true,
       print: false,

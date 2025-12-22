@@ -44,6 +44,33 @@ export const GET_GENE_BY_TERM = gql`
   }
 `;
 
+export const GET_GENE_TABLE_BY_FILTERS = gql`
+  query GetGeneBy($limit: Int, $page: Int, $advancedSearch: String) {
+    getGeneBy(limit: $limit, page: $page, advancedSearch: $advancedSearch) {
+      data {
+        _id
+        gene {
+          accessionId
+          name
+        }
+        chromosome {
+          name
+        }
+        organism {
+          _id
+          name
+        }
+      }
+      pagination {
+        totalResults
+        limit
+        currentPage
+        hasNextPage
+      }
+    }
+  }
+`;
+
 export const GET_GENE_BY_ID = gql`
   query GetGeneBy(
     $limit: Int
@@ -112,12 +139,6 @@ export const GET_GENE_BY_ID = gql`
             type
           }
         }
-      }
-      pagination {
-        totalResults
-        limit
-        currentPage
-        hasNextPage
       }
     }
   }

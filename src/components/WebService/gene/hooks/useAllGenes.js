@@ -1,8 +1,10 @@
 // local
 import { useQuey } from "../hooks/useQuery";
+import { GET_GENE_ALL } from "../queries/getAllGenes";
+import { mapGeneSummaries } from "../mappers/geneDataMappers";
 
-export function fetchAllGenes(query, { limit, page }, mapper) {
-  const { data, loading, error } = useQuey(query, {
+export function useAllGenes({ limit, page }) {
+  const { data, loading, error } = useQuey(GET_GENE_ALL, {
     limit,
     page,
   });
@@ -20,14 +22,14 @@ export function fetchAllGenes(query, { limit, page }, mapper) {
 
   if (!Array.isArray(rawData) || rawData.length === 0) {
     return {
-      data: [],
+      data: null,
       pagination,
       loading: false,
       error: `No genes found in the database`,
     };
   }
 
-  const mapped = mapper(rawData);
+  const mapped = mapGeneSummaries(rawData);
 
   return {
     data: mapped,

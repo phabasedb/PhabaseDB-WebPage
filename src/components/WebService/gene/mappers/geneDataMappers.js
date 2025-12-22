@@ -22,11 +22,11 @@ export function mapGeneDetail(record) {
     gene: {
       accessionId: record.gene?.accessionId,
       name: record.gene?.name || "",
-      start: record.gene?.startPosition || 0,
-      end: record.gene?.endPosition || 0,
+      start: record.gene?.startPosition ?? 0,
+      end: record.gene?.endPosition ?? 0,
       strand: record.gene?.strand || "",
       sequence: record.gene?.sequence || "",
-      length: record.gene?.length || 0,
+      length: record.gene?.length ?? 0,
       description: record.gene?.description || "",
     },
 
@@ -44,37 +44,37 @@ export function mapGeneDetail(record) {
     transcripts: (record.transcripts || []).map((tx) => ({
       id: tx._id,
       accessionId: tx.accessionId,
-      start: record.gene?.startPosition || 0,
-      end: record.gene?.endPosition || 0,
+      start: tx.startPosition ?? 0,
+      end: tx.endPosition ?? 0,
       strand: tx.strand || "",
       sequence: tx.sequence || "",
-      length: tx.length || 0,
+      length: tx.length ?? 0,
 
       product: {
         sequence: tx.product?.sequence || "",
-        length: tx.product?.length || 0,
+        length: tx.product?.length ?? 0,
         aminoacidSequence: tx.product?.aminoacidSequence || "",
       },
 
       utrs: (tx.utrs || []).map((u) => ({
-        start: u.startPosition || 0,
-        end: u.endPosition || 0,
-        sequence: u.sequence || "",
-        type: u.type || "",
+        start: u?.startPosition ?? 0,
+        end: u?.endPosition ?? 0,
+        sequence: u?.sequence || "",
+        type: u?.type || "",
       })),
 
       exons: (tx.exons || []).map((e) => ({
-        start: e.startPosition || 0,
-        end: e.endPosition || 0,
-        sequence: e.sequence || "",
-        type: e.type || "",
+        start: e?.startPosition ?? 0,
+        end: e?.endPosition ?? 0,
+        sequence: e?.sequence || "",
+        type: e?.type || "",
       })),
 
       cds: (tx.cds || []).map((c) => ({
-        start: c.startPosition || 0,
-        end: c.endPosition || 0,
-        sequence: c.sequence || "",
-        type: c.type || "",
+        start: c?.startPosition ?? 0,
+        end: c?.endPosition ?? 0,
+        sequence: c?.sequence || "",
+        type: c?.type || "",
       })),
     })),
   };
