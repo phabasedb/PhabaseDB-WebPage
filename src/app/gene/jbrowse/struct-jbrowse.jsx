@@ -1,51 +1,59 @@
 "use client";
 
-//standard
+// standard
 import { useMemo } from "react";
 
-//third party
+// third party
 import { Box } from "@mui/material";
 
-//local
-import { createJBrowseUrlFromCoords } from "@/shared/jbrowse/builduri-jbrowse";
+// local
+import { buildJBrowseUrlFromCoords } from "@/shared/jbrowse/build-url-from-coords";
 import { datasets } from "@/static/jbrowse/datasets";
-import ErrorBoxPageGene from "../shared/utils/error-box";
+import ErrorBoxPageGene from "../shared/components/ErrorBox";
+import { USER_ERROR_MESSAGE } from "@/shared/jbrowse/validation";
 
 export default function StructJBrowse({ gene, organism, chromosome }) {
-  const { url, internalMessage, userMessage } = useMemo(() => {
-    const ds = datasets.find((d) => d.id === organism?.id);
-
-    if (!ds) {
-      const msg = "No genomic data available for this gene/organism.";
+  const { url, internalMessage } = useMemo(() => {
+    if (!gene || !organism || !chromosome) {
       return {
         url: null,
-        internalMessage: "Dataset not found",
-        userMessage: msg,
+        internalMessage: "Missing gene, organism or chromosome context",
       };
     }
 
-    const { url, message } = createJBrowseUrlFromCoords({
-      chromosome: chromosome?.name,
-      start: gene?.start,
-      end: gene?.end,
-      assembly: ds.assembly,
-      tracks: ds.tracks,
+    const dataset = datasets.find((d) => d.id === organism.id);
+
+    if (!dataset) {
+      return {
+        url: null,
+        internalMessage: `Dataset not found for organism id: ${organism.id}`,
+      };
+    }
+
+    const { url, message } = buildJBrowseUrlFromCoords({
+      chromosome: chromosome.name,
+      start: gene.start,
+      end: gene.end,
+      assembly: dataset.assembly,
+      tracks: dataset.tracks,
     });
 
     if (!url) {
       return {
         url: null,
         internalMessage: message,
-        userMessage: "Unable to load genome browser. Please try again later.",
       };
     }
 
-    return { url, internalMessage: null, userMessage: null };
+    return { url, internalMessage: null };
   }, [gene, organism, chromosome]);
 
   if (!url) {
-    if (internalMessage) console.error("JBrowse Error:", internalMessage);
-    return <ErrorBoxPageGene text={userMessage} />;
+    if (internalMessage) {
+      console.error("JBrowse:", internalMessage);
+    }
+
+    return <ErrorBoxPageGene text={USER_ERROR_MESSAGE} />;
   }
 
   return (

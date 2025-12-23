@@ -4,7 +4,7 @@
     "organism": "Phaseolus vulgaris cv. Negro Jamapa v1",
     "assembly": "JAMAPA",
     "tracks": ["JAMAPA-FeatureTrack", "JAMAPA-ReferenceSequenceTrack"],
-    "sessionDefect": {
+    "sessionDefault": {
       "views": [
         {
           "type": "LinearGenomeView",
@@ -20,7 +20,7 @@
     "organism": "Phaseolus vulgaris G19833 v2.1",
     "assembly": "G19833",
     "tracks": ["G19833-FeatureTrack", "G19833-ReferenceSequenceTrack"],
-    "sessionDefect": {
+    "sessionDefault": {
       "views": [
         {
           "type": "LinearGenomeView",
@@ -36,7 +36,7 @@
     "organism": "Phaseolus vulgaris BAT93 v10",
     "assembly": "BAT93",
     "tracks": ["BAT93-FeatureTrack", "BAT93-ReferenceSequenceTrack"],
-    "sessionDefect": {
+    "sessionDefault": {
       "views": [
         {
           "type": "LinearGenomeView",

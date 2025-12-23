@@ -1,23 +1,27 @@
 "use client";
 
-//standard
-
 //third party
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
 //local
 import { datasets } from "@/static/jbrowse/datasets";
-import { createJBrowseUrlFromSession } from "@/shared/jbrowse/builduri-jbrowse";
+import { buildJBrowseUrlFromSession } from "@/shared/jbrowse/build-url-from-session";
 
 export default function JBrowsePage() {
   const validDatasets = datasets.filter(
-    ({ id, organism, sessionDefect }) => id && organism && sessionDefect
+    ({ id, organism, sessionDefault }) =>
+      id && organism && sessionDefault?.views?.length > 0
   );
 
-  const handleDatasetClick = (sessionDefect) => {
-    const url = createJBrowseUrlFromSession({ sessionDefect });
-    if (!url) return;
-    window.open(url, "_blank", "noopener");
+  const handleDatasetClick = (sessionDefault) => {
+    const { url, message } = buildJBrowseUrlFromSession({
+      sessionDefault,
+    });
+    if (!url) {
+      console.error("JBrowse:", message);
+      return;
+    }
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -59,12 +63,12 @@ export default function JBrowsePage() {
           </Typography>
           {/* Listing of the contents of the data set */}
           <List>
-            {validDatasets.map(({ id, organism, sessionDefect }) => (
+            {validDatasets.map(({ id, organism, sessionDefault }) => (
               <ListItem
                 key={id}
                 disablePadding
                 sx={{ cursor: "pointer" }}
-                onClick={() => handleDatasetClick(sessionDefect)}
+                onClick={() => handleDatasetClick(sessionDefault)}
               >
                 <ListItemText
                   primary={organism}

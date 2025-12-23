@@ -4,7 +4,7 @@
 import { Box, Card, CardMedia, Typography } from "@mui/material";
 
 // local
-import highlightText from "@/shared/text/utils/text-Highlighter";
+import highlightText from "@/shared/text/utils/highlight-text";
 
 export default function StructCard({ item, index }) {
   return (

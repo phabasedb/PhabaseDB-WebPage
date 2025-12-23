@@ -24,7 +24,7 @@ import Link from "next/link";
 const pages = [
   { name: "Home", path: "/" },
   { name: "Expression Atlas", path: "/expression" },
-  { name: "Genome Browser", path: "/jbrowser" },
+  { name: "Genome Browser", path: "/jbrowse" },
   { name: "BLAST", path: "/blast" },
   /*{ name: "Help", path: "/" },*/
   { name: "About Us", path: "/about" },

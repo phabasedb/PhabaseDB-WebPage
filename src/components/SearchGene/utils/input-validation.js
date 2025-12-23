@@ -3,7 +3,7 @@
 // third party
 
 //local
-import { VALID_INPUT_RULES, VALID_INPUT_TERM } from "shared/const-validateds";
+import { VALID_INPUT_TERM } from "./validation";
 
 /**
  * Runs through each validator and sets error message on first failure.

@@ -11,6 +11,7 @@ import { useSelectedTranscript } from "../hooks/useSelectedTranscript";
 import GeneHandler from "./utils/gene-handler";
 import Information from "../information";
 import Sequences from "../sequences";
+import JBrowse from "../jbrowse";
 
 export default function GenePage() {
   const { id } = useParams();
@@ -46,6 +47,7 @@ function InnerGenePage({ data }) {
         chromosome={chromosome}
         selectedTranscript={selectedTranscript}
       />
+      <JBrowse gene={gene} organism={organism} chromosome={chromosome} />
     </>
   );
 }

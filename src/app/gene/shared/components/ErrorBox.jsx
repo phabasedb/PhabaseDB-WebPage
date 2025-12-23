@@ -1,11 +1,9 @@
-//standard
-
 //third party
 import { Box, Typography } from "@mui/material";
 
 //local
 
-export default function ErrorBoxPageGene({ text }) {
+export default function ErrorBox({ text }) {
   return (
     <Box
       sx={{

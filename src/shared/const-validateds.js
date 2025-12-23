@@ -3,29 +3,7 @@
 // third party
 
 //local
-
 export const MIN_INPUT_LENGTH = 3;
-
-export const VALID_INPUT_TERM = [
-  {
-    test: (v) => typeof v === "string",
-    message: "Invalid value. The search term must be a string.",
-  },
-  {
-    test: (v) => v.trim() !== "",
-    message: "The field cannot be empty.",
-  },
-  {
-    test: (v) => v.trim().length >= MIN_INPUT_LENGTH,
-    message: `The term cannot be less than ${MIN_INPUT_LENGTH} characters.`,
-  },
-  {
-    test: (v) => /^[A-Za-z0-9._\- ]+$/.test(v),
-    message:
-      "Only letters, numbers, dots, hyphens, underscores, and inner spaces are allowed.",
-  },
-];
-
 export const MIN_TERM_LENGTH = 3;
 
 export const VALID_URL_TERM = [
@@ -41,54 +19,6 @@ export const VALID_URL_TERM = [
       "Only letters, numbers, dots, hyphens, underscores, and inner spaces are allowed.",
   },
 ];
-
-/**
- * Validation rules for building JBrowse URL using position-based input
- */
-export const VALID_SEARCH_JBR = {
-  chromosome: [
-    {
-      test: (c) => typeof c === "string" && c.trim() !== "",
-      message:
-        "Something went wrong: chromosome name is required. Please try again later or contact an administrator.",
-    },
-  ],
-  start: [
-    {
-      test: (v) => Number.isInteger(Number(v)) && Number(v) >= 0,
-      message:
-        "Something went wrong: start position must be a non-negative integer. Please try again later or contact an administrator.",
-    },
-  ],
-  end: [
-    {
-      test: (v) => Number.isInteger(Number(v)) && Number(v) >= 0,
-      message:
-        "Something went wrong: end position must be a non-negative integer. Please try again later or contact an administrator.",
-    },
-  ],
-  range: [
-    {
-      test: ({ start, end }) => Number(start) <= Number(end),
-      message:
-        "Something went wrong: start position cannot be greater than end position. Please try again later or contact an administrator.",
-    },
-  ],
-  assembly: [
-    {
-      test: (a) => typeof a === "string" && a.trim() !== "",
-      message:
-        "Something went wrong: reference genome (assembly) is required. Please try again later or contact an administrator.",
-    },
-  ],
-  tracks: [
-    {
-      test: (arr) => Array.isArray(arr) && arr.length > 0,
-      message:
-        "Something went wrong: at least one track must be provided. Please try again later or contact an administrator.",
-    },
-  ],
-};
 
 /**
  * Validation rules for expression matrix input (IDs, columns, paths, etc.)

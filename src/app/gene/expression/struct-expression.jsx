@@ -16,7 +16,7 @@ import { pivotableExpressionDataMui } from "@/shared/expression/utils/pivotablem
 import GeneExpressionChart from "@/components/ExpressionChart";
 import useBreakpointWidthExpChart from "@/shared/expression/utils/breakpoints-widthChart";
 import useContainerWidth from "@/shared/expression/utils/container-width";
-import ErrorBoxPageGene from "../shared/utils/error-box";
+import ErrorBoxPageGene from "../shared/components/ErrorBox";
 import { downloadSVG } from "@/shared/expression/utils/download-svg";
 
 export default function StructExpression({ gene, organism }) {
